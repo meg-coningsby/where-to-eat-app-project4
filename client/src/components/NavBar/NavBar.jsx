@@ -6,14 +6,14 @@ export function NavBar({ user, setUser }) {
         <nav>
             {user ? (
                 <>
-                    <Link to='/orders'>All Orders</Link>
-                    <Link to='/orders/new'>New Order</Link>
+                    <Link to='/restaurantsearch'>Search Restaurants</Link>
+                    <Link to=''>Saved Lists</Link>
+                    <Link to=''>Friends</Link>
+                    <Link to=''>Profile</Link>
                     <Link
                         to=''
                         onClick={() => {
-                            // logout via the users-service
                             logout();
-                            // setUser back to null
                             setUser(null);
                         }}>
                         Logout
