@@ -8,11 +8,13 @@ export default function RestaurantSearch() {
         setSelectedPlace(place);
     };
 
+    const apiKey = import.meta.env.VITE_apikey;
+
     return (
         <div>
             <h1>Restaurant Search</h1>
             <Autocomplete
-                apiKey={import.meta.env.VITE_REACT_APP_apikey}
+                apiKey={apiKey}
                 onPlaceSelected={handlePlaceSelected}
                 options={{
                     types: ['geocode'], // Specify the type of place data to return
