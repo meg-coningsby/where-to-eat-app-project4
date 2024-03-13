@@ -15,6 +15,11 @@
     "license": "ISC",
     "dependencies": {
         "@react-google-maps/api": "^2.19.3",
-        "concurrently": "^8.2.2"
+        "concurrently": "^8.2.2",
+        "node-fetch": "^3.3.2",
+        "react-google-autocomplete": "^2.7.3"
+    },
+    "devDependencies": {
+        "@ubilabs/google-maps-react-hooks": "^2.0.2"
     }
 }

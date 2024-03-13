@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const logger = require('morgan');
-const checkToken = require('./middleware/check-token')
+const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
 
 // Connect to the database
@@ -30,6 +30,10 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/api/users', usersApi);
+app.get('/api/googlemapsapikey', (req, res) => {
+    console.log(process.env.GOOGLE_MAPS_API_KEY); // Temporarily log the API key
+    res.json({ apiKey: process.env.GOOGLE_MAPS_API_KEY });
+});
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
