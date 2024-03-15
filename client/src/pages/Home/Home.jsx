@@ -7,7 +7,7 @@ export default function Home() {
             <h3>Never be stumped with where to eat again.</h3>
             <button>Sign up</button>
             <button>Login</button>
-            <Link to={'/restaurantsearch'}>
+            <Link to={'/restaurant'}>
                 <p>Jump straight to search</p>
             </Link>
         </>

@@ -9,6 +9,7 @@ import Home from '../Home/Home';
 
 import style from './style.module.css';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';
+import RestaurantDetailPage from '../RestaurantDetailPage/RestaurantDetailPage';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -43,21 +44,15 @@ function App() {
                         <Routes>
                             <Route
                                 path='/'
-                                element={
-                                    <Navigate to='/restaurantsearch' replace />
-                                }
+                                element={<Navigate to='/restaurant' replace />}
                             />
                             <Route
-                                path='/orders/new'
-                                element={<NewOrderPage />}
-                            />
-                            <Route
-                                path='/orders'
-                                element={<OrderHistoryPage />}
-                            />
-                            <Route
-                                path='/restaurantsearch'
+                                path='/restaurant'
                                 element={<RestaurantSearch />}
+                            />
+                            <Route
+                                path='/restaurant/:id'
+                                element={<RestaurantDetailPage />}
                             />
                             <Route
                                 path='*'
@@ -69,8 +64,12 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route
-                            path='/restaurantsearch'
+                            path='/restaurant'
                             element={<RestaurantSearch />}
+                        />
+                        <Route
+                            path='/restaurant/:id'
+                            element={<RestaurantDetailPage />}
                         />
                         <Route path='/auth' element={<AuthPage />} />
                         <Route path='*' element={<Navigate to='/' />} />

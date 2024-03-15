@@ -4,7 +4,7 @@ import {
     usePlacesService,
 } from '@ubilabs/google-maps-react-hooks';
 
-export default function RestaurantSearchForm() {
+export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
     const inputRef = useRef(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [searchParams, setSearchParams] = useState({
@@ -12,7 +12,6 @@ export default function RestaurantSearchForm() {
         cuisine: '',
         minRating: '0',
     });
-    const [restaurants, setRestaurants] = useState([]);
     const [searchTriggered, setSearchTriggered] = useState(false);
 
     const onPlaceChanged = (place) => {
@@ -58,7 +57,7 @@ export default function RestaurantSearchForm() {
                 selectedPlace.geometry.location.lat(),
                 selectedPlace.geometry.location.lng()
             ),
-            radius: '5000', // Adjust radius as needed
+            radius: '1000', // Adjust radius as needed
             type: [searchParams.type],
             keyword: searchParams.cuisine,
             minPriceLevel: 0, // Adjust as needed
@@ -82,10 +81,6 @@ export default function RestaurantSearchForm() {
     }, [searchTriggered, service]);
 
     const handleSearch = () => {
-        console.log({
-            selectedPlace,
-            searchParams,
-        });
         setSearchTriggered(true);
     };
 
@@ -126,16 +121,6 @@ export default function RestaurantSearchForm() {
             <button onClick={handleSearch}>Search</button>
             {/* Add a div container for the map */}
             <div ref={mapContainerRef} style={{ display: 'none' }}></div>
-            {restaurants.length > 0 && (
-                <div>
-                    <h2>Restaurants</h2>
-                    {restaurants.map((restaurant, index) => (
-                        <div key={index}>
-                            <p>{restaurant.name}</p>
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
     );
 }

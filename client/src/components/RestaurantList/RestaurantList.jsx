@@ -1,7 +1,18 @@
-export default function RestaurantList() {
+import { Link } from 'react-router-dom';
+
+export default function RestaurantList({ restaurants }) {
     return (
         <>
-            <p>Results:</p>
+            <h3>Results:</h3>
+            {restaurants.map((restaurant) => (
+                <div key={restaurant.place_id}>
+                    {/* Render link to RestaurantDetailPage with restaurant ID */}
+                    <Link to={`/restaurant/${restaurant.place_id}`}>
+                        {restaurant.name}
+                    </Link>
+                    {restaurant.rating}
+                </div>
+            ))}
         </>
     );
 }
