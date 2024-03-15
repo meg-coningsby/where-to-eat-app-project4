@@ -6,10 +6,16 @@ export function NavBar({ user, setUser }) {
         <nav>
             {user ? (
                 <>
+                    <Link to='/'>Home</Link>
+                    &nbsp; | &nbsp;
                     <Link to='/restaurantsearch'>Search Restaurants</Link>
-                    <Link to=''>Saved Lists</Link>
-                    <Link to=''>Friends</Link>
+                    &nbsp; | &nbsp;
+                    <Link to=''>Lists</Link>
+                    &nbsp; | &nbsp;
+                    {/* <Link to=''>Friends</Link>
+                    &nbsp; | &nbsp;
                     <Link to=''>Profile</Link>
+                    &nbsp; | &nbsp; */}
                     <Link
                         to=''
                         onClick={() => {
@@ -20,7 +26,7 @@ export function NavBar({ user, setUser }) {
                     </Link>
                 </>
             ) : (
-                <Link to='/login'>Login</Link>
+                <Link to='/auth'>Login</Link>
             )}
         </nav>
     );

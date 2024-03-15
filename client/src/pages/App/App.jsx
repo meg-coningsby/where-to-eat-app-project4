@@ -2,14 +2,14 @@ import { useState, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
 
-import { AuthPage } from '../AuthPage';
+import { AuthPage } from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import { NavBar } from '../../components/NavBar/NavBar';
 import Home from '../Home/Home';
 
 import style from './style.module.css';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';
-import RestaurantDetailPage from '../RestaurantDetailPage/RestaurantDetailPage';
+import RestaurantSearchDetailPage from '../RestaurantSearchDetailPage/RestaurantSearchDetailPage';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -42,17 +42,14 @@ function App() {
                 {user ? (
                     <>
                         <Routes>
-                            <Route
-                                path='/'
-                                element={<Navigate to='/restaurant' replace />}
-                            />
+                            <Route path='/' element={<Home />} />
                             <Route
                                 path='/restaurant'
                                 element={<RestaurantSearch />}
                             />
                             <Route
                                 path='/restaurant/:id'
-                                element={<RestaurantDetailPage />}
+                                element={<RestaurantSearchDetailPage />}
                             />
                             <Route
                                 path='*'
@@ -69,9 +66,12 @@ function App() {
                         />
                         <Route
                             path='/restaurant/:id'
-                            element={<RestaurantDetailPage />}
+                            element={<RestaurantSearchDetailPage />}
                         />
-                        <Route path='/auth' element={<AuthPage />} />
+                        <Route
+                            path='/auth'
+                            element={<AuthPage setUser={setUser} />}
+                        />
                         <Route path='*' element={<Navigate to='/' />} />
                     </Routes>
                 )}

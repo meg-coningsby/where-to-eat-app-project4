@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SignUpForm } from '../../components/SignUpForm';
-import { LoginForm } from '../../components/LoginForm';
+import { LoginForm } from '../../components/LoginForm/LoginForm';
 
 export function AuthPage({ setUser }) {
     const [toggleLogin, setToggleLogin] = useState(false);
