@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const logger = require('morgan');
+const axios = require('axios');
 const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
 
@@ -30,9 +31,29 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/api/users', usersApi);
-app.get('/api/googlemapsapikey', (req, res) => {
-    console.log(process.env.GOOGLE_MAPS_API_KEY); // Temporarily log the API key
-    res.json({ apiKey: process.env.GOOGLE_MAPS_API_KEY });
+app.get('/api/restaurants/:place_id', async (req, res) => {
+    const { place_id } = req.params;
+    const apiKey = process.env.API_KEY;
+
+    try {
+        const response = await axios.get(
+            `https://maps.googleapis.com/maps/api/place/details/json`,
+            {
+                params: {
+                    key: apiKey,
+                    place_id: place_id,
+                    fields: 'formatted_address,geometry,photo,place_id,type,url,name',
+                },
+            }
+        );
+
+        res.json(response.data.result);
+    } catch (error) {
+        console.error('Error fetching restaurant details:', error);
+        res.status(500).json({
+            error: 'An error occurred while fetching restaurant details',
+        });
+    }
 });
 
 // The following "catch all" route (note the *) is necessary
