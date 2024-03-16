@@ -10,15 +10,10 @@ export function addRestaurantToList(listId, googlePlaceId, name, address) {
     });
 }
 
-// show a restaurant from a list
-// export function fetchRestaurantFromList(restaurantId) {
-//     // If the API endpoint remains the same for fetching restaurant details
-//     return sendRequest(`/api/restaurants/${restaurantId}`);
-// }
-
 // delete a restaurant from a list
 export function deleteRestaurantFromList(listId, restaurantId) {
-    return sendRequest(`/api/myrestaurants/${restaurantId}`, 'DELETE', {
-        listId,
-    });
+    return sendRequest(
+        `/api/myrestaurants/${listId}/${restaurantId}`,
+        'DELETE'
+    );
 }

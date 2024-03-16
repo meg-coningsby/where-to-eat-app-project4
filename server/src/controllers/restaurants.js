@@ -2,17 +2,17 @@ const List = require('../models/list');
 const Restaurant = require('../models/restaurant');
 
 module.exports = {
-    show,
+    // show,
     addToList,
     removeFromList,
 };
 
-async function show(req, res) {
-    try {
-    } catch (error) {
-        res.status(400).send(error);
-    }
-}
+// async function show(req, res) {
+//     try {
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+// }
 
 async function addToList(req, res) {
     try {
@@ -49,7 +49,7 @@ async function addToList(req, res) {
 
 async function removeFromList(req, res) {
     try {
-        const { listId, restaurantId } = req.body;
+        const { listId, restaurantId } = req.params;
         const userId = req.user.sub;
 
         const list = await List.findOne({ _id: listId, owner: userId });

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as listsAPI from '../../utilities/lists-api';
+import * as restaurantsAPI from '../../utilities/restaurants-api';
 
 export default function ListShowPage({ user }) {
     const navigate = useNavigate();
@@ -28,6 +29,16 @@ export default function ListShowPage({ user }) {
         }
     };
 
+    const handleRemoveRestaurant = async (restaurantId) => {
+        try {
+            await restaurantsAPI.deleteRestaurantFromList(id, restaurantId);
+            const updatedList = await listsAPI.fetchList(id);
+            setList(updatedList);
+        } catch (error) {
+            console.error('Error removing restaurant from list', error);
+        }
+    };
+
     return (
         <>
             {list ? (
@@ -41,10 +52,19 @@ export default function ListShowPage({ user }) {
                             <ul>
                                 {list.restaurants.map((restaurant, index) => (
                                     <li key={index}>
-                                        {/* Display restaurant name and other details as needed */}
                                         {restaurant.name} - {restaurant.address}
-                                        {/* Add Link to restaurant details page if needed */}
-                                        {/* <Link to={`/restaurants/${restaurant.id}`}>View Details</Link> */}
+                                        <Link
+                                            to={`/restaurants/${restaurant.googlePlaceId}`}>
+                                            View Details
+                                        </Link>
+                                        <button
+                                            onClick={() =>
+                                                handleRemoveRestaurant(
+                                                    restaurant._id
+                                                )
+                                            }>
+                                            Remove
+                                        </button>
                                     </li>
                                 ))}
                             </ul>
