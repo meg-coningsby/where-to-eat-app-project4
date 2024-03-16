@@ -11,6 +11,7 @@ const logger = require('morgan');
 const axios = require('axios');
 const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
+const listsApi = require('./routes/api/lists');
 
 // Connect to the database
 require('./config/database');
@@ -31,6 +32,8 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/api/users', usersApi);
+app.use('/api/lists', listsApi);
+
 app.get('/api/restaurants/:place_id', async (req, res) => {
     const { place_id } = req.params;
     const apiKey = process.env.API_KEY;

@@ -10,6 +10,9 @@ import Home from '../Home/Home';
 import style from './style.module.css';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';
 import RestaurantSearchDetailPage from '../RestaurantSearchDetailPage/RestaurantSearchDetailPage';
+import ListIndexPage from '../ListIndexPage/ListIndexPage';
+import NewListPage from '../NewListPage/NewListPage';
+import ListShowPage from '../ListShowPage/ListShowPage';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -50,6 +53,18 @@ function App() {
                             <Route
                                 path='/restaurant/:id'
                                 element={<RestaurantSearchDetailPage />}
+                            />
+                            <Route
+                                path='/lists'
+                                element={<ListIndexPage user={user} />}
+                            />
+                            <Route
+                                path='/lists/new'
+                                element={<NewListPage user={user} />}
+                            />
+                            <Route
+                                path='/lists/:id'
+                                element={<ListShowPage user={user} />}
                             />
                             <Route
                                 path='*'

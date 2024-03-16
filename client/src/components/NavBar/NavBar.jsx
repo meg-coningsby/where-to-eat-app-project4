@@ -10,7 +10,7 @@ export function NavBar({ user, setUser }) {
                     &nbsp; | &nbsp;
                     <Link to='/restaurantsearch'>Search Restaurants</Link>
                     &nbsp; | &nbsp;
-                    <Link to=''>Lists</Link>
+                    <Link to='/lists'>Lists</Link>
                     &nbsp; | &nbsp;
                     {/* <Link to=''>Friends</Link>
                     &nbsp; | &nbsp;
