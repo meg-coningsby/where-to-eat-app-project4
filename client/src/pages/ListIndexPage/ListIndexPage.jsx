@@ -1,6 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-export default function ListIndexPage({user}) {
+import ListList from '../../components/ListList/ListList';
+import * as listsAPI from '../../utilities/lists-api';
+
+export default function ListIndexPage({ user }) {
+    const [lists, setLists] = useState([]);
+
+    const fetchLists = async () => {
+        try {
+            const lists = await listsAPI.fetchLists();
+            setLists(lists);
+        } catch (error) {
+            console.error('Error fetching the notes: ', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchLists();
+    }, []);
+
     return (
         <>
             <h1>Your Lists</h1>
@@ -8,6 +27,7 @@ export default function ListIndexPage({user}) {
             <Link to={'/lists/new'}>
                 <p>Add a New List</p>
             </Link>
+            <ListList lists={lists} />
         </>
     );
 }
