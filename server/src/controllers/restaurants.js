@@ -4,6 +4,7 @@ const Restaurant = require('../models/restaurant');
 module.exports = {
     addToList,
     removeFromList,
+    update,
 };
 
 async function addToList(req, res) {
@@ -71,6 +72,31 @@ async function removeFromList(req, res) {
 
         res.status(200).json(list);
     } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+async function update(req, res) {
+    try {
+        // Retrieve the restaurantId from the request parameters
+        const { restaurantId } = req.params;
+
+        // Find the restaurant by its ID
+        const restaurant = await Restaurant.findById(restaurantId);
+        if (!restaurant) {
+            return res.status(404).json({ error: 'Restaurant not found' });
+        }
+
+        // Toggle the visited status
+        restaurant.visited = !restaurant.visited;
+
+        // Save the updated restaurant
+        await restaurant.save();
+
+        // Respond with the updated restaurant
+        res.status(200).json(restaurant);
+    } catch (error) {
+        // If an error occurs, send a 400 error response
         res.status(400).send(error.message);
     }
 }

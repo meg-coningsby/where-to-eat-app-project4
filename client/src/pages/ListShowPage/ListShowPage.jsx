@@ -39,6 +39,18 @@ export default function ListShowPage({ user }) {
         }
     };
 
+    const handleToggleVisited = async (restaurantId, visited) => {
+        try {
+            // Toggle the visited state of the restaurant
+            await restaurantsAPI.toggleVisited(restaurantId, visited);
+            // Fetch the updated list after toggling
+            const updatedList = await listsAPI.fetchList(id);
+            setList(updatedList);
+        } catch (error) {
+            console.error('Error toggling visited status', error);
+        }
+    };
+
     return (
         <>
             {list ? (
@@ -52,11 +64,28 @@ export default function ListShowPage({ user }) {
                             <ul>
                                 {list.restaurants.map((restaurant, index) => (
                                     <li key={index}>
-                                        {restaurant.name} - {restaurant.address}
                                         <Link
                                             to={`/restaurants/${restaurant.googlePlaceId}`}>
-                                            View Details
+                                            {restaurant.name}
                                         </Link>
+                                        - {restaurant.address}
+                                        <span>
+                                            -{' '}
+                                            {restaurant.visited
+                                                ? 'Visited'
+                                                : 'Not Visited'}
+                                        </span>
+                                        <button
+                                            onClick={() =>
+                                                handleToggleVisited(
+                                                    restaurant._id,
+                                                    restaurant.visited
+                                                )
+                                            }>
+                                            {restaurant.visited
+                                                ? 'Mark as Not Visited'
+                                                : 'Mark as Visited'}
+                                        </button>
                                         <button
                                             onClick={() =>
                                                 handleRemoveRestaurant(
