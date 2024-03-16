@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export default function ListList({ lists }) {
+    console.log(lists);
     return (
         <div>
             {lists.map((list) => (
@@ -8,8 +9,6 @@ export default function ListList({ lists }) {
                     <Link to={`/lists/${list._id}`}>
                         <h3>{list.name}</h3>
                     </Link>
-                    <p>Owner: {list.owner}</p>
-                    <p>Public: {list.public ? 'Yes' : 'No'}</p>
                 </div>
             ))}
         </div>

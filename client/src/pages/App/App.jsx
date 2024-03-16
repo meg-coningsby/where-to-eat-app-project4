@@ -63,6 +63,10 @@ function App() {
                                 element={<NewEditListPage user={user} />}
                             />
                             <Route
+                                path='/lists/public'
+                                element={<ListIndexPage user={user} />}
+                            />
+                            <Route
                                 path='/lists/:id'
                                 element={<ListShowPage user={user} />}
                             />
@@ -86,6 +90,10 @@ function App() {
                         <Route
                             path='/restaurants/:id'
                             element={<RestaurantSearchDetailPage />}
+                        />
+                        <Route
+                            path='/lists/public'
+                            element={<ListIndexPage user={user} />}
                         />
                         <Route
                             path='/auth'

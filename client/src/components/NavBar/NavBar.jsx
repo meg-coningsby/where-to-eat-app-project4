@@ -10,7 +10,9 @@ export function NavBar({ user, setUser }) {
                     &nbsp; | &nbsp;
                     <Link to='/restaurants'>Search Restaurants</Link>
                     &nbsp; | &nbsp;
-                    <Link to='/lists'>Lists</Link>
+                    <Link to='/lists'>Your Lists</Link>
+                    &nbsp; | &nbsp;
+                    <Link to='/lists/public'>Public Lists</Link>
                     &nbsp; | &nbsp;
                     {/* <Link to=''>Friends</Link>
                     &nbsp; | &nbsp;
@@ -26,7 +28,13 @@ export function NavBar({ user, setUser }) {
                     </Link>
                 </>
             ) : (
-                <Link to='/auth'>Login</Link>
+                <>
+                    <Link to='/auth'>Login</Link>
+                    &nbsp; | &nbsp;
+                    <Link to='/restaurants'>Search Restaurants</Link>
+                    &nbsp; | &nbsp;
+                    <Link to='/lists/public'>Public Lists</Link>
+                </>
             )}
         </nav>
     );

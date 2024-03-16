@@ -2,6 +2,7 @@ const List = require('../models/list');
 
 module.exports = {
     index,
+    indexPublic,
     show,
     addList,
     updateList,
@@ -11,6 +12,15 @@ module.exports = {
 async function index(req, res) {
     try {
         const lists = await List.find({ owner: req.user.sub });
+        res.json(lists);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
+async function indexPublic(req, res) {
+    try {
+        const lists = await List.find({ public: true })
         res.json(lists);
     } catch (error) {
         res.status(400).send(error);

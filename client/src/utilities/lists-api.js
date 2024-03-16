@@ -1,8 +1,13 @@
 import sendRequest from './send-request';
 
-// fetch lists
+// fetch user's lists
 export function fetchLists() {
     return sendRequest('/api/lists');
+}
+
+// fetch all public lists
+export function fetchPublicLists() {
+    return sendRequest('/api/lists/public');
 }
 
 // add a list
