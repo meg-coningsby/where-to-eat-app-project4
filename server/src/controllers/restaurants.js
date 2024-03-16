@@ -16,7 +16,7 @@ async function show(req, res) {
 
 async function addToList(req, res) {
     try {
-        const { listId, googlePlaceId } = req.body;
+        const { listId, googlePlaceId, name, address } = req.body;
         const userId = req.user.sub;
 
         const list = await List.findOne({ _id: listId, owner: userId });
@@ -27,11 +27,14 @@ async function addToList(req, res) {
         }
 
         let restaurant = await Restaurant.findOne({ googlePlaceId });
+
+        // If the restaurant doesn't exist, create a new one
         if (!restaurant) {
-            restaurant = new Restaurant({ googlePlaceId });
+            restaurant = new Restaurant({ googlePlaceId, name, address });
             await restaurant.save();
         }
 
+        // Add the restaurant to the list if it's not already included
         if (!list.restaurants.includes(restaurant._id)) {
             list.restaurants.push(restaurant._id);
             await list.save();

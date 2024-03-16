@@ -1,10 +1,12 @@
 import sendRequest from './send-request';
 
 // add restaurant to a list
-export function addRestaurantToList(listId, googlePlaceId) {
+export function addRestaurantToList(listId, googlePlaceId, name, address) {
     return sendRequest(`/api/myrestaurants`, 'POST', {
         listId,
         googlePlaceId,
+        name,
+        address,
     });
 }
 

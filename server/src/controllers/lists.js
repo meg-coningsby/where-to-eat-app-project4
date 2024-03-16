@@ -19,7 +19,7 @@ async function index(req, res) {
 
 async function show(req, res) {
     try {
-        const list = await List.findById(req.params.id);
+        const list = await List.findById(req.params.id).populate('restaurants');
         if (!list) {
             return res.status(404).json({ message: 'List not found' });
         }

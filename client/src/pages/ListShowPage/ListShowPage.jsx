@@ -34,6 +34,24 @@ export default function ListShowPage({ user }) {
                 <div>
                     <h1>{list.name}</h1>
                     <p>Public: {list.public ? 'Yes' : 'No'}</p>
+                    {/* Display list of restaurants */}
+                    {list.restaurants && list.restaurants.length > 0 ? (
+                        <div>
+                            <h2>Restaurants:</h2>
+                            <ul>
+                                {list.restaurants.map((restaurant, index) => (
+                                    <li key={index}>
+                                        {/* Display restaurant name and other details as needed */}
+                                        {restaurant.name} - {restaurant.address}
+                                        {/* Add Link to restaurant details page if needed */}
+                                        {/* <Link to={`/restaurants/${restaurant.id}`}>View Details</Link> */}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <p>No restaurants in this list.</p>
+                    )}
                 </div>
             ) : (
                 <p>Loading...</p>

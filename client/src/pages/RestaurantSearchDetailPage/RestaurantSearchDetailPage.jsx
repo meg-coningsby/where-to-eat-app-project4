@@ -41,11 +41,19 @@ export default function RestaurantSearchDetailPage() {
 
     const addToUserList = async () => {
         try {
-            if (selectedList && id) {
-                await restaurantsAPI.addRestaurantToList(selectedList, id);
+            if (selectedList && restaurantDetails) {
+                const { name, formatted_address: address } = restaurantDetails;
+                await restaurantsAPI.addRestaurantToList(
+                    selectedList,
+                    id,
+                    name,
+                    address
+                );
                 closeModal();
             } else {
-                console.error('Selected list or restaurant ID is empty');
+                console.error(
+                    'Selected list, restaurant ID, or restaurant details are empty'
+                );
             }
         } catch (error) {
             console.error('Error adding restaurant to list:', error);
