@@ -47,11 +47,11 @@ function App() {
                         <Routes>
                             <Route path='/' element={<Home />} />
                             <Route
-                                path='/restaurant'
+                                path='/restaurants'
                                 element={<RestaurantSearch />}
                             />
                             <Route
-                                path='/restaurant/:id'
+                                path='/restaurants/:id'
                                 element={<RestaurantSearchDetailPage />}
                             />
                             <Route
@@ -80,11 +80,11 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route
-                            path='/restaurant'
+                            path='/restaurants'
                             element={<RestaurantSearch />}
                         />
                         <Route
-                            path='/restaurant/:id'
+                            path='/restaurants/:id'
                             element={<RestaurantSearchDetailPage />}
                         />
                         <Route

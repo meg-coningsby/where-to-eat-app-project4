@@ -8,7 +8,7 @@ export function NavBar({ user, setUser }) {
                 <>
                     <Link to='/'>Home</Link>
                     &nbsp; | &nbsp;
-                    <Link to='/restaurantsearch'>Search Restaurants</Link>
+                    <Link to='/restaurants'>Search Restaurants</Link>
                     &nbsp; | &nbsp;
                     <Link to='/lists'>Lists</Link>
                     &nbsp; | &nbsp;

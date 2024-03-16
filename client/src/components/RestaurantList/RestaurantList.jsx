@@ -7,7 +7,7 @@ export default function RestaurantList({ restaurants }) {
             {restaurants.map((restaurant) => (
                 <div key={restaurant.place_id}>
                     {/* Render link to RestaurantDetailPage with restaurant ID */}
-                    <Link to={`/restaurant/${restaurant.place_id}`}>
+                    <Link to={`/restaurants/${restaurant.place_id}`}>
                         {restaurant.name}
                     </Link>
                     {restaurant.rating}
