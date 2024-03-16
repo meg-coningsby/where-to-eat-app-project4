@@ -9,12 +9,17 @@ import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 
 export default function RestaurantSearchDetailPage() {
-    const apiKey = import.meta.env.VITE_apikey;
     const { id } = useParams();
     const [restaurantDetails, setRestaurantDetails] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userLists, setUserLists] = useState([]);
     const [selectedList, setSelectedList] = useState('');
+
+    useEffect(() => {
+        fetchRestaurantDetails(id);
+        fetchUserLists();
+        return () => setSelectedList('');
+    }, [id]);
 
     const fetchUserLists = async () => {
         try {
@@ -24,11 +29,6 @@ export default function RestaurantSearchDetailPage() {
             console.error('Error fetching user lists:', error);
         }
     };
-
-    useEffect(() => {
-        fetchRestaurantDetails(id);
-        fetchUserLists();
-    }, [id]);
 
     const fetchRestaurantDetails = async (placeId) => {
         try {
@@ -40,21 +40,22 @@ export default function RestaurantSearchDetailPage() {
     };
 
     const addToUserList = async () => {
+        if (!selectedList || !restaurantDetails) {
+            console.error(
+                'Selected list, restaurant ID, or restaurant details are empty'
+            );
+            return;
+        }
         try {
-            if (selectedList && restaurantDetails) {
-                const { name, formatted_address: address } = restaurantDetails;
-                await restaurantsAPI.addRestaurantToList(
-                    selectedList,
-                    id,
-                    name,
-                    address
-                );
-                closeModal();
-            } else {
-                console.error(
-                    'Selected list, restaurant ID, or restaurant details are empty'
-                );
-            }
+            const { name, formatted_address: address } = restaurantDetails;
+            await restaurantsAPI.addRestaurantToList(
+                selectedList,
+                id,
+                name,
+                address
+            );
+            closeModal();
+            setSelectedList('');
         } catch (error) {
             console.error('Error adding restaurant to list:', error);
         }
@@ -74,7 +75,11 @@ export default function RestaurantSearchDetailPage() {
                             Select the list you want to add this restaurant to:
                         </p>
                         <select
+                            value={selectedList}
                             onChange={(e) => setSelectedList(e.target.value)}>
+                            <option value='' disabled>
+                                Select a list
+                            </option>{' '}
                             {userLists.map((list) => (
                                 <option key={list._id} value={list._id}>
                                     {list.name}
