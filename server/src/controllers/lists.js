@@ -59,7 +59,7 @@ async function updateList(req, res) {
     }
 }
 
-async function deleteList() {
+async function deleteList(req, res) {
     try {
         const listId = req.params.id;
         const list = await List.findByIdAndDelete(listId);
@@ -67,6 +67,8 @@ async function deleteList() {
         if (!list) {
             return res.status(404).json({ message: 'List not found' });
         }
+
+        res.json({ message: 'List deleted successfully' });
     } catch (error) {
         console.error('Error deleting list:', error);
         res.status(500).json({ error: 'Internal server error' });
