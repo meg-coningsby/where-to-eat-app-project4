@@ -12,6 +12,7 @@ const axios = require('axios');
 const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
 const listsApi = require('./routes/api/lists');
+const restaurantsApi = require('./routes/api/restaurants');
 
 // Connect to the database
 require('./config/database');
@@ -33,6 +34,7 @@ app.get('/api/test', (req, res) => {
 
 app.use('/api/users', usersApi);
 app.use('/api/lists', listsApi);
+app.use('/api/myrestaurants', restaurantsApi);
 
 app.get('/api/restaurants/:place_id', async (req, res) => {
     const { place_id } = req.params;
@@ -45,7 +47,7 @@ app.get('/api/restaurants/:place_id', async (req, res) => {
                 params: {
                     key: apiKey,
                     place_id: place_id,
-                    fields: 'formatted_address,geometry,photo,place_id,type,url,name',
+                    fields: 'name,formatted_address',
                 },
             }
         );

@@ -3,7 +3,7 @@ const router = express.Router();
 const listsCtrl = require('../../controllers/lists');
 const ensureLoggedIn = require('../../middleware/ensure-logged-in');
 
-// GET api/lists
+// GET all lists
 router.get('/', ensureLoggedIn, listsCtrl.index);
 
 // POST Add a list api/notes
