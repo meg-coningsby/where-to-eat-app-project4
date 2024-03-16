@@ -24,21 +24,13 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
         onPlaceChanged,
     });
 
-    // Add a ref for the map container
-    const mapContainerRef = useRef(null);
+    // Initialize the mapContainerRef with a valid DOM element
+    const mapContainerRef = useRef(document.createElement('div'));
 
     // Initialize the usePlacesService hook with the map container ref
     const service = usePlacesService({
         divElement: mapContainerRef.current,
     });
-
-    //  some console logs for debugging
-    // useEffect(() => {
-    //     console.log('Selected Place:', selectedPlace);
-    //     console.log('Search Params:', searchParams);
-    //     console.log('Search Triggered:', searchTriggered);
-    //     console.log('Places Service:', service);
-    // }, [selectedPlace, searchParams, searchTriggered, service]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -57,11 +49,11 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
                 selectedPlace.geometry.location.lat(),
                 selectedPlace.geometry.location.lng()
             ),
-            radius: '1000', // Adjust radius as needed
+            radius: '1000', // Radius in metres
             type: [searchParams.type],
             keyword: searchParams.cuisine,
-            minPriceLevel: 0, // Adjust as needed
-            maxPriceLevel: 4, // Adjust as needed
+            minPriceLevel: 0,
+            maxPriceLevel: 4,
         };
 
         service.nearbySearch(request, (results, status) => {

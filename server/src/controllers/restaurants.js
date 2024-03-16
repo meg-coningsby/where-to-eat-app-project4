@@ -2,17 +2,9 @@ const List = require('../models/list');
 const Restaurant = require('../models/restaurant');
 
 module.exports = {
-    // show,
     addToList,
     removeFromList,
 };
-
-// async function show(req, res) {
-//     try {
-//     } catch (error) {
-//         res.status(400).send(error);
-//     }
-// }
 
 async function addToList(req, res) {
     try {
@@ -59,7 +51,7 @@ async function removeFromList(req, res) {
                 .json({ error: 'List not found or unauthorized access' });
         }
 
-        // Remove the restaurant reference from the list
+        // Remove the restaurant from the list
         const index = list.restaurants.indexOf(restaurantId);
         if (index > -1) {
             list.restaurants.splice(index, 1);

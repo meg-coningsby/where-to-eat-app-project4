@@ -8,7 +8,7 @@ export default function Home() {
             <Link to={'/auth'}>
                 <button>Login / Sign Up</button>
             </Link>
-            <Link to={'/restaurant'}>
+            <Link to={'/restaurants'}>
                 <p>Jump straight to search</p>
             </Link>
         </>
