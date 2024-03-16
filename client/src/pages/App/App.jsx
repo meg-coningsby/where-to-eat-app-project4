@@ -13,6 +13,7 @@ import RestaurantSearchDetailPage from '../RestaurantSearchDetailPage/Restaurant
 import ListIndexPage from '../ListIndexPage/ListIndexPage';
 import NewEditListPage from '../NewEditListPage/NewEditListPage';
 import ListShowPage from '../ListShowPage/ListShowPage';
+import VisitedRestaurantsPage from '../VisitedRestaurantsPage/VisitedRestaurantsPage';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -73,6 +74,10 @@ function App() {
                             <Route
                                 path='/lists/:id/edit'
                                 element={<NewEditListPage user={user} />}
+                            />
+                            <Route
+                                path='/visited'
+                                element={<VisitedRestaurantsPage user={user} />}
                             />
                             <Route
                                 path='*'

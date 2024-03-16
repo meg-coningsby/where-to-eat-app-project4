@@ -10,14 +10,12 @@ export function NavBar({ user, setUser }) {
                     &nbsp; | &nbsp;
                     <Link to='/restaurants'>Search Restaurants</Link>
                     &nbsp; | &nbsp;
-                    <Link to='/lists'>Your Lists</Link>
+                    <Link to='/lists'>My Lists</Link>
                     &nbsp; | &nbsp;
                     <Link to='/lists/public'>Public Lists</Link>
                     &nbsp; | &nbsp;
-                    {/* <Link to=''>Friends</Link>
+                    <Link to='/visited'>My Visits</Link>
                     &nbsp; | &nbsp;
-                    <Link to=''>Profile</Link>
-                    &nbsp; | &nbsp; */}
                     <Link
                         to=''
                         onClick={() => {

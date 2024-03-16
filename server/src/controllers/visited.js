@@ -1,9 +1,19 @@
 const Visited = require('../models/visited');
 
 module.exports = {
+    index,
     addVisited,
     deleteVisited,
 };
+
+async function index(req, res) {
+    try {
+        const visits = await Visited.find({ user: req.user.sub });
+        res.json(visits);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
 
 async function addVisited(req, res) {
     try {
