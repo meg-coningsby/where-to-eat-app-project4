@@ -1,14 +1,31 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as listsAPI from '../../utilities/lists-api';
 
 export default function ListForm({ user }) {
     const navigate = useNavigate();
+    const { id } = useParams();
     const [form, setForm] = useState({
         name: '',
         public: false,
     });
     const [error, setError] = useState(null);
+
+    // Fetch the list details (if we are editing rather than a new form)
+    useEffect(() => {
+        const fetchListDetails = async () => {
+            if (id) {
+                try {
+                    const listDetails = await listsAPI.fetchList(id);
+                    setForm(listDetails);
+                } catch (error) {
+                    console.error(error);
+                    setError('Failed to fetch list details.');
+                }
+            }
+        };
+        fetchListDetails();
+    }, [id]);
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -27,14 +44,16 @@ export default function ListForm({ user }) {
         };
         console.log(listData);
         try {
-            await listsAPI.addAList(listData);
-            setForm({
-                name: '',
-                public: false,
-            });
+            if (id) {
+                await listsAPI.updateList(id, listData); // Assuming you have an updateList API utility
+            } else {
+                await listsAPI.addAList(listData);
+            }
+            setForm({ name: '', public: false });
             setError(null);
             navigate('/lists');
         } catch (error) {
+            console.error(error);
             setError(error.message);
         }
     };
@@ -62,7 +81,7 @@ export default function ListForm({ user }) {
                 />
             </div>
             <button type='submit' disabled={!form.name}>
-                Add List
+                {id ? 'Update List' : 'Add List'}
             </button>
         </form>
     );

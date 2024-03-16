@@ -11,7 +11,7 @@ import style from './style.module.css';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';
 import RestaurantSearchDetailPage from '../RestaurantSearchDetailPage/RestaurantSearchDetailPage';
 import ListIndexPage from '../ListIndexPage/ListIndexPage';
-import NewListPage from '../NewListPage/NewListPage';
+import NewEditListPage from '../NewEditListPage/NewEditListPage';
 import ListShowPage from '../ListShowPage/ListShowPage';
 
 function App() {
@@ -60,11 +60,15 @@ function App() {
                             />
                             <Route
                                 path='/lists/new'
-                                element={<NewListPage user={user} />}
+                                element={<NewEditListPage user={user} />}
                             />
                             <Route
                                 path='/lists/:id'
                                 element={<ListShowPage user={user} />}
+                            />
+                            <Route
+                                path='/lists/:id/edit'
+                                element={<NewEditListPage user={user} />}
                             />
                             <Route
                                 path='*'

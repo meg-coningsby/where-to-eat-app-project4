@@ -19,7 +19,14 @@ async function index(req, res) {
 
 async function show(req, res) {
     try {
-    } catch (error) {}
+        const list = await List.findById(req.params.id);
+        if (!list) {
+            return res.status(404).json({ message: 'List not found' });
+        }
+        res.json(list);
+    } catch (error) {
+        res.status(400).send(error);
+    }
 }
 
 async function addList(req, res) {
@@ -35,12 +42,33 @@ async function addList(req, res) {
     }
 }
 
-async function updateList() {
+async function updateList(req, res) {
     try {
-    } catch (error) {}
+        const listId = req.params.id;
+        const updateData = req.body;
+        const updatedList = await List.findByIdAndUpdate(listId, updateData, {
+            new: true,
+        });
+
+        if (!updatedList) {
+            return res.status(404).json({ message: 'List not found' });
+        }
+        res.json(updatedList);
+    } catch (error) {
+        res.status(400).send({ error: 'Could not update the list' });
+    }
 }
 
 async function deleteList() {
     try {
-    } catch (error) {}
+        const listId = req.params.id;
+        const list = await List.findByIdAndDelete(listId);
+
+        if (!list) {
+            return res.status(404).json({ message: 'List not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting list:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 }
