@@ -13,6 +13,7 @@ const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
 const listsApi = require('./routes/api/lists');
 const restaurantsApi = require('./routes/api/restaurants');
+const visitedApi = require('./routes/api/visited');
 
 // Connect to the database
 require('./config/database');
@@ -35,6 +36,7 @@ app.get('/api/test', (req, res) => {
 app.use('/api/users', usersApi);
 app.use('/api/lists', listsApi);
 app.use('/api/myrestaurants', restaurantsApi);
+app.use('/api/visited', visitedApi);
 
 app.get('/api/restaurants/:place_id', async (req, res) => {
     const { place_id } = req.params;

@@ -2,11 +2,19 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
+import * as visitedAPI from '../../utilities/visited-api';
+import Modal from '../../components/Modal/Modal';
 
 export default function ListShowPage({ user }) {
     const navigate = useNavigate();
     const { id } = useParams();
     const [list, setList] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentRestaurantId, setCurrentRestaurantId] = useState('');
+    const [visitDetails, setVisitDetails] = useState({
+        visitDate: '',
+        comments: '',
+    });
 
     useEffect(() => {
         const fetchList = async () => {
@@ -39,15 +47,28 @@ export default function ListShowPage({ user }) {
         }
     };
 
-    const handleToggleVisited = async (restaurantId, visited) => {
+    const handleMarkAsVisited = (restaurantId) => {
+        setIsModalOpen(true);
+        setCurrentRestaurantId(restaurantId);
+    };
+
+    const handleSubmitVisited = async () => {
         try {
-            // Toggle the visited state of the restaurant
-            await restaurantsAPI.toggleVisited(restaurantId, visited);
-            // Fetch the updated list after toggling
-            const updatedList = await listsAPI.fetchList(id);
-            setList(updatedList);
+            // Ensure comments field is set to an empty string if it's undefined or null
+            const commentsValue = visitDetails.comments || '';
+
+            await visitedAPI.addRestaurantToVisited({
+                restaurantId: currentRestaurantId,
+                visitDate: visitDetails.visitDate,
+                comments: commentsValue, // Pass the comments value explicitly
+                userId: user.sub,
+            });
+            setIsModalOpen(false);
+            setVisitDetails({ visitDate: '', comments: '' });
+            setCurrentRestaurantId('');
+            // Optionally refresh the list or specific data here
         } catch (error) {
-            console.error('Error toggling visited status', error);
+            console.error('Error marking restaurant as visited', error);
         }
     };
 
@@ -69,23 +90,6 @@ export default function ListShowPage({ user }) {
                                             {restaurant.name}
                                         </Link>
                                         - {restaurant.address}
-                                        <span>
-                                            -{' '}
-                                            {restaurant.visited
-                                                ? 'Visited'
-                                                : 'Not Visited'}
-                                        </span>
-                                        <button
-                                            onClick={() =>
-                                                handleToggleVisited(
-                                                    restaurant._id,
-                                                    restaurant.visited
-                                                )
-                                            }>
-                                            {restaurant.visited
-                                                ? 'Mark as Not Visited'
-                                                : 'Mark as Visited'}
-                                        </button>
                                         <button
                                             onClick={() =>
                                                 handleRemoveRestaurant(
@@ -93,6 +97,14 @@ export default function ListShowPage({ user }) {
                                                 )
                                             }>
                                             Remove
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleMarkAsVisited(
+                                                    restaurant._id
+                                                )
+                                            }>
+                                            Add a Visit
                                         </button>
                                     </li>
                                 ))}
@@ -109,6 +121,30 @@ export default function ListShowPage({ user }) {
                 <button>Edit List Details</button>
             </Link>
             <button onClick={handleDelete}>Delete List</button>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <h2>Mark as Visited</h2>
+                <label>Visit Date:</label>
+                <input
+                    type='date'
+                    value={visitDetails.visitDate}
+                    onChange={(e) =>
+                        setVisitDetails({
+                            ...visitDetails,
+                            visitDate: e.target.value,
+                        })
+                    }
+                />
+                <label>Comments:</label>
+                <textarea
+                    value={visitDetails.comments}
+                    onChange={(e) =>
+                        setVisitDetails({
+                            ...visitDetails,
+                            comments: e.target.value,
+                        })
+                    }></textarea>
+                <button onClick={handleSubmitVisited}>Add Visit</button>
+            </Modal>
         </>
     );
 }

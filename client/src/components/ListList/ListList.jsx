@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 export default function ListList({ lists }) {
-    console.log(lists);
     return (
         <div>
             {lists.map((list) => (
