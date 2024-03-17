@@ -1,13 +1,15 @@
+// import style from './style.module.css';
+
 import { useState, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
+import { ThemeProvider } from '@mui/material/styles';
 
 import { AuthPage } from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import { NavBar } from '../../components/NavBar/NavBar';
+import { lightTheme } from '../../themes/LightTheme';
 import Home from '../Home/Home';
-
-import style from './style.module.css';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';
 import RestaurantSearchDetailPage from '../RestaurantSearchDetailPage/RestaurantSearchDetailPage';
 import ListIndexPage from '../ListIndexPage/ListIndexPage';
@@ -33,18 +35,62 @@ function App() {
     };
 
     return (
-        <GoogleMapsProvider
-            googleMapsAPIKey={apiKey}
-            mapContainer={mapContainer}
-            mapOptions={mapOptions}
-            libraries={['places']}
-            region='au'>
-            <header>
-                <NavBar user={user} setUser={setUser} />
-            </header>
-            <main className='App'>
-                {user ? (
-                    <>
+        <ThemeProvider theme={lightTheme}>
+            <GoogleMapsProvider
+                googleMapsAPIKey={apiKey}
+                mapContainer={mapContainer}
+                mapOptions={mapOptions}
+                libraries={['places']}
+                region='au'>
+                <header>
+                    <NavBar user={user} setUser={setUser} />
+                </header>
+                <main className='App'>
+                    {user ? (
+                        <>
+                            <Routes>
+                                <Route path='/' element={<Home />} />
+                                <Route
+                                    path='/restaurants'
+                                    element={<RestaurantSearch />}
+                                />
+                                <Route
+                                    path='/restaurants/:id'
+                                    element={<RestaurantSearchDetailPage />}
+                                />
+                                <Route
+                                    path='/lists'
+                                    element={<ListIndexPage user={user} />}
+                                />
+                                <Route
+                                    path='/lists/new'
+                                    element={<NewEditListPage user={user} />}
+                                />
+                                <Route
+                                    path='/lists/public'
+                                    element={<ListIndexPage user={user} />}
+                                />
+                                <Route
+                                    path='/lists/:id'
+                                    element={<ListShowPage user={user} />}
+                                />
+                                <Route
+                                    path='/lists/:id/edit'
+                                    element={<NewEditListPage user={user} />}
+                                />
+                                <Route
+                                    path='/visited'
+                                    element={
+                                        <VisitedRestaurantsPage user={user} />
+                                    }
+                                />
+                                <Route
+                                    path='*'
+                                    element={<Navigate to='/' replace />}
+                                />
+                            </Routes>
+                        </>
+                    ) : (
                         <Routes>
                             <Route path='/' element={<Home />} />
                             <Route
@@ -56,60 +102,20 @@ function App() {
                                 element={<RestaurantSearchDetailPage />}
                             />
                             <Route
-                                path='/lists'
-                                element={<ListIndexPage user={user} />}
-                            />
-                            <Route
-                                path='/lists/new'
-                                element={<NewEditListPage user={user} />}
-                            />
-                            <Route
                                 path='/lists/public'
                                 element={<ListIndexPage user={user} />}
                             />
                             <Route
-                                path='/lists/:id'
-                                element={<ListShowPage user={user} />}
+                                path='/auth'
+                                element={<AuthPage setUser={setUser} />}
                             />
-                            <Route
-                                path='/lists/:id/edit'
-                                element={<NewEditListPage user={user} />}
-                            />
-                            <Route
-                                path='/visited'
-                                element={<VisitedRestaurantsPage user={user} />}
-                            />
-                            <Route
-                                path='*'
-                                element={<Navigate to='/' replace />}
-                            />
+                            <Route path='*' element={<Navigate to='/' />} />
                         </Routes>
-                    </>
-                ) : (
-                    <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route
-                            path='/restaurants'
-                            element={<RestaurantSearch />}
-                        />
-                        <Route
-                            path='/restaurants/:id'
-                            element={<RestaurantSearchDetailPage />}
-                        />
-                        <Route
-                            path='/lists/public'
-                            element={<ListIndexPage user={user} />}
-                        />
-                        <Route
-                            path='/auth'
-                            element={<AuthPage setUser={setUser} />}
-                        />
-                        <Route path='*' element={<Navigate to='/' />} />
-                    </Routes>
-                )}
-            </main>
-            <footer></footer>
-        </GoogleMapsProvider>
+                    )}
+                </main>
+                <footer></footer>
+            </GoogleMapsProvider>
+        </ThemeProvider>
     );
 }
 

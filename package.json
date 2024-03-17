@@ -14,6 +14,13 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.0",
+        "@fontsource-variable/montserrat": "^5.0.18",
+        "@fontsource/barlow-condensed": "^5.0.12",
+        "@fontsource/roboto": "^5.0.12",
+        "@mui/icons-material": "^5.15.13",
+        "@mui/material": "^5.15.13",
         "@react-google-maps/api": "^2.19.3",
         "axios": "^1.6.7",
         "concurrently": "^8.2.2",
