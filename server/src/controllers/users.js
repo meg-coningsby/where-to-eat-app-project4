@@ -3,10 +3,26 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 module.exports = {
+    allButCurrentUser,
     create,
     login,
     checkToken,
 };
+
+async function allButCurrentUser(req, res) {
+    try {
+        const currentUser = req.user.sub;
+        console.log(currentUser);
+
+        // Fetch all users excluding the current user
+        const users = await User.find({ _id: { $ne: currentUser } }).select(
+            'name'
+        );
+        res.json(users);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
 
 async function create(req, res) {
     const userData = req.body;

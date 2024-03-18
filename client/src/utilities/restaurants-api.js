@@ -1,5 +1,10 @@
 import sendRequest from './send-request';
 
+// fetch all a user's restaurants
+export function fetchRestaurants() {
+    return sendRequest('/api/myrestaurants');
+}
+
 // add restaurant to a list
 export function addRestaurantToList(listId, googlePlaceId, name, address) {
     return sendRequest(`/api/myrestaurants`, 'POST', {

@@ -11,9 +11,13 @@ import {
     Select,
     InputLabel,
     FormControl,
+    Autocomplete,
+    Checkbox,
 } from '@mui/material';
 
 import * as eventsAPI from '../../utilities/events-api';
+import * as restaurantsAPI from '../../utilities/restaurants-api';
+import * as usersAPI from '../../utilities/users-api';
 
 export default function EventForm({ user }) {
     const navigate = useNavigate();
@@ -23,11 +27,11 @@ export default function EventForm({ user }) {
         description: '',
         location: '',
         date: '',
-        invitedUsers: null,
+        invitedUsers: [],
     });
     const [error, setError] = useState(null);
-    const [locations, setLocations] = useState([]); // Placeholder for user's restaurants
-    const [allUsers, setAllUsers] = useState([]); // Placeholder for all users
+    const [locations, setLocations] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
 
     // Fetch the list details (if we are editing rather than a new form)
     useEffect(() => {
@@ -44,6 +48,33 @@ export default function EventForm({ user }) {
         };
         fetchEventDetails();
     }, [id]);
+
+    useEffect(() => {
+        const fetchUserRestaurants = async () => {
+            try {
+                const userRestaurants = await restaurantsAPI.fetchRestaurants();
+                setLocations(userRestaurants);
+            } catch (error) {
+                console.error(error);
+                setError('Failed to fetch restaurants.');
+            }
+        };
+        fetchUserRestaurants();
+    }, []);
+
+    useEffect(() => {
+        const fetchPossibleInvitedUsers = async () => {
+            try {
+                const allButCurrentUsers = await usersAPI.allButCurrentUser();
+                setAllUsers(allButCurrentUsers);
+            } catch (error) {
+                console.error(error);
+                setError('Failed to fetch users.');
+            }
+        };
+        fetchPossibleInvitedUsers();
+        console.log('all users:', allUsers);
+    }, [user]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -131,23 +162,30 @@ export default function EventForm({ user }) {
                 onChange={handleChange}
                 required
             />
-            <FormControl variant='outlined' sx={{ m: 1, width: '25ch' }}>
-                <InputLabel id='location-label'>Location</InputLabel>
-                <Select
-                    labelId='location-label'
-                    id='location'
-                    name='location'
-                    value={form.location}
-                    onChange={handleChange}
-                    label='Location'
-                    required>
-                    {locations.map((location) => (
-                        <MenuItem key={location._id} value={location._id}>
-                            {location.name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <Autocomplete
+                id='location-autocomplete'
+                options={locations}
+                getOptionLabel={(option) => option.name}
+                value={
+                    locations.find(
+                        (location) => location._id === form.location
+                    ) || null
+                }
+                onChange={(event, newValue) => {
+                    setForm((prevForm) => ({
+                        ...prevForm,
+                        location: newValue ? newValue._id : '',
+                    }));
+                }}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label='Location'
+                        variant='outlined'
+                        required
+                    />
+                )}
+            />
             <FormControl variant='outlined' sx={{ m: 1, width: '25ch' }}>
                 <InputLabel id='invited-users-label'>Invited Users</InputLabel>
                 <Select
@@ -160,7 +198,10 @@ export default function EventForm({ user }) {
                     label='Invited Users'>
                     {allUsers.map((user) => (
                         <MenuItem key={user._id} value={user._id}>
-                            {user.username}
+                            <Checkbox
+                                checked={form.invitedUsers.includes(user._id)}
+                            />
+                            {user.name}
                         </MenuItem>
                     ))}
                 </Select>

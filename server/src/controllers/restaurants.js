@@ -2,10 +2,32 @@ const List = require('../models/list');
 const Restaurant = require('../models/restaurant');
 
 module.exports = {
+    index,
     addToList,
     removeFromList,
     update,
 };
+
+async function index(req, res) {
+    try {
+        const userId = req.user.sub;
+        const userLists = await List.find({ owner: userId });
+
+        // Using set as a restaurant could be in multiple lists
+        const restaurantIds = [
+            ...new Set(userLists.flatMap((list) => list.restaurants)),
+        ];
+
+        // Find all restaurants with IDs that are in the user's lists
+        const restaurants = await Restaurant.find({
+            _id: { $in: restaurantIds },
+        });
+
+        res.json(restaurants);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
 
 async function addToList(req, res) {
     try {
