@@ -12,7 +12,7 @@ export default function RestaurantDetail({ restaurant }) {
                 mt={4}>
                 {restaurant ? (
                     <>
-                        <Typography variant='h5' gutterBottom>
+                        <Typography variant='h4' gutterBottom>
                             {restaurant.name}
                         </Typography>
                         <Typography variant='body1' gutterBottom>

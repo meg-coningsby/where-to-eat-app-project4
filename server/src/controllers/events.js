@@ -45,7 +45,8 @@ async function show(req, res) {
             .populate('location')
             .populate('invitedUsers')
             .populate('acceptedUsers')
-            .populate('declinedUsers');
+            .populate('declinedUsers')
+            .populate('owner');
         if (!event) {
             return res.status(404).json({ error: 'Event not found' });
         }

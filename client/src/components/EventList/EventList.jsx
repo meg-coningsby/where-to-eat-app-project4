@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Card,
     CardContent,
@@ -9,10 +9,18 @@ import {
     Button,
 } from '@mui/material';
 
+import * as eventsAPI from '../../utilities/events-api';
+
 export default function EventList({ events }) {
-    const handleDeleteEvent = async () => {
+    const navigate = useNavigate();
+
+    const handleDeleteEvent = async (id) => {
         try {
-        } catch (error) {}
+            await eventsAPI.deleteEvent(id);
+            navigate('/events');
+        } catch (error) {
+            console.error('Error deleting event', error);
+        }
     };
 
     return (
@@ -20,40 +28,36 @@ export default function EventList({ events }) {
             <Grid container spacing={2}>
                 {events.map((event) => (
                     <Grid item key={event._id} xs={12} sm={6} md={4}>
-                        <Link
-                            to={`/events/${event._id}`}
-                            style={{
-                                textDecoration: 'none',
-                                color: 'inherit',
-                            }}>
-                            <Card
-                                sx={{
-                                    width: '100%',
-                                    '&:hover': { boxShadow: 6 },
-                                }}>
-                                <CardContent>
-                                    <Typography variant='h5' component='div'>
-                                        {event.title}
-                                    </Typography>
-                                    <CardActions>
-                                        <Button
-                                            size='small'
-                                            component={Link}
-                                            to={`/events/${event._id}/edit`}>
-                                            Edit Event
-                                        </Button>
-                                        <Button
-                                            size='small'
-                                            color='error'
-                                            onClick={() =>
-                                                handleDeleteEvent(event._id)
-                                            }>
-                                            Delete Event
-                                        </Button>
-                                    </CardActions>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                        <Card
+                            sx={{
+                                width: '100%',
+                                '&:hover': { boxShadow: 6 },
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => navigate(`/events/${event._id}`)}>
+                            <CardContent>
+                                <Typography variant='h5' component='div'>
+                                    {event.title}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button
+                                    size='small'
+                                    onClick={() =>
+                                        navigate(`/events/${event._id}/edit`)
+                                    }>
+                                    Edit Event
+                                </Button>
+                                <Button
+                                    size='small'
+                                    color='error'
+                                    onClick={() =>
+                                        handleDeleteEvent(event._id)
+                                    }>
+                                    Delete Event
+                                </Button>
+                            </CardActions>
+                        </Card>
                     </Grid>
                 ))}
             </Grid>
