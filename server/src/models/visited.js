@@ -7,6 +7,7 @@ const visitedSchema = new Schema(
         restaurant: { type: Schema.Types.ObjectId, ref: 'Restaurant' },
         visitDate: { type: Date },
         comments: { type: String },
+        rating: { type: Number, min: 1, max: 5 },
     },
     {
         timestamps: true,

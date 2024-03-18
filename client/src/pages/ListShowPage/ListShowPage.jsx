@@ -146,6 +146,7 @@ export default function ListShowPage({ user }) {
                                             <CardActions>
                                                 <Button
                                                     size='small'
+                                                    color='error'
                                                     onClick={() =>
                                                         handleRemoveRestaurant(
                                                             restaurant._id

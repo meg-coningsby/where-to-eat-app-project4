@@ -8,7 +8,9 @@ module.exports = {
 
 async function index(req, res) {
     try {
-        const visits = await Visited.find({ user: req.user.sub });
+        const visits = await Visited.find({ user: req.user.sub })
+            .populate('restaurant')
+            .sort({ visitDate: -1 });
         res.json(visits);
     } catch (error) {
         res.status(400).send(error);
@@ -41,24 +43,20 @@ async function addVisited(req, res) {
 async function deleteVisited(req, res) {
     try {
         const visitedId = req.params.id;
-        const userId = req.user.sub; // Assuming you're using req.user.sub to identify the user
+        const userId = req.user.sub;
 
-        // Find the visited document by ID and ensure the user is the owner
         const visited = await Visited.findById(visitedId);
 
-        // Check if the visited document exists
         if (!visited) {
             return res
                 .status(404)
                 .json({ error: 'Visited restaurant not found' });
         }
 
-        // Check if the user making the request is the owner of the visited restaurant
         if (visited.user.toString() !== userId) {
-            // If the user IDs don't match, respond with an unauthorized error
             return res
                 .status(403)
-                .json({ error: 'Unauthorized to delete this visited record' });
+                .json({ error: 'Unauthorised to delete this visited record' });
         }
 
         // Proceed to delete the visited document
