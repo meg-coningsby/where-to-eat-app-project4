@@ -51,10 +51,9 @@ export default function ListForm({ user }) {
             public: form.public,
             owner: user.sub,
         };
-        console.log(listData);
         try {
             if (id) {
-                await listsAPI.updateList(id, listData); // Assuming you have an updateList API utility
+                await listsAPI.updateList(id, listData);
             } else {
                 await listsAPI.addAList(listData);
             }

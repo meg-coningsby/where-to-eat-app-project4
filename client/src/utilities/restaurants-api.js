@@ -23,7 +23,5 @@ export function toggleVisited(restaurantId, visited) {
     const body = {
         visited: !visited, // Toggle the visited status
     };
-
-    // Call sendRequest with the updated parameters and body
     return sendRequest(`/api/myrestaurants/${restaurantId}`, 'PUT', body);
 }

@@ -13,7 +13,13 @@ const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
 const listsApi = require('./routes/api/lists');
 const restaurantsApi = require('./routes/api/restaurants');
+const restaurantDetailsApi = require('./routes/api/restaurantDetails');
 const visitedApi = require('./routes/api/visited');
+const eventsApi = require('./routes/api/events');
+
+// Import Socket.IO and create a HTTP server instance
+const http = require('http');
+const socketIo = require('socket.io');
 
 // Connect to the database
 require('./config/database');
@@ -37,31 +43,8 @@ app.use('/api/users', usersApi);
 app.use('/api/lists', listsApi);
 app.use('/api/myrestaurants', restaurantsApi);
 app.use('/api/visited', visitedApi);
-
-app.get('/api/restaurants/:place_id', async (req, res) => {
-    const { place_id } = req.params;
-    const apiKey = process.env.API_KEY;
-
-    try {
-        const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/place/details/json`,
-            {
-                params: {
-                    key: apiKey,
-                    place_id: place_id,
-                    fields: 'name,formatted_address',
-                },
-            }
-        );
-
-        res.json(response.data.result);
-    } catch (error) {
-        console.error('Error fetching restaurant details:', error);
-        res.status(500).json({
-            error: 'An error occurred while fetching restaurant details',
-        });
-    }
-});
+app.use('/api/events', eventsApi);
+app.use('/api/restaurants', restaurantDetailsApi);
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
@@ -72,6 +55,21 @@ app.get('/*', function (req, res) {
 });
 
 const port = +process.env.PORT || 3000;
+
+// Create HTTP server instance
+const server = http.createServer(app);
+
+// Pass the server instance to Socket.IO
+const io = socketIo(server);
+
+// Socket.IO logic goes here
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
 
 app.listen(port, function () {
     console.log(`Express app running on port ${port}`);

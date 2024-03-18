@@ -54,6 +54,7 @@ export function NavBar({ user, setUser }) {
         'Public Lists': '/lists/public',
         'My Visits': '/visited',
         Login: '/auth',
+        'My Events': '/events',
     };
 
     const userActions = user
@@ -61,7 +62,7 @@ export function NavBar({ user, setUser }) {
         : { Login: () => navigate('/auth') };
 
     let pages = user
-        ? ['Restaurants', 'My Lists', 'Public Lists', 'My Visits']
+        ? ['Restaurants', 'My Lists', 'Public Lists', 'My Visits', 'My Events']
         : ['Restaurants', 'Public Lists'];
 
     return (
