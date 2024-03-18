@@ -1,5 +1,3 @@
-// import style from './style.module.css';
-
 import { useState, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 export default function Home() {
     return (
@@ -6,10 +7,10 @@ export default function Home() {
             <h1>Where To Eat</h1>
             <h3>Never be stumped with where to eat again.</h3>
             <Link to={'/auth'}>
-                <button>Login / Sign Up</button>
+                <Button variant='contained'>Login / Sign Up</Button>
             </Link>
             <Link to={'/restaurants'}>
-                <p>Jump straight to search</p>
+                <Button>Search Restaurants</Button>
             </Link>
         </>
     );

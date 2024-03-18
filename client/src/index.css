@@ -1,5 +1,5 @@
 /* CSS Custom Properties */
-:root {
+/* :root {
     --white: #ffffff;
     --tan-1: #fbf9f6;
     --tan-2: #e7e2dd;
@@ -112,8 +112,8 @@ input {
     border-radius: 0.5vmin;
     color: var(--text-dark);
     background-image: none !important; /* prevent lastpass */
-    outline: none;
-}
+/* outline: none;
+} */
 
 input:focus {
     border-color: var(--orange);
@@ -155,21 +155,9 @@ button[type='submit'] {
     grid-column: span 2;
     margin: 1vmin 0 0;
 }
+*/
 
 /* Modal Overlay/Backdrop */
-.modal {
-    position: fixed;
-    top: 50%; /* Position at the vertical center */
-    left: 50%; /* Position at the horizontal center */
-    transform: translate(-50%, -50%); /* Center the modal */
-    width: 80%; /* Adjust the width as needed */
-    max-width: 500px; /* Set a maximum width */
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1001; /* Ensure the modal appears above the backdrop */
-}
 
 .modal-backdrop {
     position: fixed;

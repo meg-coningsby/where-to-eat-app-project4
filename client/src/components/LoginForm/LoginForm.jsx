@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { login } from '../../utilities/users-service';
 
+import {
+    Container,
+    Grid,
+    TextField,
+    Button,
+    Box,
+    Typography,
+} from '@mui/material';
+
 export function LoginForm({ setUser }) {
     const [form, setForm] = useState({
         email: '',
@@ -30,31 +39,58 @@ export function LoginForm({ setUser }) {
     const disable = !form.email || !form.password;
 
     return (
-        <div>
-            <div className={`form-container`}>
+        <Container maxWidth='sm'>
+            <Box sx={{ mt: 4, padding: 2, borderRadius: 2 }}>
+                <Typography
+                    variant='h4'
+                    component='h1'
+                    gutterBottom
+                    align='center'>
+                    Login
+                </Typography>
                 <form autoComplete='off' onSubmit={handleSubmit}>
-                    <label>Email</label>
-                    <input
-                        type='email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label>Password</label>
-                    <input
-                        type='password'
-                        name='password'
-                        value={form.password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <button type='submit' disabled={disable}>
-                        Login
-                    </button>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                type='email'
+                                name='email'
+                                label='Email'
+                                variant='outlined'
+                                value={form.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                type='password'
+                                name='password'
+                                label='Password'
+                                variant='outlined'
+                                value={form.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                fullWidth
+                                type='submit'
+                                variant='contained'
+                                disabled={disable}>
+                                Login
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </form>
-            </div>
-            <p className='error-message'>{error}</p>
-        </div>
+                {error && (
+                    <Typography color='error' align='center' mt={2}>
+                        {error}
+                    </Typography>
+                )}
+            </Box>
+        </Container>
     );
 }

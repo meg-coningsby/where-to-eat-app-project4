@@ -83,7 +83,7 @@ export function NavBar({ user, setUser }) {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}>
-                        LOGO
+                        WHERE TO EAT
                     </Typography>
                     <Box
                         sx={{

@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { signUp } from '../../utilities/users-service';
 
+import {
+    Container,
+    Grid,
+    TextField,
+    Button,
+    Box,
+    Typography,
+} from '@mui/material';
+
 export function SignUpForm({ setUser }) {
     const [form, setForm] = useState({
         name: '',
@@ -41,47 +50,82 @@ export function SignUpForm({ setUser }) {
         form.password !== form.confirmPassword;
 
     return (
-        <div>
-            <div className={`form-container`}>
+        <Container maxWidth='sm'>
+            <Box sx={{ mt: 4, padding: 2, borderRadius: 2 }}>
+                <Typography
+                    variant='h4'
+                    component='h1'
+                    gutterBottom
+                    align='center'>
+                    Sign Up
+                </Typography>
                 <form autoComplete='off' onSubmit={handleSubmit}>
-                    <label>Name</label>
-                    <input
-                        type='text'
-                        name='name'
-                        value={form.name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label>Email</label>
-                    <input
-                        type='email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label>Password</label>
-                    <input
-                        type='password'
-                        name='password'
-                        value={form.password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label>Confirm Password</label>
-                    <input
-                        type='password'
-                        name='confirmPassword'
-                        value={form.confirmPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <button type='submit' disabled={disable}>
-                        Sign up
-                    </button>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                type='text'
+                                name='name'
+                                label='Name'
+                                variant='outlined'
+                                value={form.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                type='email'
+                                name='email'
+                                label='Email'
+                                variant='outlined'
+                                value={form.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                type='password'
+                                name='password'
+                                label='Password'
+                                variant='outlined'
+                                value={form.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                type='password'
+                                name='confirmPassword'
+                                label='Confirm Password'
+                                variant='outlined'
+                                value={form.confirmPassword}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                fullWidth
+                                type='submit'
+                                variant='contained'
+                                disabled={disable}>
+                                Sign up
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </form>
-            </div>
-            <p className='error-message'>{error}</p>
-        </div>
+                {error && (
+                    <Typography color='error' align='center' mt={2}>
+                        {error}
+                    </Typography>
+                )}
+            </Box>
+        </Container>
     );
 }
