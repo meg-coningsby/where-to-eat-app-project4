@@ -8,6 +8,7 @@ import {
     Typography,
     Box,
     Grid,
+    Rating,
 } from '@mui/material';
 
 import * as visitedAPI from '../../utilities/visited-api';
@@ -72,13 +73,33 @@ export default function VisitedRestaurantsPage() {
                                                         }
                                                     </Link>
                                                 </Typography>
-                                                <Typography
-                                                    variant='body2'
-                                                    color='text.secondary'>
-                                                    {new Date(
-                                                        visited.visitDate
-                                                    ).toLocaleDateString()}
-                                                </Typography>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        justifyContent:
+                                                            'space-between',
+                                                        alignItems: 'center',
+                                                        width: '100%',
+                                                    }}
+                                                    mt={1}>
+                                                    <Typography
+                                                        variant='body2'
+                                                        color='text.secondary'>
+                                                        {new Date(
+                                                            visited.visitDate
+                                                        ).toLocaleDateString()}
+                                                    </Typography>
+                                                    {visited.rating && (
+                                                        <Rating
+                                                            name='read-only'
+                                                            size='small'
+                                                            value={
+                                                                visited.rating
+                                                            }
+                                                            readOnly
+                                                        />
+                                                    )}
+                                                </Box>
                                             </CardContent>
                                             <CardActions>
                                                 {visited.comments && (

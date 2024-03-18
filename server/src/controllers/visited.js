@@ -19,15 +19,16 @@ async function index(req, res) {
 
 async function addVisited(req, res) {
     try {
-        const { restaurantId } = req.body;
+        const { restaurantId, visitDate, comments, rating } = req.body;
         const userId = req.user.sub;
 
-        // Create a new visited document
+        // Create a new visited document including the rating
         const visited = new Visited({
             user: userId,
             restaurant: restaurantId,
-            visitDate: new Date(),
-            comments: req.body.comments || '',
+            visitDate: visitDate || new Date(), // Assuming you want to use the date from the request or the current date
+            comments: comments || '',
+            rating: rating, // Include the rating field
         });
 
         // Save the visited document

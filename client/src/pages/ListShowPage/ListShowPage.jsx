@@ -9,12 +9,7 @@ import {
     Box,
     TextField,
     Grid,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    MenuItem,
-    Select,
+    Rating,
 } from '@mui/material';
 
 import * as listsAPI from '../../utilities/lists-api';
@@ -31,6 +26,7 @@ export default function ListShowPage({ user }) {
     const [visitDetails, setVisitDetails] = useState({
         visitDate: '',
         comments: '',
+        rating: 0,
     });
 
     useEffect(() => {
@@ -77,7 +73,8 @@ export default function ListShowPage({ user }) {
             await visitedAPI.addRestaurantToVisited({
                 restaurantId: currentRestaurantId,
                 visitDate: visitDetails.visitDate,
-                comments: commentsValue, // Pass the comments value explicitly
+                comments: commentsValue,
+                rating: visitDetails.rating,
                 userId: user.sub,
             });
             setIsModalOpen(false);
@@ -217,10 +214,24 @@ export default function ListShowPage({ user }) {
                         fullWidth
                         sx={{ mb: 2 }}
                     />
-                    <Box textAlign='right'>
+                    <Box sx={{ mb: 2 }}>
+                        <Typography component='legend'>Rating</Typography>
+                        <Rating
+                            name='rating'
+                            value={visitDetails.rating}
+                            onChange={(event, newValue) => {
+                                setVisitDetails({
+                                    ...visitDetails,
+                                    rating: newValue,
+                                });
+                            }}
+                        />
+                    </Box>
+                    <Box textAlign='center'>
                         <Button
                             variant='contained'
                             onClick={handleSubmitVisited}
+                            fullWidth
                             sx={{ mt: 1 }}>
                             Add Visit
                         </Button>
