@@ -1,5 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Typography,
+    Box,
+    TextField,
+    Grid,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    MenuItem,
+    Select,
+} from '@mui/material';
+
 import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 import * as visitedAPI from '../../utilities/visited-api';
@@ -75,75 +92,139 @@ export default function ListShowPage({ user }) {
     return (
         <>
             {list ? (
-                <div>
-                    <h1>{list.name}</h1>
-                    <p>Public: {list.public ? 'Yes' : 'No'}</p>
+                <Box sx={{ maxWidth: 600, margin: '0 auto', paddingTop: 4 }}>
+                    <Box sx={{ textAlign: 'center' }}>
+                        <Typography variant='h4' gutterBottom>
+                            {list.name}
+                        </Typography>
+                        <Typography variant='subtitle1' gutterBottom>
+                            Public: {list.public ? 'Yes' : 'No'}
+                        </Typography>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            mt: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: 1,
+                        }}>
+                        <Button
+                            variant='outlined'
+                            component={Link}
+                            to={`/lists/${id}/edit`}>
+                            Edit List Details
+                        </Button>
+                        <Button
+                            variant='outlined'
+                            color='error'
+                            onClick={handleDelete}>
+                            Delete List
+                        </Button>
+                    </Box>
+
                     {/* Display list of restaurants */}
                     {list.restaurants && list.restaurants.length > 0 ? (
-                        <div>
-                            <h2>Restaurants:</h2>
-                            <ul>
+                        <Box mt={4}>
+                            {' '}
+                            {/* Increased margin-top here for space */}
+                            <Grid container spacing={2}>
                                 {list.restaurants.map((restaurant, index) => (
-                                    <li key={index}>
-                                        <Link
-                                            to={`/restaurants/${restaurant.googlePlaceId}`}>
-                                            {restaurant.name}
-                                        </Link>
-                                        - {restaurant.address}
-                                        <button
-                                            onClick={() =>
-                                                handleRemoveRestaurant(
-                                                    restaurant._id
-                                                )
-                                            }>
-                                            Remove
-                                        </button>
-                                        <button
-                                            onClick={() =>
-                                                handleMarkAsVisited(
-                                                    restaurant._id
-                                                )
-                                            }>
-                                            Add a Visit
-                                        </button>
-                                    </li>
+                                    <Grid item xs={12} sm={6} key={index}>
+                                        <Card>
+                                            <CardContent>
+                                                <Typography variant='h6'>
+                                                    <Link
+                                                        to={`/restaurants/${restaurant.googlePlaceId}`}>
+                                                        {restaurant.name}
+                                                    </Link>
+                                                </Typography>
+                                                <Typography variant='body2'>
+                                                    {restaurant.address}
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button
+                                                    size='small'
+                                                    onClick={() =>
+                                                        handleRemoveRestaurant(
+                                                            restaurant._id
+                                                        )
+                                                    }>
+                                                    Remove
+                                                </Button>
+                                                <Button
+                                                    size='small'
+                                                    onClick={() =>
+                                                        handleMarkAsVisited(
+                                                            restaurant._id
+                                                        )
+                                                    }>
+                                                    Add a Visit
+                                                </Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
                                 ))}
-                            </ul>
-                        </div>
+                            </Grid>
+                        </Box>
                     ) : (
-                        <p>No restaurants in this list.</p>
+                        <Typography textAlign='center' mt={2}>
+                            No restaurants in this list.
+                        </Typography>
                     )}
-                </div>
+                </Box>
             ) : (
-                <p>Loading...</p>
+                <Typography textAlign='center' mt={2}>
+                    Loading...
+                </Typography>
             )}
-            <Link to={`/lists/${id}/edit`}>
-                <button>Edit List Details</button>
-            </Link>
-            <button onClick={handleDelete}>Delete List</button>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <h2>Mark as Visited</h2>
-                <label>Visit Date:</label>
-                <input
-                    type='date'
-                    value={visitDetails.visitDate}
-                    onChange={(e) =>
-                        setVisitDetails({
-                            ...visitDetails,
-                            visitDate: e.target.value,
-                        })
-                    }
-                />
-                <label>Comments:</label>
-                <textarea
-                    value={visitDetails.comments}
-                    onChange={(e) =>
-                        setVisitDetails({
-                            ...visitDetails,
-                            comments: e.target.value,
-                        })
-                    }></textarea>
-                <button onClick={handleSubmitVisited}>Add Visit</button>
+                <>
+                    <Typography variant='h6' sx={{ mb: 2 }}>
+                        Mark as Visited
+                    </Typography>
+                    <TextField
+                        id='visit-date'
+                        label='Visit Date'
+                        type='date'
+                        value={visitDetails.visitDate}
+                        onChange={(e) =>
+                            setVisitDetails({
+                                ...visitDetails,
+                                visitDate: e.target.value,
+                            })
+                        }
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        id='comments'
+                        label='Comments'
+                        multiline
+                        rows={4}
+                        value={visitDetails.comments}
+                        onChange={(e) =>
+                            setVisitDetails({
+                                ...visitDetails,
+                                comments: e.target.value,
+                            })
+                        }
+                        fullWidth
+                        sx={{ mb: 2 }}
+                    />
+                    <Box textAlign='right'>
+                        <Button
+                            variant='contained'
+                            onClick={handleSubmitVisited}
+                            sx={{ mt: 1 }}>
+                            Add Visit
+                        </Button>
+                    </Box>
+                </>
             </Modal>
         </>
     );

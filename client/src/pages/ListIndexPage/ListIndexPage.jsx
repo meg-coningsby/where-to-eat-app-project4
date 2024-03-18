@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Typography, Container, Box, Button } from '@mui/material';
 
 import ListList from '../../components/ListList/ListList';
 import * as listsAPI from '../../utilities/lists-api';
@@ -37,15 +38,31 @@ export default function ListIndexPage({ user }) {
             : "All the lists you've created and the eateries you've saved.";
 
     return (
-        <>
-            <h1>{pageTitle}</h1>
-            <h3>{pageSubTitle}</h3>
-            {location.pathname !== '/lists/public' && (
-                <Link to={'/lists/new'}>
-                    <p>Add a New List</p>
-                </Link>
-            )}
-            <ListList lists={lists} />
-        </>
+        <Container>
+            <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                mt={4}>
+                <Typography variant='h4' component='h1' gutterBottom>
+                    {pageTitle}
+                </Typography>
+                <Typography variant='h6' component='h3' gutterBottom>
+                    {pageSubTitle}
+                </Typography>
+                {location.pathname !== '/lists/public' && (
+                    <Link to={'/lists/new'} style={{ textDecoration: 'none' }}>
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            style={{ marginTop: '16px' }}>
+                            {' '}
+                            Add a New List
+                        </Button>
+                    </Link>
+                )}
+                <ListList lists={lists} />
+            </Box>
+        </Container>
     );
 }

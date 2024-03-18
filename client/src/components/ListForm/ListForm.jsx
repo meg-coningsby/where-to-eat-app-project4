@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import {
+    Button,
+    TextField,
+    FormControlLabel,
+    Switch,
+    Box,
+    Alert,
+} from '@mui/material';
+
 import * as listsAPI from '../../utilities/lists-api';
 
 export default function ListForm({ user }) {
@@ -59,30 +68,43 @@ export default function ListForm({ user }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor='name'>Name:</label>
-                <input
-                    type='text'
-                    id='name'
-                    name='name'
-                    value={form.name}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor='public'>Public List:</label>
-                <input
-                    type='checkbox'
-                    id='public'
-                    name='public'
-                    checked={form.public}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type='submit' disabled={!form.name}>
-                {id ? 'Update List' : 'Add List'}
-            </button>
-        </form>
+        <Box
+            component='form'
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+            noValidate
+            autoComplete='off'
+            onSubmit={handleSubmit}>
+            <TextField
+                label='Name'
+                variant='outlined'
+                id='name'
+                name='name'
+                value={form.name}
+                onChange={handleChange}
+                required
+            />
+            <FormControlLabel
+                control={
+                    <Switch
+                        checked={form.public}
+                        onChange={handleChange}
+                        name='public'
+                        color='primary'
+                    />
+                }
+                label='Public List'
+            />
+            {error && <Alert severity='error'>{error}</Alert>}
+            <Box sx={{ mt: 2 }}>
+                <Button type='submit' variant='contained' disabled={!form.name}>
+                    {id ? 'Update List' : 'Add List'}
+                </Button>
+            </Box>
+        </Box>
     );
 }
