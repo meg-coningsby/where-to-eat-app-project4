@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+    Box,
+    Button,
+    Container,
+    MenuItem,
+    Select,
+    Typography,
+} from '@mui/material';
 
 import axios from 'axios';
 import RestaurantDetail from '../../components/RestaurantDetails/RestaurantDetails';
@@ -65,31 +73,49 @@ export default function RestaurantSearchDetailPage() {
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div>
-            <RestaurantDetail restaurant={restaurantDetails} />
-            <div>
-                <button onClick={openModal}>Add to List</button>
-                <Modal isOpen={isModalOpen} onClose={closeModal}>
-                    <>
-                        <p>
-                            Select the list you want to add this restaurant to:
-                        </p>
-                        <select
-                            value={selectedList}
-                            onChange={(e) => setSelectedList(e.target.value)}>
-                            <option value='' disabled>
-                                Select a list
-                            </option>{' '}
-                            {userLists.map((list) => (
-                                <option key={list._id} value={list._id}>
-                                    {list.name}
-                                </option>
-                            ))}
-                        </select>
-                        <button onClick={addToUserList}>Add to List</button>
-                    </>
-                </Modal>
-            </div>
-        </div>
+        <Container maxWidth='sm'>
+            <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                justifyContent='flex-start'
+                mt={4}>
+                <RestaurantDetail restaurant={restaurantDetails} />
+                <Box mt={2}>
+                    <Button variant='contained' onClick={openModal}>
+                        Add to List
+                    </Button>
+                    <Modal isOpen={isModalOpen} onClose={closeModal}>
+                        <>
+                            <Typography variant='body1'>
+                                Select the list you want to add this restaurant
+                                to:
+                            </Typography>
+                            <Select
+                                value={selectedList}
+                                onChange={(e) =>
+                                    setSelectedList(e.target.value)
+                                }
+                                sx={{ minWidth: 200, mt: 1, mr: 1 }}>
+                                <MenuItem value='' disabled>
+                                    Select a list
+                                </MenuItem>
+                                {userLists.map((list) => (
+                                    <MenuItem key={list._id} value={list._id}>
+                                        {list.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            <Button
+                                variant='contained'
+                                onClick={addToUserList}
+                                sx={{ mt: 1 }}>
+                                Add to List
+                            </Button>
+                        </>
+                    </Modal>
+                </Box>
+            </Box>
+        </Container>
     );
 }

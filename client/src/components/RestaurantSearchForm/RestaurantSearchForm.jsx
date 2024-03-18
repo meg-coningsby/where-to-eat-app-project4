@@ -3,6 +3,15 @@ import {
     useAutocomplete,
     usePlacesService,
 } from '@ubilabs/google-maps-react-hooks';
+import {
+    TextField,
+    Button,
+    Grid,
+    MenuItem,
+    Select,
+    Container,
+    Box,
+} from '@mui/material';
 
 export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
     const inputRef = useRef(null);
@@ -10,7 +19,7 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
     const [searchParams, setSearchParams] = useState({
         type: 'restaurant',
         cuisine: '',
-        minRating: '0',
+        minRating: '',
     });
     const [searchTriggered, setSearchTriggered] = useState(false);
 
@@ -77,42 +86,75 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
     };
 
     return (
-        <div>
-            <input
-                ref={inputRef}
-                type='text'
-                placeholder='Search for a place...'
-            />
-            <select
-                name='type'
-                value={searchParams.type}
-                onChange={handleInputChange}>
-                <option value='restaurant'>Restaurant</option>
-                <option value='cafe'>Cafe</option>
-                <option value='takeaway'>Takeaway</option>
-            </select>
-            <select
-                name='cuisine'
-                value={searchParams.cuisine}
-                onChange={handleInputChange}>
-                <option value=''>Select Cuisine</option>
-                <option value='japanese'>Japanese</option>
-                <option value='italian'>Italian</option>
-                <option value='mexican'>Mexican</option>
-                <option value='thai'>Thai</option>
-            </select>
-            <select
-                name='minRating'
-                value={searchParams.minRating}
-                onChange={handleInputChange}>
-                <option value='3'>3</option>
-                <option value='3.5'>3.5</option>
-                <option value='4'>4</option>
-                <option value='4.5'>4.5</option>
-            </select>
-            <button onClick={handleSearch}>Search</button>
-            {/* Add a div container for the map */}
-            <div ref={mapContainerRef} style={{ display: 'none' }}></div>
-        </div>
+        <Container maxWidth='sm'>
+            <Box sx={{ mt: 2 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            fullWidth
+                            label='Suburb or Postcode'
+                            name='suburbOrPostcode'
+                            variant='outlined'
+                            inputRef={inputRef}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Select
+                            name='type'
+                            value={searchParams.type}
+                            onChange={handleInputChange}
+                            fullWidth
+                            displayEmpty
+                            variant='outlined'>
+                            <MenuItem value='restaurant'>Restaurant</MenuItem>
+                            <MenuItem value='cafe'>Cafe</MenuItem>
+                            <MenuItem value='takeaway'>Takeaway</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Select
+                            name='cuisine'
+                            value={searchParams.cuisine}
+                            onChange={handleInputChange}
+                            fullWidth
+                            displayEmpty
+                            variant='outlined'>
+                            <MenuItem value='' disabled>
+                                Cuisine
+                            </MenuItem>
+                            <MenuItem value='japanese'>Japanese</MenuItem>
+                            <MenuItem value='italian'>Italian</MenuItem>
+                            <MenuItem value='mexican'>Mexican</MenuItem>
+                            <MenuItem value='thai'>Thai</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Select
+                            name='minRating'
+                            value={searchParams.minRating}
+                            onChange={handleInputChange}
+                            fullWidth
+                            displayEmpty
+                            variant='outlined'>
+                            <MenuItem value='' disabled>
+                                Min. Google Rating
+                            </MenuItem>
+                            <MenuItem value='3'>3</MenuItem>
+                            <MenuItem value='3.5'>3.5</MenuItem>
+                            <MenuItem value='4'>4</MenuItem>
+                            <MenuItem value='4.5'>4.5</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            fullWidth
+                            variant='contained'
+                            onClick={handleSearch}>
+                            Search
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Box>
+        </Container>
     );
 }
