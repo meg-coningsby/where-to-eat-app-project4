@@ -2,22 +2,24 @@ import * as React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { logout } from '../../utilities/users-service';
 
-// Material UI Components | Start
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-// Material UI Components | End
+import {
+    AppBar,
+    Box,
+    Toolbar,
+    IconButton,
+    Typography,
+    Menu,
+    Container,
+    Avatar,
+    Button,
+    Tooltip,
+    MenuItem,
+} from '@mui/material';
+import {
+    Menu as MenuIcon,
+    AccountCircle,
+    RestaurantMenu as RestaurantMenuIcon,
+} from '@mui/icons-material';
 
 export function NavBar({ user, setUser }) {
     const navigate = useNavigate();
@@ -66,9 +68,13 @@ export function NavBar({ user, setUser }) {
         <AppBar position='static'>
             <Container maxWidth='xl'>
                 <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-                    />
+                    <RouterLink
+                        to='/'
+                        style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <RestaurantMenuIcon
+                            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+                        />
+                    </RouterLink>
                     <Typography
                         variant='h6'
                         noWrap
@@ -132,9 +138,6 @@ export function NavBar({ user, setUser }) {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon
-                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-                    />
                     <Box
                         sx={{
                             flexGrow: 1,

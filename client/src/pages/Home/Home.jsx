@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function Home() {
+export default function Home({ user }) {
     return (
         <Box
             display='flex'
@@ -19,9 +19,11 @@ export default function Home() {
             <Typography variant='h3' gutterBottom>
                 Never be stumped with where to eat again.
             </Typography>
-            <Link to={'/auth'} style={{ textDecoration: 'none' }}>
-                <Button variant='contained'>Login / Sign Up</Button>
-            </Link>
+            {!user && (
+                <Link to={'/auth'} style={{ textDecoration: 'none' }}>
+                    <Button variant='contained'>Login / Sign Up</Button>
+                </Link>
+            )}
         </Box>
     );
 }

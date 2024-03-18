@@ -7,13 +7,13 @@ const ensureLoggedIn = require('../../middleware/ensure-logged-in');
 router.get('/', ensureLoggedIn, listsCtrl.index);
 
 // GET all public lists
-router.get('/public', ensureLoggedIn, listsCtrl.indexPublic);
+router.get('/public', listsCtrl.indexPublic);
 
 // POST Add a list api/notes
 router.post('/', ensureLoggedIn, listsCtrl.addList);
 
 // GET Show a list
-router.get('/:id', ensureLoggedIn, listsCtrl.show);
+router.get('/:id', listsCtrl.show);
 
 // PUT update a list
 router.put('/:id', ensureLoggedIn, listsCtrl.updateList);

@@ -99,26 +99,28 @@ export default function ListShowPage({ user }) {
                         </Typography>
                     </Box>
 
-                    <Box
-                        sx={{
-                            mt: 2,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            gap: 1,
-                        }}>
-                        <Button
-                            variant='outlined'
-                            component={Link}
-                            to={`/lists/${id}/edit`}>
-                            Edit List Details
-                        </Button>
-                        <Button
-                            variant='outlined'
-                            color='error'
-                            onClick={handleDelete}>
-                            Delete List
-                        </Button>
-                    </Box>
+                    {user && ( // Conditional rendering based on user being logged in
+                        <Box
+                            sx={{
+                                mt: 2,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                gap: 1,
+                            }}>
+                            <Button
+                                variant='outlined'
+                                component={Link}
+                                to={`/lists/${id}/edit`}>
+                                Edit List Details
+                            </Button>
+                            <Button
+                                variant='outlined'
+                                color='error'
+                                onClick={handleDelete}>
+                                Delete List
+                            </Button>
+                        </Box>
+                    )}
 
                     {/* Display list of restaurants */}
                     {list.restaurants && list.restaurants.length > 0 ? (
@@ -140,27 +142,29 @@ export default function ListShowPage({ user }) {
                                                     {restaurant.address}
                                                 </Typography>
                                             </CardContent>
-                                            <CardActions>
-                                                <Button
-                                                    size='small'
-                                                    color='error'
-                                                    onClick={() =>
-                                                        handleRemoveRestaurant(
-                                                            restaurant._id
-                                                        )
-                                                    }>
-                                                    Remove
-                                                </Button>
-                                                <Button
-                                                    size='small'
-                                                    onClick={() =>
-                                                        handleMarkAsVisited(
-                                                            restaurant._id
-                                                        )
-                                                    }>
-                                                    Add a Visit
-                                                </Button>
-                                            </CardActions>
+                                            {user && ( // Conditional rendering for CardActions based on user
+                                                <CardActions>
+                                                    <Button
+                                                        size='small'
+                                                        color='error'
+                                                        onClick={() =>
+                                                            handleRemoveRestaurant(
+                                                                restaurant._id
+                                                            )
+                                                        }>
+                                                        Remove
+                                                    </Button>
+                                                    <Button
+                                                        size='small'
+                                                        onClick={() =>
+                                                            handleMarkAsVisited(
+                                                                restaurant._id
+                                                            )
+                                                        }>
+                                                        Add a Visit
+                                                    </Button>
+                                                </CardActions>
+                                            )}
                                         </Card>
                                     </Grid>
                                 ))}

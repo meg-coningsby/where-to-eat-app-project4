@@ -50,18 +50,17 @@ export default function ListIndexPage({ user }) {
                 <Typography variant='h6' component='h3' gutterBottom>
                     {pageSubTitle}
                 </Typography>
-                {location.pathname !== '/lists/public' && (
+                {location.pathname !== '/lists/public' && user && (
                     <Link to={'/lists/new'} style={{ textDecoration: 'none' }}>
                         <Button
                             variant='contained'
                             color='primary'
                             style={{ marginTop: '16px' }}>
-                            {' '}
                             Add a New List
                         </Button>
                     </Link>
                 )}
-                <ListList lists={lists} />
+                <ListList lists={lists} user={user} />
             </Box>
         </Container>
     );

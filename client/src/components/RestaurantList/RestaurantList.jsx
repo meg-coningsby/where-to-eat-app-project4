@@ -31,7 +31,7 @@ export default function RestaurantList({ restaurants }) {
                             <Card
                                 sx={{
                                     maxWidth: '100%',
-                                    height: '100%', // Ensure the card takes up the full height
+                                    height: '100%',
                                     margin: 'auto',
                                     textDecoration: 'none',
                                     '&:hover': {
@@ -40,11 +40,10 @@ export default function RestaurantList({ restaurants }) {
                                         borderStyle: 'solid',
                                     },
                                     display: 'flex',
-                                    flexDirection: 'column', // Stack the content vertically
+                                    flexDirection: 'column',
                                 }}>
                                 <CardContent sx={{ flexGrow: 1 }}>
                                     {' '}
-                                    {/* Allow content to grow and push actions to the bottom */}
                                     <Typography variant='h5' component='div'>
                                         {restaurant.name}
                                     </Typography>

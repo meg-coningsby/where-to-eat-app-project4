@@ -16,7 +16,7 @@ import Modal from '../../components/Modal/Modal';
 import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 
-export default function RestaurantSearchDetailPage() {
+export default function RestaurantSearchDetailPage({ user }) {
     const { id } = useParams();
     const [restaurantDetails, setRestaurantDetails] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,9 +25,11 @@ export default function RestaurantSearchDetailPage() {
 
     useEffect(() => {
         fetchRestaurantDetails(id);
-        fetchUserLists();
+        if (user) {
+            fetchUserLists();
+        }
         return () => setSelectedList('');
-    }, [id]);
+    }, [id, user]);
 
     const fetchUserLists = async () => {
         try {
@@ -106,12 +108,14 @@ export default function RestaurantSearchDetailPage() {
                                     </MenuItem>
                                 ))}
                             </Select>
-                            <Button
-                                variant='contained'
-                                onClick={addToUserList}
-                                sx={{ mt: 1 }}>
-                                Add to List
-                            </Button>
+                            {user && (
+                                <Button
+                                    variant='contained'
+                                    onClick={addToUserList}
+                                    sx={{ mt: 1 }}>
+                                    Add to List
+                                </Button>
+                            )}
                         </>
                     </Modal>
                 </Box>

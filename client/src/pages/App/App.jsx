@@ -44,17 +44,25 @@ function App() {
                     <NavBar user={user} setUser={setUser} />
                 </header>
                 <main className='App'>
-                    {user ? (
-                        <>
-                            <Routes>
-                                <Route path='/' element={<Home />} />
+                    <Routes>
+                        {user ? (
+                            <>
+                                {/* Routes accessible after authentication */}
+                                <Route
+                                    path='/'
+                                    element={<Home user={user} />}
+                                />
                                 <Route
                                     path='/restaurants'
-                                    element={<RestaurantSearch />}
+                                    element={<RestaurantSearch user={user} />}
                                 />
                                 <Route
                                     path='/restaurants/:id'
-                                    element={<RestaurantSearchDetailPage />}
+                                    element={
+                                        <RestaurantSearchDetailPage
+                                            user={user}
+                                        />
+                                    }
                                 />
                                 <Route
                                     path='/lists'
@@ -82,34 +90,43 @@ function App() {
                                         <VisitedRestaurantsPage user={user} />
                                     }
                                 />
+                            </>
+                        ) : (
+                            <>
+                                {/* Routes accessible without authentication */}
+                                <Route path='/' element={<Home />} />
                                 <Route
-                                    path='*'
-                                    element={<Navigate to='/' replace />}
+                                    path='/restaurants'
+                                    element={<RestaurantSearch user={user} />}
                                 />
-                            </Routes>
-                        </>
-                    ) : (
-                        <Routes>
-                            <Route path='/' element={<Home />} />
-                            <Route
-                                path='/restaurants'
-                                element={<RestaurantSearch />}
-                            />
-                            <Route
-                                path='/restaurants/:id'
-                                element={<RestaurantSearchDetailPage />}
-                            />
-                            <Route
-                                path='/lists/public'
-                                element={<ListIndexPage user={user} />}
-                            />
-                            <Route
-                                path='/auth'
-                                element={<AuthPage setUser={setUser} />}
-                            />
-                            <Route path='*' element={<Navigate to='/' />} />
-                        </Routes>
-                    )}
+                                <Route
+                                    path='/restaurants/:id'
+                                    element={
+                                        <RestaurantSearchDetailPage
+                                            user={user}
+                                        />
+                                    }
+                                />
+                                <Route
+                                    path='/lists/public'
+                                    element={<ListIndexPage user={user} />}
+                                />
+                                <Route
+                                    path='/lists/:id'
+                                    element={<ListShowPage user={user} />}
+                                />
+
+                                {/* Authentication Route */}
+                                <Route
+                                    path='/auth'
+                                    element={<AuthPage setUser={setUser} />}
+                                />
+                            </>
+                        )}
+
+                        {/* Fallback route */}
+                        <Route path='*' element={<Navigate to='/' />} />
+                    </Routes>
                 </main>
                 <footer></footer>
             </GoogleMapsProvider>
