@@ -11,8 +11,13 @@ import {
     Button,
 } from '@mui/material';
 
-export default function EventDetail({ event, user, handleDeleteEvent }) {
-    console.log(user);
+export default function EventDetail({
+    event,
+    user,
+    handleDeleteEvent,
+    handleAcceptEvent,
+    handleDeclineEvent,
+}) {
     if (!event) {
         return (
             <Container maxWidth='sm'>
@@ -45,11 +50,6 @@ export default function EventDetail({ event, user, handleDeleteEvent }) {
         ) : (
             <span>{emptyMessage}</span>
         );
-    };
-
-    const handleAction = (actionType, eventId) => {
-        // Placeholder function for handling actions
-        console.log(`Performing ${actionType} action for event ${eventId}`);
     };
 
     const renderCardActions = () => {
@@ -91,13 +91,13 @@ export default function EventDetail({ event, user, handleDeleteEvent }) {
                 <>
                     <Button
                         size='small'
-                        onClick={() => handleAction('accept', event._id)}>
+                        onClick={() => handleAcceptEvent(event._id, user.sub)}>
                         Accept
                     </Button>
                     <Button
                         size='small'
                         color='error'
-                        onClick={() => handleAction('decline', event._id)}>
+                        onClick={() => handleDeclineEvent(event._id, user.sub)}>
                         Decline
                     </Button>
                 </>

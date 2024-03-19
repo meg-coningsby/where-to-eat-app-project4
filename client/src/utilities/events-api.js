@@ -32,10 +32,12 @@ export function deleteEvent(id) {
 
 // accept an event
 export function acceptEvent(id, userID) {
-    return sendRequest(`/api/events/${id}/accept`, 'PUT', userID);
+    const payload = { userId: userID }; // Adjust this line
+    return sendRequest(`/api/events/${id}/accept`, 'PUT', payload);
 }
 
 // decline an event
 export function declineEvent(id, userID) {
-    return sendRequest(`/api/events/${id}/decline`, 'PUT', userID);
+    const payload = { userId: userID }; // And this one
+    return sendRequest(`/api/events/${id}/decline`, 'PUT', payload);
 }

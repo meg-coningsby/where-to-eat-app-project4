@@ -10,16 +10,17 @@ export default function EventsShowPage({ user }) {
     const { id } = useParams();
     const [eventDetails, setEventDetails] = useState(null);
 
+    const fetchEventDetails = async () => {
+        try {
+            const event = await eventsAPI.fetchEvent(id);
+            setEventDetails(event);
+        } catch (error) {
+            console.error(error);
+            setError('Failed to fetch event details.');
+        }
+    };
+
     useEffect(() => {
-        const fetchEventDetails = async () => {
-            try {
-                const event = await eventsAPI.fetchEvent(id);
-                setEventDetails(event);
-            } catch (error) {
-                console.error(error);
-                setError('Failed to fetch event details.');
-            }
-        };
         fetchEventDetails();
     }, [id]);
 
@@ -29,6 +30,24 @@ export default function EventsShowPage({ user }) {
             navigate('/events');
         } catch (error) {
             console.error('Error deleting event', error);
+        }
+    };
+
+    const handleAcceptEvent = async () => {
+        try {
+            await eventsAPI.acceptEvent(id, user.sub);
+            fetchEventDetails();
+        } catch (error) {
+            console.error('Error accepting event', error);
+        }
+    };
+
+    const handleDeclineEvent = async () => {
+        try {
+            await eventsAPI.declineEvent(id, user.sub);
+            fetchEventDetails();
+        } catch (error) {
+            console.error('Error declining event', error);
         }
     };
 
@@ -45,6 +64,8 @@ export default function EventsShowPage({ user }) {
                         event={eventDetails}
                         user={user}
                         handleDeleteEvent={handleDeleteEvent}
+                        handleAcceptEvent={handleAcceptEvent}
+                        handleDeclineEvent={handleDeclineEvent}
                     />
                 </Box>
             </Container>
