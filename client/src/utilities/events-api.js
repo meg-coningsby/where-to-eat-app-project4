@@ -10,6 +10,11 @@ export function fetchInvitedEvent() {
     return sendRequest('/api/events/invited');
 }
 
+// fetch all owned & invited events
+export function fetchOwnedAndInvitedEvent() {
+    return sendRequest('/api/events/allevents');
+}
+
 // create an event
 export function createEvent(eventData) {
     return sendRequest('/api/events', 'POST', eventData);
@@ -25,7 +30,7 @@ export function updateEvent(id, eventData) {
     return sendRequest(`/api/events/${id}`, 'PUT', eventData);
 }
 
-// delete a list
+// delete an event
 export function deleteEvent(id) {
     return sendRequest(`/api/events/${id}`, 'DELETE');
 }

@@ -7,7 +7,10 @@ const ensureLoggedIn = require('../../middleware/ensure-logged-in');
 router.get('/', ensureLoggedIn, eventsCtrl.indexOwnEvents);
 
 // GET all user invited events
-router.get('/invited', ensureLoggedIn, eventsCtrl.indexOwnEvents);
+router.get('/invited', ensureLoggedIn, eventsCtrl.indexInvitedEvents);
+
+// GET all user owned & invited events
+router.get('/allevents', ensureLoggedIn, eventsCtrl.indexOwnedAndInvitedEvents);
 
 // POST Add an event
 router.post('/', ensureLoggedIn, eventsCtrl.createEvent);

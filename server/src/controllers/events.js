@@ -3,6 +3,7 @@ const Event = require('../models/event');
 module.exports = {
     indexOwnEvents,
     indexInvitedEvents,
+    indexOwnedAndInvitedEvents,
     show,
     createEvent,
     updateEvent,
@@ -27,9 +28,32 @@ async function indexOwnEvents(req, res) {
 async function indexInvitedEvents(req, res) {
     try {
         const userId = req.user.sub;
-        const events = await Event.find({ invitedUsers: userId }).populate(
-            'location'
-        );
+        const events = await Event.find({
+            $or: [
+                { invitedUsers: userId },
+                { acceptedUsers: userId },
+                { declinedUsers: userId },
+            ],
+        }).populate('location');
+        res.json(events);
+    } catch (error) {
+        console.error('Error in indexInvitedEvents function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+// All events - owned or invited
+async function indexOwnedAndInvitedEvents(req, res) {
+    try {
+        const userId = req.user.sub;
+        const events = await Event.find({
+            $or: [
+                { owner: userId },
+                { invitedUsers: userId },
+                { acceptedUsers: userId },
+                { declinedUsers: userId },
+            ],
+        }).populate('location');
         res.json(events);
     } catch (error) {
         console.error('Error in indexInvitedEvents function:', error);

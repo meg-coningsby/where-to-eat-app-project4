@@ -39,22 +39,29 @@ export default function EventList({ events }) {
                                 <Typography variant='h5' component='div'>
                                     {event.title}
                                 </Typography>
+                                <Typography variant='body1' component='div'>
+                                    {event.location.name}
+                                </Typography>
+                                <Typography variant='body1' component='div'>
+                                    {new Date(event.date).toLocaleDateString(
+                                        'en-Au',
+                                        {
+                                            weekday: 'short',
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                        }
+                                    )}
+                                </Typography>
                             </CardContent>
                             <CardActions>
                                 <Button
                                     size='small'
-                                    onClick={() =>
-                                        navigate(`/events/${event._id}/edit`)
-                                    }>
-                                    Edit Event
-                                </Button>
-                                <Button
-                                    size='small'
-                                    color='error'
-                                    onClick={() =>
-                                        handleDeleteEvent(event._id)
-                                    }>
-                                    Delete Event
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(`/events/${event._id}`);
+                                    }}>
+                                    View Event Details
                                 </Button>
                             </CardActions>
                         </Card>
