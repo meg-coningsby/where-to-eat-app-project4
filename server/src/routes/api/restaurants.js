@@ -3,6 +3,9 @@ const router = express.Router();
 const restaurantsCtrl = require('../../controllers/restaurants');
 const ensureLoggedIn = require('../../middleware/ensure-logged-in');
 
+// GET all a user's resturants
+router.get('/', ensureLoggedIn, restaurantsCtrl.index)
+
 // POST add a restaurant to a list
 router.post('/', ensureLoggedIn, restaurantsCtrl.addToList);
 

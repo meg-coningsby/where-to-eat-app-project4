@@ -14,6 +14,9 @@ import ListIndexPage from '../ListIndexPage/ListIndexPage';
 import NewEditListPage from '../NewEditListPage/NewEditListPage';
 import ListShowPage from '../ListShowPage/ListShowPage';
 import VisitedRestaurantsPage from '../VisitedRestaurantsPage/VisitedRestaurantsPage';
+import EventsIndexPage from '../EventsIndexPage/EventsIndexPage';
+import EventsShowPage from '../EventsShowpage/EventsShowPage';
+import NewEditEventPage from '../NewEditEventPage/NewEditEventPage';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -89,6 +92,22 @@ function App() {
                                     element={
                                         <VisitedRestaurantsPage user={user} />
                                     }
+                                />
+                                <Route
+                                    path='/events'
+                                    element={<EventsIndexPage user={user} />}
+                                />
+                                <Route
+                                    path='/events/new'
+                                    element={<NewEditEventPage user={user} />}
+                                />
+                                <Route
+                                    path='/events/:id'
+                                    element={<EventsShowPage user={user} />}
+                                />
+                                <Route
+                                    path='/events/:id/edit'
+                                    element={<NewEditEventPage user={user} />}
                                 />
                             </>
                         ) : (

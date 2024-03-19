@@ -4,7 +4,7 @@ const ensureLoggedIn = require('../../middleware/ensure-logged-in.js');
 
 const router = express.Router();
 
-// Base url might be /api/users
+router.get('/', usersCtrl.allButCurrentUser);
 router.post('/', usersCtrl.create);
 router.post('/login', usersCtrl.login);
 router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken);
