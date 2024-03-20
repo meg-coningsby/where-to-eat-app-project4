@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { logout } from '../../utilities/users-service';
 
@@ -23,10 +23,13 @@ import {
     Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 
+import * as notificationsAPI from '../../utilities/notifications-api';
+
 export function NavBar({ user, setUser }) {
     const navigate = useNavigate();
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -75,6 +78,23 @@ export function NavBar({ user, setUser }) {
               'Events',
           ]
         : ['Restaurants', 'Public Lists'];
+
+    useEffect(() => {
+        const fetchUnreadNotifications = async () => {
+            try {
+                const fetchedNotifications =
+                    await notificationsAPI.fetchNotifications();
+                const unreadCount = fetchedNotifications.filter(
+                    (notification) => !notification.read
+                ).length;
+                setUnreadNotificationsCount(unreadCount);
+            } catch (error) {
+                console.error('Error fetching unread notifications:', error);
+            }
+        };
+
+        fetchUnreadNotifications();
+    }, []);
 
     return (
         <AppBar position='static'>
@@ -181,7 +201,9 @@ export function NavBar({ user, setUser }) {
                                 component={RouterLink}
                                 to='/notifications'
                                 sx={{ color: 'inherit', mr: 0.5 }}>
-                                <Badge badgeContent={0} color='secondary'>
+                                <Badge
+                                    badgeContent={unreadNotificationsCount}
+                                    color='secondary'>
                                     <NotificationsIcon />
                                 </Badge>
                             </IconButton>
