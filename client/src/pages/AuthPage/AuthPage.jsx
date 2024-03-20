@@ -4,7 +4,7 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { Box, Typography } from '@mui/material';
 
-export function AuthPage({ setUser }) {
+export default function AuthPage({ setUser }) {
     const [toggleLogin, setToggleLogin] = useState(true);
     return (
         <>

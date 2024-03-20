@@ -3,11 +3,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
 import { ThemeProvider } from '@mui/material/styles';
 
-import { AuthPage } from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { lightTheme } from '../../themes/LightTheme';
+import { darkTheme } from '../../themes/DarkTheme';
+
 import Home from '../Home/Home';
+import AuthPage from '../AuthPage/AuthPage';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';
 import RestaurantSearchDetailPage from '../RestaurantSearchDetailPage/RestaurantSearchDetailPage';
 import ListIndexPage from '../ListIndexPage/ListIndexPage';
@@ -27,6 +29,13 @@ function App() {
         return getUser();
     });
     const [mapContainer, setMapContainer] = useState(null);
+    const [themeMode, setThemeMode] = useState('light');
+
+    const currentTheme = themeMode === 'light' ? lightTheme : darkTheme;
+
+    const toggleTheme = () => {
+        setThemeMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+    };
 
     const mapRef = useCallback((node) => {
         node && setMapContainer(node);
@@ -38,7 +47,7 @@ function App() {
     };
 
     return (
-        <ThemeProvider theme={lightTheme}>
+        <ThemeProvider theme={currentTheme}>
             <GoogleMapsProvider
                 googleMapsAPIKey={apiKey}
                 mapContainer={mapContainer}
@@ -46,7 +55,12 @@ function App() {
                 libraries={['places']}
                 region='au'>
                 <header>
-                    <NavBar user={user} setUser={setUser} />
+                    <NavBar
+                        user={user}
+                        setUser={setUser}
+                        themeMode={themeMode}
+                        toggleTheme={toggleTheme}
+                    />
                 </header>
                 <main className='App'>
                     <Routes>

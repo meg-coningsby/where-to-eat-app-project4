@@ -25,11 +25,14 @@ import {
 
 import * as notificationsAPI from '../../utilities/notifications-api';
 
-export function NavBar({ user, setUser }) {
+export function NavBar({ user, setUser, themeMode, toggleTheme }) {
     const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0);
+
+    const themeToggleLabel =
+        themeMode === 'dark' ? 'Change to Light Mode' : 'Change to Dark Mode';
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -66,6 +69,7 @@ export function NavBar({ user, setUser }) {
     const userActions = user
         ? {
               Profile: () => navigate('/profile'),
+              [themeToggleLabel]: toggleTheme,
               Logout: handleLogout,
           }
         : { Login: () => navigate('/auth') };
@@ -269,7 +273,11 @@ export function NavBar({ user, setUser }) {
                                 <MenuItem
                                     key={action}
                                     onClick={() => {
-                                        userActions[action]();
+                                        if (action === themeToggleLabel) {
+                                            toggleTheme();
+                                        } else {
+                                            userActions[action]();
+                                        }
                                         handleCloseUserMenu();
                                     }}>
                                     <Typography textAlign='center'>
