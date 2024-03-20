@@ -75,18 +75,19 @@ export default function RestaurantSearchDetailPage({ user }) {
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <Container maxWidth='sm'>
+        <Container maxWidth='md'>
             <Box
                 display='flex'
                 flexDirection='column'
                 alignItems='center'
-                justifyContent='flex-start'
-                mt={4}>
+                justifyContent='flex-start'>
                 <RestaurantDetail restaurant={restaurantDetails} />
                 <Box mt={2}>
-                    <Button variant='contained' onClick={openModal}>
-                        Add to List
-                    </Button>
+                    {user && (
+                        <Button variant='contained' onClick={openModal}>
+                            Add to List
+                        </Button>
+                    )}
                     <Modal isOpen={isModalOpen} onClose={closeModal}>
                         <>
                             <Typography variant='body1'>
@@ -108,14 +109,12 @@ export default function RestaurantSearchDetailPage({ user }) {
                                     </MenuItem>
                                 ))}
                             </Select>
-                            {user && (
-                                <Button
-                                    variant='contained'
-                                    onClick={addToUserList}
-                                    sx={{ mt: 1 }}>
-                                    Add to List
-                                </Button>
-                            )}
+                            <Button
+                                variant='contained'
+                                onClick={addToUserList}
+                                sx={{ mt: 1 }}>
+                                Add to List
+                            </Button>
                         </>
                     </Modal>
                 </Box>

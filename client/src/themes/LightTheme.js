@@ -7,7 +7,7 @@ export const themeOptions = {
             main: '#386641',
         },
         secondary: {
-            main: '#bc4749',
+            main: '#6A994E',
         },
         error: {
             main: '#d32f2f',

@@ -62,6 +62,7 @@ export default function EventDetail({
                     <Button
                         size='small'
                         component={Link}
+                        color='secondary'
                         to={`/events/${event._id}/edit`}>
                         Edit Event
                     </Button>

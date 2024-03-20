@@ -79,12 +79,17 @@ export function NavBar({ user, setUser }) {
               'Visited Restaurants',
               'Events',
           ]
-        : ['Home', 'Restaurants', 'Public Lists'];
+        : ['Home', 'Search Restaurants', 'Public Lists'];
 
     // Setting up http polling
     const POLLING_INTERVAL = 60000; // 60 seconds
 
     useEffect(() => {
+        // If there's no user logged in, do not fetch notifications
+        if (!user) {
+            return;
+        }
+
         const fetchUnreadNotifications = async () => {
             try {
                 const fetchedNotifications =
@@ -124,7 +129,7 @@ export function NavBar({ user, setUser }) {
                 handleVisibilityChange
             );
         };
-    }, []);
+    }, [user]);
 
     return (
         <AppBar position='static'>
@@ -222,18 +227,20 @@ export function NavBar({ user, setUser }) {
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title='View notifications'>
-                            <IconButton
-                                component={RouterLink}
-                                to='/notifications'
-                                sx={{ color: 'inherit', mr: 0.5 }}>
-                                <Badge
-                                    badgeContent={unreadNotificationsCount}
-                                    color='secondary'>
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton>
-                        </Tooltip>
+                        {user && (
+                            <Tooltip title='View notifications'>
+                                <IconButton
+                                    component={RouterLink}
+                                    to='/notifications'
+                                    sx={{ color: 'inherit', mr: 0.5 }}>
+                                    <Badge
+                                        badgeContent={unreadNotificationsCount}
+                                        color='secondary'>
+                                        <NotificationsIcon />
+                                    </Badge>
+                                </IconButton>
+                            </Tooltip>
+                        )}
                         <Tooltip title='Open settings'>
                             <IconButton
                                 onClick={handleOpenUserMenu}

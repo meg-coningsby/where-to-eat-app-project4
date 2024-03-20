@@ -11,7 +11,7 @@ import {
 
 export default function ListList({ lists }) {
     return (
-        <Box sx={{ width: '80%', margin: '0 auto', paddingTop: 4 }}>
+        <Box sx={{ width: '100%', margin: '0 auto', paddingTop: 4 }}>
             <Grid container spacing={2}>
                 {lists.map((list) => (
                     <Grid item key={list._id} xs={12} sm={6} md={4}>
@@ -34,6 +34,7 @@ export default function ListList({ lists }) {
                                 <CardActions>
                                     <Button
                                         size='small'
+                                        color='secondary'
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             navigate(`/lists/${list._id}`);

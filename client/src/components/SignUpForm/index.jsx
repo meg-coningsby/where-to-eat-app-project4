@@ -10,7 +10,7 @@ import {
     Typography,
 } from '@mui/material';
 
-export function SignUpForm({ setUser }) {
+export default function SignUpForm({ setUser }) {
     const [form, setForm] = useState({
         name: '',
         email: '',

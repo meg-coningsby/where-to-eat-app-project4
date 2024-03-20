@@ -3,7 +3,7 @@ import { Box, Container, Typography } from '@mui/material';
 export default function RestaurantDetail({ restaurant }) {
     const apiKey = import.meta.env.VITE_apikey;
     return (
-        <Container maxWidth='sm'>
+        <Container maxWidth='md'>
             <Box
                 display='flex'
                 flexDirection='column'
@@ -12,7 +12,7 @@ export default function RestaurantDetail({ restaurant }) {
                 mt={4}>
                 {restaurant ? (
                     <>
-                        <Typography variant='h4' gutterBottom>
+                        <Typography variant='h4' component='h1' gutterBottom>
                             {restaurant.name}
                         </Typography>
                         <Typography variant='body1' gutterBottom>

@@ -13,6 +13,7 @@ import {
 
 import * as visitedAPI from '../../utilities/visited-api';
 import Modal from '../../components/Modal/Modal';
+import VisitedRestaurantDetails from '../../components/VisitedRestaurantDetails/VisitedRestaurantDetails';
 
 export default function VisitedRestaurantsPage() {
     const [visitedList, setVisitedList] = useState([]);
@@ -58,73 +59,14 @@ export default function VisitedRestaurantsPage() {
                     {/* Display list of visited restaurants */}
                     {visitedList.length > 0 ? (
                         <Box mt={4}>
-                            {' '}
                             <Grid container spacing={2}>
                                 {visitedList.map((visited, index) => (
                                     <Grid item xs={12} sm={6} key={index}>
-                                        <Card>
-                                            <CardContent>
-                                                <Typography variant='h6'>
-                                                    <Link
-                                                        to={`/restaurants/${visited.restaurant.googlePlaceId}`}>
-                                                        {
-                                                            visited.restaurant
-                                                                .name
-                                                        }
-                                                    </Link>
-                                                </Typography>
-                                                <Box
-                                                    sx={{
-                                                        display: 'flex',
-                                                        justifyContent:
-                                                            'space-between',
-                                                        alignItems: 'center',
-                                                        width: '100%',
-                                                    }}
-                                                    mt={1}>
-                                                    <Typography
-                                                        variant='body2'
-                                                        color='text.secondary'>
-                                                        {new Date(
-                                                            visited.visitDate
-                                                        ).toLocaleDateString()}
-                                                    </Typography>
-                                                    {visited.rating && (
-                                                        <Rating
-                                                            name='read-only'
-                                                            size='small'
-                                                            value={
-                                                                visited.rating
-                                                            }
-                                                            readOnly
-                                                        />
-                                                    )}
-                                                </Box>
-                                            </CardContent>
-                                            <CardActions>
-                                                {visited.comments && (
-                                                    <Button
-                                                        size='small'
-                                                        onClick={() =>
-                                                            handleViewDetails(
-                                                                visited.comments
-                                                            )
-                                                        }>
-                                                        View Details
-                                                    </Button>
-                                                )}
-                                                <Button
-                                                    size='small'
-                                                    color='error'
-                                                    onClick={() =>
-                                                        handleDeleteVisit(
-                                                            visited._id
-                                                        )
-                                                    }>
-                                                    Delete Visit
-                                                </Button>
-                                            </CardActions>
-                                        </Card>
+                                        <VisitedRestaurantDetails
+                                            visited={visited}
+                                            onDeleteVisit={handleDeleteVisit}
+                                            onViewDetails={handleViewDetails}
+                                        />
                                     </Grid>
                                 ))}
                             </Grid>

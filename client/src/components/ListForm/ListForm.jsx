@@ -93,14 +93,18 @@ export default function ListForm({ user }) {
                         checked={form.public}
                         onChange={handleChange}
                         name='public'
-                        color='primary'
+                        color='secondary'
                     />
                 }
                 label='Public List'
             />
             {error && <Alert severity='error'>{error}</Alert>}
             <Box sx={{ mt: 2 }}>
-                <Button type='submit' variant='contained' disabled={!form.name}>
+                <Button
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    disabled={!form.name}>
                     {id ? 'Update List' : 'Add List'}
                 </Button>
             </Box>

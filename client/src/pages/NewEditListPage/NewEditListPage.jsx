@@ -8,7 +8,7 @@ export default function NewEditListPage({ user }) {
     const isNewList = location.pathname === '/lists/new';
 
     return (
-        <Container maxWidth='sm'>
+        <Container maxWidth='md'>
             <Box
                 display='flex'
                 flexDirection='column'

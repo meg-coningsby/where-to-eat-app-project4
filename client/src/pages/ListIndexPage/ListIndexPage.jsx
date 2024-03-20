@@ -34,11 +34,11 @@ export default function ListIndexPage({ user }) {
         location.pathname === '/lists/public' ? 'Public Lists' : 'Saved Lists';
     const pageSubTitle =
         location.pathname === '/lists/public'
-            ? 'Browse all public lists.'
-            : "All the lists you've created and the eateries you've saved.";
+            ? 'Get inspired and browse through lists other users have created.'
+            : "Create lists to save all the places you'd want to visit or even just return to. You can also mark any saved restaurants as 'visited' or use them to create events to invite your friends to try something new.";
 
     return (
-        <Container>
+        <Container maxWidth='md'>
             <Box
                 display='flex'
                 flexDirection='column'
@@ -47,14 +47,18 @@ export default function ListIndexPage({ user }) {
                 <Typography variant='h4' component='h1' gutterBottom>
                     {pageTitle}
                 </Typography>
-                <Typography variant='h6' component='h3' gutterBottom>
+                <Typography
+                    variant='h6'
+                    component='h3'
+                    gutterBottom
+                    style={{ textAlign: 'center' }}>
                     {pageSubTitle}
                 </Typography>
                 {location.pathname !== '/lists/public' && user && (
                     <Link to={'/lists/new'} style={{ textDecoration: 'none' }}>
                         <Button
                             variant='contained'
-                            color='primary'
+                            color='secondary'
                             style={{ marginTop: '16px' }}>
                             Add a New List
                         </Button>

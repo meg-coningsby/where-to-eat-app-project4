@@ -149,6 +149,7 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
                         <Button
                             fullWidth
                             variant='contained'
+                            color='secondary'
                             onClick={handleSearch}>
                             Search
                         </Button>

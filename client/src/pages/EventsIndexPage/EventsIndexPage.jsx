@@ -55,7 +55,7 @@ export default function EventsIndexPage({ user }) {
                 <Link to={'/events/new'} style={{ textDecoration: 'none' }}>
                     <Button
                         variant='contained'
-                        color='primary'
+                        color='secondary'
                         style={{ marginTop: '16px' }}>
                         Create a New Event
                     </Button>

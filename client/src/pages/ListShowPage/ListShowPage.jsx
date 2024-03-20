@@ -16,6 +16,7 @@ import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 import * as visitedAPI from '../../utilities/visited-api';
 import Modal from '../../components/Modal/Modal';
+import ListRestaurantDetails from '../../components/ListRestaurantDetails/ListRestaurantDetails';
 
 export default function ListShowPage({ user }) {
     const navigate = useNavigate();
@@ -98,8 +99,7 @@ export default function ListShowPage({ user }) {
                             Public: {list.public ? 'Yes' : 'No'}
                         </Typography>
                     </Box>
-
-                    {user && ( // Conditional rendering based on user being logged in
+                    {user && (
                         <Box
                             sx={{
                                 mt: 2,
@@ -108,7 +108,8 @@ export default function ListShowPage({ user }) {
                                 gap: 1,
                             }}>
                             <Button
-                                variant='outlined'
+                                variant='contained'
+                                color='secondary'
                                 component={Link}
                                 to={`/lists/${id}/edit`}>
                                 Edit List Details
@@ -121,54 +122,14 @@ export default function ListShowPage({ user }) {
                             </Button>
                         </Box>
                     )}
-
-                    {/* Display list of restaurants */}
                     {list.restaurants && list.restaurants.length > 0 ? (
                         <Box mt={4}>
-                            {' '}
-                            {/* Increased margin-top here for space */}
-                            <Grid container spacing={2}>
-                                {list.restaurants.map((restaurant, index) => (
-                                    <Grid item xs={12} sm={6} key={index}>
-                                        <Card>
-                                            <CardContent>
-                                                <Typography variant='h6'>
-                                                    <Link
-                                                        to={`/restaurants/${restaurant.googlePlaceId}`}>
-                                                        {restaurant.name}
-                                                    </Link>
-                                                </Typography>
-                                                <Typography variant='body2'>
-                                                    {restaurant.address}
-                                                </Typography>
-                                            </CardContent>
-                                            {user && ( // Conditional rendering for CardActions based on user
-                                                <CardActions>
-                                                    <Button
-                                                        size='small'
-                                                        color='error'
-                                                        onClick={() =>
-                                                            handleRemoveRestaurant(
-                                                                restaurant._id
-                                                            )
-                                                        }>
-                                                        Remove
-                                                    </Button>
-                                                    <Button
-                                                        size='small'
-                                                        onClick={() =>
-                                                            handleMarkAsVisited(
-                                                                restaurant._id
-                                                            )
-                                                        }>
-                                                        Add a Visit
-                                                    </Button>
-                                                </CardActions>
-                                            )}
-                                        </Card>
-                                    </Grid>
-                                ))}
-                            </Grid>
+                            <ListRestaurantDetails
+                                restaurants={list.restaurants}
+                                user={user}
+                                handleRemoveRestaurant={handleRemoveRestaurant}
+                                handleMarkAsVisited={handleMarkAsVisited}
+                            />
                         </Box>
                     ) : (
                         <Typography textAlign='center' mt={2}>

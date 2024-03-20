@@ -36,13 +36,13 @@ export default function EventList({ events }) {
                             }}
                             onClick={() => navigate(`/events/${event._id}`)}>
                             <CardContent>
-                                <Typography variant='h5' component='div'>
+                                <Typography variant='h6' component='div'>
                                     {event.title}
                                 </Typography>
-                                <Typography variant='body1' component='div'>
+                                <Typography variant='body2' component='div'>
                                     {event.location.name}
                                 </Typography>
-                                <Typography variant='body1' component='div'>
+                                <Typography variant='body2' component='div'>
                                     {new Date(event.date).toLocaleDateString(
                                         'en-Au',
                                         {
@@ -57,6 +57,7 @@ export default function EventList({ events }) {
                             <CardActions>
                                 <Button
                                     size='small'
+                                    color='secondary'
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         navigate(`/events/${event._id}`);

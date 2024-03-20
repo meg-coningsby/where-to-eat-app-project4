@@ -16,7 +16,7 @@ export default function RestaurantSearch() {
                 flexDirection: 'column',
                 alignItems: 'center',
             }}>
-            <Typography variant='h2' component='h1' gutterBottom align='center'>
+            <Typography variant='h4' component='h1' gutterBottom align='center'>
                 Restaurant Search
             </Typography>
             <RestaurantSearchForm

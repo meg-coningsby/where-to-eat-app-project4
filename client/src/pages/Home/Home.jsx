@@ -7,27 +7,28 @@ export default function Home({ user }) {
             display='flex'
             flexDirection='column'
             alignItems='center'
-            justifyContent='center'
+            justifyContent='flex-start'
             minHeight='100vh'
             textAlign='center'
             padding='20px'>
             <CardMedia
                 component='img'
-                alt='Where to eat feature image'
-                height='140'
-                image='../../assets/homepage-image.png'
-                sx={{ width: 345, marginBottom: 2 }}
+                image='/homepageImage.png'
+                alt='Homepage Image'
+                style={{ maxWidth: '50%', height: 'auto' }}
             />
             <Typography variant='h1' gutterBottom>
                 Where To Eat
             </Typography>
-            <Typography variant='h3' gutterBottom>
+            <Typography variant='h5' gutterBottom>
                 Never be stumped with where to eat again.
             </Typography>
             {!user && (
-                <Link to={'/auth'} style={{ textDecoration: 'none' }}>
-                    <Button variant='contained'>Login / Sign Up</Button>
-                </Link>
+                <Box mt={2}>
+                    <Link to={'/auth'} style={{ textDecoration: 'none' }}>
+                        <Button variant='contained'>Login / Sign Up</Button>
+                    </Link>
+                </Box>
             )}
         </Box>
     );
