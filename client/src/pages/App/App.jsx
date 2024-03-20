@@ -18,6 +18,7 @@ import EventsIndexPage from '../EventsIndexPage/EventsIndexPage';
 import EventsShowPage from '../EventsShowpage/EventsShowPage';
 import NewEditEventPage from '../NewEditEventPage/NewEditEventPage';
 import NotificationsIndex from '../NotificationsIndex/NotificationsIndex';
+import Profile from '../Profile/Profile';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -113,6 +114,10 @@ function App() {
                                 <Route
                                     path='/notifications'
                                     element={<NotificationsIndex user={user} />}
+                                />
+                                <Route
+                                    path='/profile'
+                                    element={<Profile user={user} />}
                                 />
                             </>
                         ) : (

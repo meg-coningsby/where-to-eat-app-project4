@@ -42,7 +42,7 @@ export default function NotificationDetail({
                 return `You have been invited to ${notification.event.title} at ${notification.event.location.name} on ${eventDate}.`;
             case 'inviteAccepted':
                 return `One of your invitees has accepted your invite to ${notification.event.title}.`;
-            case 'inviteDecline':
+            case 'inviteDeclined':
                 return `One of your invitees has declined your invite to ${notification.event.title}.`;
             default:
                 return '';

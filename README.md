@@ -34,7 +34,7 @@ _Please note: this app doesn't have a 'friends' functionality as yet, so all use
 
 ## 💻 Technologies Used in App
 
-A typical MERN stack app:
+This app is a typical MERN stack app, with some additional technologies used for styling and my Google APIs:
 
 -   JavaScript
 -   HTML

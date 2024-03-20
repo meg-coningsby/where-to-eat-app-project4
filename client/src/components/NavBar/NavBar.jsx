@@ -54,6 +54,7 @@ export function NavBar({ user, setUser }) {
     };
 
     const pageRoutes = {
+        Home: '/',
         'Search Restaurants': '/restaurants',
         Lists: '/lists',
         'Public Lists': '/lists/public',
@@ -71,13 +72,17 @@ export function NavBar({ user, setUser }) {
 
     let pages = user
         ? [
+              'Home',
               'Search Restaurants',
               'Lists',
               'Public Lists',
               'Visited Restaurants',
               'Events',
           ]
-        : ['Restaurants', 'Public Lists'];
+        : ['Home', 'Restaurants', 'Public Lists'];
+
+    // Setting up http polling
+    const POLLING_INTERVAL = 60000; // 60 seconds
 
     useEffect(() => {
         const fetchUnreadNotifications = async () => {
@@ -93,7 +98,32 @@ export function NavBar({ user, setUser }) {
             }
         };
 
+        const handleVisibilityChange = () => {
+            if (!document.hidden) {
+                fetchUnreadNotifications();
+            }
+        };
+
+        // Fetch unread notifications initially
         fetchUnreadNotifications();
+
+        // Set up polling
+        const intervalId = setInterval(
+            fetchUnreadNotifications,
+            POLLING_INTERVAL
+        );
+
+        // Add event listener for visibility change
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Clean up on component unmount
+        return () => {
+            clearInterval(intervalId);
+            document.removeEventListener(
+                'visibilitychange',
+                handleVisibilityChange
+            );
+        };
     }, []);
 
     return (
@@ -155,16 +185,12 @@ export function NavBar({ user, setUser }) {
                             {pages.map((page) => (
                                 <MenuItem
                                     key={page}
-                                    onClick={handleCloseNavMenu}>
+                                    onClick={() => {
+                                        navigate(pageRoutes[page]);
+                                        handleCloseNavMenu();
+                                    }}>
                                     <Typography textAlign='center'>
-                                        <RouterLink
-                                            to={pageRoutes[page]}
-                                            style={{
-                                                textDecoration: 'none',
-                                                color: 'inherit',
-                                            }}>
-                                            {page}
-                                        </RouterLink>
+                                        {page}
                                     </Typography>
                                 </MenuItem>
                             ))}

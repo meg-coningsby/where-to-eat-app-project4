@@ -26,8 +26,17 @@ export default function NotificationsIndex({ user }) {
         }
     };
 
+    // Setting up http polling
+    const POLLING_INTERVAL = 60000; // 10 seconds
+
     useEffect(() => {
         fetchNotifications();
+
+        // Set up polling
+        const interval = setInterval(fetchNotifications, POLLING_INTERVAL);
+
+        // Clean up on component unmount
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
