@@ -9,7 +9,7 @@ router.get('/', ensureLoggedIn, listsCtrl.index);
 // GET all public lists
 router.get('/public', listsCtrl.indexPublic);
 
-// POST Add a list api/notes
+// POST Add a list
 router.post('/', ensureLoggedIn, listsCtrl.addList);
 
 // GET Show a list

@@ -6,8 +6,11 @@ const ensureLoggedIn = require('../../middleware/ensure-logged-in');
 // GET see all your restaurant visits
 router.get('/', ensureLoggedIn, visitedCtrl.index);
 
-// POST add a restaurant to my visited list
+// POST add a restaurant from my lists to visited
 router.post('/', ensureLoggedIn, visitedCtrl.addVisited);
+
+// POST add a restaurant from the search to visited
+router.post('/search', ensureLoggedIn, visitedCtrl.addVisitedFromSearch);
 
 // DELETE restaurant from my visited list
 router.delete('/:id', ensureLoggedIn, visitedCtrl.deleteVisited);

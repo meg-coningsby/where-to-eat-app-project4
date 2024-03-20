@@ -1,8 +1,10 @@
 const Visited = require('../models/visited');
+const Restaurant = require('../models/restaurant');
 
 module.exports = {
     index,
     addVisited,
+    addVisitedFromSearch,
     deleteVisited,
 };
 
@@ -17,23 +19,59 @@ async function index(req, res) {
     }
 }
 
+// Marks a restaurant as visited (when it is already saved in one of their lists)
 async function addVisited(req, res) {
     try {
         const { restaurantId, visitDate, comments, rating } = req.body;
         const userId = req.user.sub;
 
-        // Create a new visited document including the rating
         const visited = new Visited({
             user: userId,
             restaurant: restaurantId,
-            visitDate: visitDate || new Date(), // Assuming you want to use the date from the request or the current date
+            visitDate: visitDate || new Date(),
             comments: comments || '',
-            rating: rating, // Include the rating field
+            rating: rating,
         });
 
-        // Save the visited document
         const savedVisited = await visited.save();
 
+        res.status(201).json(savedVisited);
+    } catch (error) {
+        console.error('Error adding visited restaurant:', error);
+        res.status(500).json({ error: 'Failed to add visited restaurant' });
+    }
+}
+
+// Allows them to add a restaurant from the search page - it will check if they have saved the restaurant first, and if not, add it in.
+async function addVisitedFromSearch(req, res) {
+    try {
+        const { googlePlaceId, visitDate, comments, rating, name, address } =
+            req.body;
+        const userId = req.user.sub;
+
+        // Check if the restaurant exists in the database
+        let restaurant = await Restaurant.findOne({ googlePlaceId });
+
+        // If the restaurant doesn't exist, add it to the db
+        if (!restaurant) {
+            restaurant = new Restaurant({
+                googlePlaceId,
+                name,
+                address,
+            });
+            await restaurant.save();
+        }
+
+        // Now mark it as visited
+        const visited = new Visited({
+            user: userId,
+            restaurant: restaurant._id,
+            visitDate: visitDate || new Date(),
+            comments: comments || '',
+            rating: rating,
+        });
+
+        const savedVisited = await visited.save();
         res.status(201).json(savedVisited);
     } catch (error) {
         console.error('Error adding visited restaurant:', error);

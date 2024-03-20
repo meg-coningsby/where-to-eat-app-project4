@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SignUpForm } from '../../components/SignUpForm';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { Box, Typography } from '@mui/material';
 
