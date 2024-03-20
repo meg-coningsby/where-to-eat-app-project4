@@ -16,10 +16,7 @@ const restaurantsApi = require('./routes/api/restaurants');
 const restaurantDetailsApi = require('./routes/api/restaurantDetails');
 const visitedApi = require('./routes/api/visited');
 const eventsApi = require('./routes/api/events');
-
-// Import Socket.IO and create a HTTP server instance
-const http = require('http');
-const socketIo = require('socket.io');
+const eventNotificationsApi = require('./routes/api/eventNotifications');
 
 // Connect to the database
 require('./config/database');
@@ -45,6 +42,7 @@ app.use('/api/myrestaurants', restaurantsApi);
 app.use('/api/visited', visitedApi);
 app.use('/api/events', eventsApi);
 app.use('/api/restaurants', restaurantDetailsApi);
+app.use('/api/notifications', eventNotificationsApi);
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
@@ -55,21 +53,6 @@ app.get('/*', function (req, res) {
 });
 
 const port = +process.env.PORT || 3000;
-
-// Create HTTP server instance
-const server = http.createServer(app);
-
-// Pass the server instance to Socket.IO
-const io = socketIo(server);
-
-// Socket.IO logic goes here
-io.on('connection', (socket) => {
-    console.log('A user connected');
-
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});
 
 app.listen(port, function () {
     console.log(`Express app running on port ${port}`);

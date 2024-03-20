@@ -31,7 +31,7 @@ export default function ListIndexPage({ user }) {
 
     // Adjust the page title based on the path
     const pageTitle =
-        location.pathname === '/lists/public' ? 'Public Lists' : 'Your Lists';
+        location.pathname === '/lists/public' ? 'Public Lists' : 'Saved Lists';
     const pageSubTitle =
         location.pathname === '/lists/public'
             ? 'Browse all public lists.'

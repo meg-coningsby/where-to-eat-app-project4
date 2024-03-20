@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
-import { Card, CardContent, Typography, Grid, Box } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    Typography,
+    Grid,
+    Box,
+    CardActions,
+    Button,
+} from '@mui/material';
 
 export default function ListList({ lists }) {
     return (
@@ -23,6 +31,16 @@ export default function ListList({ lists }) {
                                         {list.name}
                                     </Typography>
                                 </CardContent>
+                                <CardActions>
+                                    <Button
+                                        size='small'
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(`/lists/${list._id}`);
+                                        }}>
+                                        View List Details
+                                    </Button>
+                                </CardActions>
                             </Card>
                         </Link>
                     </Grid>

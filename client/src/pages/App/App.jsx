@@ -17,6 +17,7 @@ import VisitedRestaurantsPage from '../VisitedRestaurantsPage/VisitedRestaurants
 import EventsIndexPage from '../EventsIndexPage/EventsIndexPage';
 import EventsShowPage from '../EventsShowpage/EventsShowPage';
 import NewEditEventPage from '../NewEditEventPage/NewEditEventPage';
+import NotificationsIndex from '../NotificationsIndex/NotificationsIndex';
 
 function App() {
     const apiKey = import.meta.env.VITE_apikey;
@@ -108,6 +109,10 @@ function App() {
                                 <Route
                                     path='/events/:id/edit'
                                     element={<NewEditEventPage user={user} />}
+                                />
+                                <Route
+                                    path='/notifications'
+                                    element={<NotificationsIndex user={user} />}
                                 />
                             </>
                         ) : (

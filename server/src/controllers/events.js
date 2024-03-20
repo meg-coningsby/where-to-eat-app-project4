@@ -1,4 +1,5 @@
 const Event = require('../models/event');
+const EventNotification = require('../models/eventNotification');
 
 module.exports = {
     indexOwnEvents,
@@ -81,12 +82,24 @@ async function show(req, res) {
     }
 }
 
-// Create a new event (user becomes the owner)
+// Create a new event (user becomes the owner) & notify the invitees (using eventNotifications)
 async function createEvent(req, res) {
     try {
         const eventData = req.body;
         eventData.owner = req.user.sub;
         const event = await Event.create(eventData);
+
+        // Add notification for the invited users
+        const invitedUsers = eventData.invitedUsers;
+        for (const userId of invitedUsers) {
+            await EventNotification.create({
+                user: userId,
+                type: 'invite',
+                event: event._id,
+                read: false,
+            });
+        }
+
         res.status(201).json(event);
     } catch (error) {
         console.error('Error in createEvent function:', error);
@@ -94,7 +107,7 @@ async function createEvent(req, res) {
     }
 }
 
-// Update an event (only available to the owner)
+// Update an event (only available to the owner) & notify invitees (if new ones added)
 async function updateEvent(req, res) {
     try {
         const eventId = req.params.id;
@@ -110,12 +123,34 @@ async function updateEvent(req, res) {
             return res.status(403).json({ error: 'Unauthorized' });
         }
 
+        // Keep a copy of the old invitees
+        const oldInvitees = new Set(
+            event.invitedUsers.map((user) => user.toString())
+        );
+
         await Event.findByIdAndUpdate(eventId, eventData);
+
         const updatedEvent = await Event.findById(eventId)
             .populate('location')
             .populate('invitedUsers')
             .populate('acceptedUsers')
             .populate('declinedUsers');
+
+        // Find new invitees by comparing old list to updated list
+        const newInvitees = updatedEvent.invitedUsers.filter(
+            (user) => !oldInvitees.has(user._id.toString())
+        );
+
+        // Create a notification for each new invitee
+        for (const invitee of newInvitees) {
+            await Notification.create({
+                user: invitee._id,
+                type: 'invite',
+                event: eventId,
+                read: false,
+            });
+        }
+
         res.json(updatedEvent);
     } catch (error) {
         console.error('Error in updateEvent function:', error);
@@ -173,6 +208,14 @@ async function acceptEvent(req, res) {
         event.acceptedUsers.push(userId);
         await event.save();
 
+        // Create a notification for the event owner
+        await EventNotification.create({
+            user: event.owner,
+            event: eventId,
+            type: 'inviteAccepted',
+            read: false,
+        });
+
         res.json({ message: 'Event accepted successfully' });
     } catch (error) {
         console.error('Error in acceptEvent function:', error);
@@ -206,6 +249,14 @@ async function declineEvent(req, res) {
         event.invitedUsers.pull(userId);
         event.declinedUsers.push(userId);
         await event.save();
+
+        // Create a notification for the event owner
+        await EventNotification.create({
+            user: event.owner,
+            event: eventId,
+            type: 'inviteDeclined',
+            read: false,
+        });
 
         res.json({ message: 'Event declined successfully' });
     } catch (error) {

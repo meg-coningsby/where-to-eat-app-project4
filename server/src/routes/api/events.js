@@ -18,10 +18,10 @@ router.post('/', ensureLoggedIn, eventsCtrl.createEvent);
 // GET Show an event details
 router.get('/:id', eventsCtrl.show);
 
-// PUT update a list
+// PUT update an event
 router.put('/:id', ensureLoggedIn, eventsCtrl.updateEvent);
 
-// DELETE a list
+// DELETE an event
 router.delete('/:id', ensureLoggedIn, eventsCtrl.deleteEvent);
 
 // PUT accept an event

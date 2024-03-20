@@ -14,11 +14,13 @@ import {
     Button,
     Tooltip,
     MenuItem,
+    Badge,
 } from '@mui/material';
 import {
     Menu as MenuIcon,
     AccountCircle,
     RestaurantMenu as RestaurantMenuIcon,
+    Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 
 export function NavBar({ user, setUser }) {
@@ -49,20 +51,29 @@ export function NavBar({ user, setUser }) {
     };
 
     const pageRoutes = {
-        Restaurants: '/restaurants',
-        'My Lists': '/lists',
+        'Search Restaurants': '/restaurants',
+        Lists: '/lists',
         'Public Lists': '/lists/public',
-        'My Visits': '/visited',
+        'Visited Restaurants': '/visited',
         Login: '/auth',
-        'My Events': '/events',
+        Events: '/events',
     };
 
     const userActions = user
-        ? { Logout: handleLogout }
+        ? {
+              Profile: () => navigate('/profile'),
+              Logout: handleLogout,
+          }
         : { Login: () => navigate('/auth') };
 
     let pages = user
-        ? ['Restaurants', 'My Lists', 'Public Lists', 'My Visits', 'My Events']
+        ? [
+              'Search Restaurants',
+              'Lists',
+              'Public Lists',
+              'Visited Restaurants',
+              'Events',
+          ]
         : ['Restaurants', 'Public Lists'];
 
     return (
@@ -165,11 +176,21 @@ export function NavBar({ user, setUser }) {
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title='View notifications'>
+                            <IconButton
+                                component={RouterLink}
+                                to='/notifications'
+                                sx={{ color: 'inherit', mr: 0.5 }}>
+                                <Badge badgeContent={0} color='secondary'>
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                        </Tooltip>
                         <Tooltip title='Open settings'>
                             <IconButton
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}>
-                                <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                                <Avatar sx={{ bgcolor: 'primary.main' }}>
                                     <AccountCircle />
                                 </Avatar>
                             </IconButton>
@@ -208,35 +229,3 @@ export function NavBar({ user, setUser }) {
         </AppBar>
     );
 }
-// <nav>
-//     {user ? (
-//         <>
-//             <Link to='/'>Home</Link>
-//             &nbsp; | &nbsp;
-//             <Link to='/restaurants'>Search Restaurants</Link>
-//             &nbsp; | &nbsp;
-//             <Link to='/lists'>My Lists</Link>
-//             &nbsp; | &nbsp;
-//             <Link to='/lists/public'>Public Lists</Link>
-//             &nbsp; | &nbsp;
-//             <Link to='/visited'>My Visits</Link>
-//             &nbsp; | &nbsp;
-//             <Link
-//                 to=''
-//                 onClick={() => {
-//                     logout();
-//                     setUser(null);
-//                 }}>
-//                 Logout
-//             </Link>
-//         </>
-//     ) : (
-//         <>
-//             <Link to='/auth'>Login</Link>
-//             &nbsp; | &nbsp;
-//             <Link to='/restaurants'>Search Restaurants</Link>
-//             &nbsp; | &nbsp;
-//             <Link to='/lists/public'>Public Lists</Link>
-//         </>
-//     )}
-// </nav>

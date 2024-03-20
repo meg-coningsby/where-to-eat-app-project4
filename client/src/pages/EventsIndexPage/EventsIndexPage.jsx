@@ -70,7 +70,6 @@ export default function EventsIndexPage({ user }) {
                     <ToggleButton value='all'>All Events</ToggleButton>
                     <ToggleButton value='own'>My Own Events</ToggleButton>
                     <ToggleButton value='invited'>Invited Events</ToggleButton>
-                    {/* Add more filter options as needed */}
                 </ToggleButtonGroup>
                 <EventList events={events} user={user} />
             </Box>
