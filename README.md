@@ -133,6 +133,7 @@ To come.
 
 Planned future enhancements for the app:
 
+-   Improve error notifications in the UI (not just console notifications of errors)
 -   Add functionality for user's to add friends (and these requests can be accepted / declined), and then limit event invites to friends
 -   Ability to see the restaurant search results in map view (not just list view)
 -   Ability to see your lists' restaurants in a map view (not just list view)

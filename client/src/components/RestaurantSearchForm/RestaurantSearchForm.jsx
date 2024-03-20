@@ -13,7 +13,13 @@ import {
     Box,
 } from '@mui/material';
 
-export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
+export default function RestaurantSearchForm({
+    restaurants,
+    setRestaurants,
+    sortCriteria,
+    setSortCriteria,
+    sortRestaurants,
+}) {
     const inputRef = useRef(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [searchParams, setSearchParams] = useState({
@@ -21,11 +27,9 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
         cuisine: '',
         minRating: '',
     });
-    const [searchTriggered, setSearchTriggered] = useState(false);
 
     const onPlaceChanged = (place) => {
         setSelectedPlace(place);
-        setSearchTriggered(false);
     };
 
     useAutocomplete({
@@ -49,9 +53,8 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
         }));
     };
 
-    // Perform search when search is triggered and both place and searchParams are set
-    useEffect(() => {
-        if (!searchTriggered || !selectedPlace || !service) return;
+    const performSearch = () => {
+        if (!selectedPlace || !service) return;
 
         const request = {
             location: new google.maps.LatLng(
@@ -73,16 +76,20 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
                 const filteredResults = results.filter(
                     (result) => result.rating >= searchParams.minRating
                 );
-                setRestaurants(filteredResults);
+                const sortedResults = sortRestaurants(
+                    filteredResults,
+                    sortCriteria
+                );
+                setRestaurants(sortedResults); // Now sorting is handled by the parent before setting
             } else {
                 console.error('Places Service failed:', status);
                 setRestaurants([]);
             }
         });
-    }, [searchTriggered, service]);
+    };
 
     const handleSearch = () => {
-        setSearchTriggered(true);
+        performSearch();
     };
 
     return (
@@ -107,8 +114,9 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
                             displayEmpty
                             variant='outlined'>
                             <MenuItem value='restaurant'>Restaurant</MenuItem>
+                            <MenuItem value='bakery'>Bakery</MenuItem>
+                            <MenuItem value='bar'>Bar</MenuItem>
                             <MenuItem value='cafe'>Cafe</MenuItem>
-                            <MenuItem value='takeaway'>Takeaway</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -122,10 +130,22 @@ export default function RestaurantSearchForm({ restaurants, setRestaurants }) {
                             <MenuItem value='' disabled>
                                 Cuisine
                             </MenuItem>
-                            <MenuItem value='japanese'>Japanese</MenuItem>
+                            <MenuItem value='australian'>Australian</MenuItem>
+                            <MenuItem value='south american'>
+                                South American
+                            </MenuItem>
+                            <MenuItem value='chinese'>Chinese</MenuItem>
+                            <MenuItem value='french'>French</MenuItem>
+                            <MenuItem value='greek'>Greek</MenuItem>
+                            <MenuItem value='indian'>Indian</MenuItem>
                             <MenuItem value='italian'>Italian</MenuItem>
+                            <MenuItem value='japanese'>Japanese</MenuItem>
+                            <MenuItem value='korean'>Korean</MenuItem>
                             <MenuItem value='mexican'>Mexican</MenuItem>
+                            <MenuItem value='spanish'>Spanish</MenuItem>
                             <MenuItem value='thai'>Thai</MenuItem>
+                            <MenuItem value='turkish'>Turkish</MenuItem>
+                            <MenuItem value='vietnamese'>Vietnamese</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item xs={12} sm={6}>

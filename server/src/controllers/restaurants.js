@@ -55,7 +55,8 @@ async function addToList(req, res) {
             await list.save();
             res.status(201).json(list);
         } else {
-            res.status(400).json({ error: 'Restaurant already in list' });
+            // Instead of erroring, just return the current state of the list
+            res.status(200).json(list);
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -83,13 +84,6 @@ async function removeFromList(req, res) {
             return res
                 .status(404)
                 .json({ error: 'Restaurant not found in list' });
-        }
-
-        // Check if the restaurant is associated with any other lists
-        const otherLists = await List.find({ restaurants: restaurantId });
-        if (otherLists.length === 0) {
-            // If not associated with any other lists, delete the restaurant from the database
-            await Restaurant.findByIdAndDelete(restaurantId);
         }
 
         res.status(200).json(list);
