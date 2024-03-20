@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { Button, Typography, Box, CardMedia } from '@mui/material';
 
 export default function Home({ user }) {
     return (
@@ -13,6 +11,13 @@ export default function Home({ user }) {
             minHeight='100vh'
             textAlign='center'
             padding='20px'>
+            <CardMedia
+                component='img'
+                alt='Where to eat feature image'
+                height='140'
+                image='../../assets/homepage-image.png'
+                sx={{ width: 345, marginBottom: 2 }}
+            />
             <Typography variant='h1' gutterBottom>
                 Where To Eat
             </Typography>
