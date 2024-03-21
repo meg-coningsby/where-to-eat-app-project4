@@ -231,13 +231,11 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
                             </Tooltip>
                         )}
                         <Tooltip title='Open settings'>
-                            <Tooltip title='Open settings'>
-                                <IconButton
-                                    onClick={handleOpenUserMenu}
-                                    sx={{ p: 0, color: 'inherit' }}>
-                                    <AccountCircle />
-                                </IconButton>
-                            </Tooltip>
+                            <IconButton
+                                onClick={handleOpenUserMenu}
+                                sx={{ p: 0, color: 'inherit' }}>
+                                <AccountCircle />
+                            </IconButton>
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
