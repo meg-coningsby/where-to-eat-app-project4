@@ -7,6 +7,7 @@ import { getUser } from '../../utilities/users-service';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { lightTheme } from '../../themes/LightTheme';
 import { darkTheme } from '../../themes/DarkTheme';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import Home from '../Home/Home';
 import AuthPage from '../AuthPage/AuthPage';
@@ -48,6 +49,7 @@ function App() {
 
     return (
         <ThemeProvider theme={currentTheme}>
+            <CssBaseline />
             <GoogleMapsProvider
                 googleMapsAPIKey={apiKey}
                 mapContainer={mapContainer}
@@ -167,7 +169,7 @@ function App() {
                             </>
                         )}
 
-                        {/* Fallback route */}
+                        {/* Fallback Route */}
                         <Route path='*' element={<Navigate to='/' />} />
                     </Routes>
                 </main>

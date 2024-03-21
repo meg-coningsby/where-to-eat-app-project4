@@ -20,7 +20,10 @@ export default function VisitedRestaurantDetails({
             <CardContent>
                 <Typography variant='h6'>
                     <Link
-                        to={`/restaurants/${visited.restaurant.googlePlaceId}`}>
+                        to={`/restaurants/${visited.restaurant.googlePlaceId}`}
+                        style={{
+                            color: 'inherit',
+                        }}>
                         {visited.restaurant.name}
                     </Link>
                 </Typography>

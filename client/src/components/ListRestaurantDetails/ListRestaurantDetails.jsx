@@ -28,7 +28,10 @@ export default function ListRestaurantDetails({
                         <CardContent sx={{ flexGrow: 1 }}>
                             <Typography variant='h6'>
                                 <Link
-                                    to={`/restaurants/${restaurant.googlePlaceId}`}>
+                                    to={`/restaurants/${restaurant.googlePlaceId}`}
+                                    style={{
+                                        color: 'inherit',
+                                    }}>
                                     {restaurant.name}
                                 </Link>
                             </Typography>

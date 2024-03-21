@@ -15,7 +15,7 @@ export default function Home({ user }) {
                 component='img'
                 image='/homepageImage.png'
                 alt='Homepage Image'
-                style={{ maxWidth: '50%', height: 'auto' }}
+                style={{ maxWidth: '30%', height: 'auto' }}
             />
             <Typography variant='h1' gutterBottom>
                 Where To Eat

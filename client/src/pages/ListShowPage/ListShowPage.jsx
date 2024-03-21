@@ -81,7 +81,6 @@ export default function ListShowPage({ user }) {
             setIsModalOpen(false);
             setVisitDetails({ visitDate: '', comments: '' });
             setCurrentRestaurantId('');
-            // Optionally refresh the list or specific data here
         } catch (error) {
             console.error('Error marking restaurant as visited', error);
         }

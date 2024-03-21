@@ -57,11 +57,10 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
     };
 
     const pageRoutes = {
-        Home: '/',
-        'Search Restaurants': '/restaurants',
+        Search: '/restaurants',
         Lists: '/lists',
         'Public Lists': '/lists/public',
-        'Visited Restaurants': '/visited',
+        Visited: '/visited',
         Login: '/auth',
         Events: '/events',
     };
@@ -75,15 +74,8 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
         : { Login: () => navigate('/auth') };
 
     let pages = user
-        ? [
-              'Home',
-              'Search Restaurants',
-              'Lists',
-              'Public Lists',
-              'Visited Restaurants',
-              'Events',
-          ]
-        : ['Home', 'Search Restaurants', 'Public Lists'];
+        ? ['Search', 'Lists', 'Public Lists', 'Visited', 'Events']
+        : ['Search', 'Public Lists'];
 
     // Setting up http polling
     const POLLING_INTERVAL = 60000; // 60 seconds
@@ -139,18 +131,11 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
         <AppBar position='static'>
             <Container maxWidth='xl'>
                 <Toolbar disableGutters>
-                    <RouterLink
-                        to='/'
-                        style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <RestaurantMenuIcon
-                            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-                        />
-                    </RouterLink>
                     <Typography
                         variant='h6'
                         noWrap
-                        component='a'
-                        href=''
+                        component={RouterLink}
+                        to='/'
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -246,13 +231,13 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
                             </Tooltip>
                         )}
                         <Tooltip title='Open settings'>
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}>
-                                <Avatar sx={{ bgcolor: 'primary.main' }}>
+                            <Tooltip title='Open settings'>
+                                <IconButton
+                                    onClick={handleOpenUserMenu}
+                                    sx={{ p: 0, color: 'inherit' }}>
                                     <AccountCircle />
-                                </Avatar>
-                            </IconButton>
+                                </IconButton>
+                            </Tooltip>
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
