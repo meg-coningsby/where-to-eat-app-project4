@@ -50,7 +50,7 @@ export default function VisitedRestaurantsPage() {
     return (
         <>
             {visitedList ? (
-                <Box sx={{ maxWidth: 600, margin: '0 auto', paddingTop: 4 }}>
+                <Box sx={{ width: '80%', margin: '0 auto', paddingTop: 4 }}>
                     <Box sx={{ textAlign: 'center' }}>
                         <Typography variant='h4' gutterBottom>
                             Visited Restaurants
@@ -61,7 +61,12 @@ export default function VisitedRestaurantsPage() {
                         <Box mt={4}>
                             <Grid container spacing={2}>
                                 {visitedList.map((visited, index) => (
-                                    <Grid item xs={12} sm={6} key={index}>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        md={4}
+                                        key={index}>
                                         <VisitedRestaurantDetails
                                             visited={visited}
                                             onDeleteVisit={handleDeleteVisit}

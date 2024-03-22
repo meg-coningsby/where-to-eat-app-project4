@@ -14,11 +14,11 @@ import {
 } from '@mui/material';
 
 export default function RestaurantSearchForm({
-    restaurants,
     setRestaurants,
     sortCriteria,
-    setSortCriteria,
     sortRestaurants,
+    setSearchPerformed,
+    setIsLoading,
 }) {
     const inputRef = useRef(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
@@ -56,6 +56,9 @@ export default function RestaurantSearchForm({
     const performSearch = () => {
         if (!selectedPlace || !service) return;
 
+        setSearchPerformed(true);
+        setIsLoading(true);
+
         const request = {
             location: new google.maps.LatLng(
                 selectedPlace.geometry.location.lat(),
@@ -80,10 +83,12 @@ export default function RestaurantSearchForm({
                     filteredResults,
                     sortCriteria
                 );
-                setRestaurants(sortedResults); // Now sorting is handled by the parent before setting
+                setRestaurants(sortedResults);
+                setIsLoading(false);
             } else {
                 console.error('Places Service failed:', status);
                 setRestaurants([]);
+                setIsLoading(false);
             }
         });
     };
@@ -126,14 +131,14 @@ export default function RestaurantSearchForm({
                             onChange={handleInputChange}
                             fullWidth
                             displayEmpty
-                            variant='outlined'>
-                            <MenuItem value='' disabled>
-                                Cuisine
-                            </MenuItem>
+                            variant='outlined'
+                            disabled={
+                                searchParams.type === 'bar' ||
+                                searchParams.type === 'cafe' ||
+                                searchParams.type === 'bakery'
+                            }>
+                            <MenuItem value=''>Cuisine</MenuItem>
                             <MenuItem value='australian'>Australian</MenuItem>
-                            <MenuItem value='south american'>
-                                South American
-                            </MenuItem>
                             <MenuItem value='chinese'>Chinese</MenuItem>
                             <MenuItem value='french'>French</MenuItem>
                             <MenuItem value='greek'>Greek</MenuItem>
@@ -142,7 +147,6 @@ export default function RestaurantSearchForm({
                             <MenuItem value='japanese'>Japanese</MenuItem>
                             <MenuItem value='korean'>Korean</MenuItem>
                             <MenuItem value='mexican'>Mexican</MenuItem>
-                            <MenuItem value='spanish'>Spanish</MenuItem>
                             <MenuItem value='thai'>Thai</MenuItem>
                             <MenuItem value='turkish'>Turkish</MenuItem>
                             <MenuItem value='vietnamese'>Vietnamese</MenuItem>

@@ -89,7 +89,7 @@ export default function ListShowPage({ user }) {
     return (
         <>
             {list ? (
-                <Box sx={{ maxWidth: 600, margin: '0 auto', paddingTop: 4 }}>
+                <Box sx={{ width: '80%', margin: '0 auto', paddingTop: 4 }}>
                     <Box sx={{ textAlign: 'center' }}>
                         <Typography variant='h4' gutterBottom>
                             {list.name}

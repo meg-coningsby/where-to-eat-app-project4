@@ -13,6 +13,8 @@ import RestaurantList from '../../components/RestaurantList/RestaurantList';
 export default function RestaurantSearch() {
     const [restaurants, setRestaurants] = useState([]);
     const [sortCriteria, setSortCriteria] = useState('rating');
+    const [searchPerformed, setSearchPerformed] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const sortRestaurants = (restaurants, criteria) => {
         if (criteria === 'name') {
@@ -50,11 +52,11 @@ export default function RestaurantSearch() {
                 Restaurant Search
             </Typography>
             <RestaurantSearchForm
-                restaurants={restaurants}
                 setRestaurants={setRestaurants}
                 sortCriteria={sortCriteria}
-                setSortCriteria={setSortCriteria}
                 sortRestaurants={sortRestaurants}
+                setSearchPerformed={setSearchPerformed}
+                setIsLoading={setIsLoading}
                 sx={{ width: '100%', maxWidth: 600 }}
             />
             {restaurants.length > 0 && (
@@ -73,6 +75,11 @@ export default function RestaurantSearch() {
                 restaurants={restaurants}
                 sx={{ width: '100%', maxWidth: 600 }}
             />
+            {searchPerformed && !isLoading && restaurants.length === 0 && (
+                <Typography variant='body1' align='center'>
+                    No places found matching your search filters.
+                </Typography>
+            )}
         </Container>
     );
 }

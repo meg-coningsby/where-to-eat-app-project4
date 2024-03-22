@@ -18,7 +18,8 @@ export default function ListRestaurantDetails({
     return (
         <Grid container spacing={2}>
             {restaurants.map((restaurant, index) => (
-                <Grid item xs={12} sm={6} key={index}>
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                    {' '}
                     <Card
                         sx={{
                             height: '100%',
