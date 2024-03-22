@@ -25,7 +25,8 @@ async function index(req, res) {
 
         res.json(restaurants);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error in index restaurants function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -39,7 +40,7 @@ async function addToList(req, res) {
         if (!list) {
             return res
                 .status(404)
-                .json({ error: 'List not found or unauthorized access' });
+                .json({ error: 'List not found or unauthorised access' });
         }
 
         let restaurant = await Restaurant.findOne({ googlePlaceId });
@@ -60,7 +61,8 @@ async function addToList(req, res) {
             res.status(200).json(list);
         }
     } catch (error) {
-        res.status(400).send(error.message);
+        console.error('Error in addToList function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -74,7 +76,7 @@ async function removeFromList(req, res) {
         if (!list) {
             return res
                 .status(404)
-                .json({ error: 'List not found or unauthorized access' });
+                .json({ error: 'List not found or unauthorised access' });
         }
 
         const index = list.restaurants.indexOf(restaurantId);
@@ -89,7 +91,8 @@ async function removeFromList(req, res) {
 
         res.status(200).json(list);
     } catch (error) {
-        res.status(400).send(error.message);
+        console.error('Error in removeFromList function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -109,6 +112,7 @@ async function update(req, res) {
 
         res.status(200).json(restaurant);
     } catch (error) {
-        res.status(400).send(error.message);
+        console.error('Error in update list function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }

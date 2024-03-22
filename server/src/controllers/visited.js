@@ -17,7 +17,8 @@ async function index(req, res) {
             .sort({ visitDate: -1 });
         res.json(visits);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error in index visited function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -39,7 +40,7 @@ async function addVisited(req, res) {
 
         res.status(201).json(savedVisited);
     } catch (error) {
-        console.error('Error adding visited restaurant:', error);
+        console.error('Error in addVisited function:', error);
         res.status(500).json({ error: 'Failed to add visited restaurant' });
     }
 }
@@ -76,7 +77,7 @@ async function addVisitedFromSearch(req, res) {
         const savedVisited = await visited.save();
         res.status(201).json(savedVisited);
     } catch (error) {
-        console.error('Error adding visited restaurant:', error);
+        console.error('Error in addVisitedFromSearch function:', error);
         res.status(500).json({ error: 'Failed to add visited restaurant' });
     }
 }
@@ -105,7 +106,7 @@ async function deleteVisited(req, res) {
 
         res.json({ message: 'Visited restaurant deleted successfully' });
     } catch (error) {
-        console.error('Error deleting visited restaurant:', error);
+        console.error('Error in deleteVisited function:', error);
         res.status(500).json({ error: 'Failed to delete visited restaurant' });
     }
 }
@@ -127,7 +128,7 @@ async function checkIfVisited(req, res) {
 
         res.json({ isVisited });
     } catch (error) {
-        console.error('Error checking if visited:', error);
+        console.error('Error in checkIfVisited function:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }

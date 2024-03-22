@@ -15,7 +15,8 @@ async function index(req, res) {
         const lists = await List.find({ owner: req.user.sub });
         res.json(lists);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error in index list function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -25,7 +26,8 @@ async function indexPublic(req, res) {
         const lists = await List.find({ public: true });
         res.json(lists);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error in indexPublic list function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -38,7 +40,8 @@ async function show(req, res) {
         }
         res.json(list);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error in show list function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -52,7 +55,8 @@ async function addList(req, res) {
         });
         res.json(newList);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error in addList function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -70,7 +74,8 @@ async function updateList(req, res) {
         }
         res.json(updatedList);
     } catch (error) {
-        res.status(400).send({ error: 'Could not update the list' });
+        console.error('Error in updateList function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -86,7 +91,7 @@ async function deleteList(req, res) {
 
         res.json({ message: 'List deleted successfully' });
     } catch (error) {
-        console.error('Error deleting list:', error);
+        console.error('Error deleteList function:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }

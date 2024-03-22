@@ -15,8 +15,8 @@ async function eventNotificationsIndex(req, res) {
         });
         res.json(notifications);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching notifications');
+        console.error('Error in eventNotificationsIndex function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -36,7 +36,7 @@ async function markNotificationAsRead(req, res) {
 
         res.json(updatedNotification);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Error marking notification as read');
+        console.error('Error in markNotificationAsRead function:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }

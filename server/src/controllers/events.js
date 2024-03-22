@@ -77,7 +77,7 @@ async function show(req, res) {
         }
         res.json(event);
     } catch (error) {
-        console.error('Error in show function:', error);
+        console.error('Error in show function for events:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
@@ -120,7 +120,7 @@ async function updateEvent(req, res) {
         }
 
         if (event.owner.toString() !== userId) {
-            return res.status(403).json({ error: 'Unauthorized' });
+            return res.status(403).json({ error: 'Unauthorised' });
         }
 
         // Keep a copy of the old invitees
