@@ -1,12 +1,5 @@
 import { Link } from 'react-router-dom';
-import {
-    Grid,
-    Card,
-    CardContent,
-    Typography,
-    Container,
-    Box,
-} from '@mui/material';
+import { Grid, Card, CardContent, Typography, Container } from '@mui/material';
 
 export default function RestaurantList({ restaurants }) {
     return (

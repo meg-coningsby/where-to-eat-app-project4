@@ -37,7 +37,6 @@ export default function EventForm({ user }) {
                 try {
                     const eventDetails = await eventsAPI.fetchEvent(id);
 
-                    // Assume locations state is already populated correctly
                     const eventDate = new Date(eventDetails.date);
                     const formattedDate = eventDate.toISOString().split('T')[0];
                     setForm({
@@ -45,8 +44,8 @@ export default function EventForm({ user }) {
                         date: formattedDate,
                         invitedUsers: Array.isArray(eventDetails.invitedUsers)
                             ? eventDetails.invitedUsers
-                                  .map((user) => user._id) // Extract _id values
-                                  .filter((id) => Boolean(id)) // Filter out falsy values like undefined, null, or ''
+                                  .map((user) => user._id)
+                                  .filter((id) => Boolean(id)) // Filter out values like undefined, null, or ''
                             : [],
                         location: eventDetails.location
                             ? eventDetails.location._id

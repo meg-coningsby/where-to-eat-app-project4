@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     Card,
     CardContent,
@@ -9,19 +9,8 @@ import {
     Button,
 } from '@mui/material';
 
-import * as eventsAPI from '../../utilities/events-api';
-
 export default function EventList({ events }) {
     const navigate = useNavigate();
-
-    const handleDeleteEvent = async (id) => {
-        try {
-            await eventsAPI.deleteEvent(id);
-            navigate('/events');
-        } catch (error) {
-            console.error('Error deleting event', error);
-        }
-    };
 
     return (
         <Box sx={{ width: '80%', margin: '0 auto', paddingTop: 4 }}>

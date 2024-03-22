@@ -12,7 +12,6 @@ module.exports = {
 async function allButCurrentUser(req, res) {
     try {
         const currentUser = req.user.sub;
-        console.log(currentUser);
 
         // Fetch all users excluding the current user
         const users = await User.find({ _id: { $ne: currentUser } }).select(
@@ -60,7 +59,6 @@ async function login(req, res) {
 // Check their token
 function checkToken(req, res) {
     // req.user will always be there for you when a token is sent
-    console.log('req.user', req.user);
     res.json(req.user.exp);
 }
 

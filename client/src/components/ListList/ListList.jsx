@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Card,
     CardContent,
@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 
 export default function ListList({ lists }) {
+    const navigate = useNavigate();
+
     return (
         <Box sx={{ width: '100%', margin: '0 auto', paddingTop: 4 }}>
             <Grid container spacing={2}>

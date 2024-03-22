@@ -52,6 +52,7 @@ export default function EventDetail({
         );
     };
 
+    // logic to render different cardactions based on the user's role in the event (owner vs invitee vs accepted / declined)
     const renderCardActions = () => {
         if (!user) return null;
 

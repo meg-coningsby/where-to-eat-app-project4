@@ -10,7 +10,6 @@ import {
     Typography,
     Menu,
     Container,
-    Avatar,
     Button,
     Tooltip,
     MenuItem,
@@ -19,7 +18,6 @@ import {
 import {
     Menu as MenuIcon,
     AccountCircle,
-    RestaurantMenu as RestaurantMenuIcon,
     Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 
@@ -78,7 +76,7 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
         : ['Search', 'Public Lists'];
 
     // Setting up http polling
-    const POLLING_INTERVAL = 10000; // 60 seconds
+    const POLLING_INTERVAL = 10000; // 10 seconds
 
     useEffect(() => {
         // If there's no user logged in, do not fetch notifications
@@ -114,7 +112,7 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
             POLLING_INTERVAL
         );
 
-        // Add event listener for visibility change
+        // Add event listener for visibility change (if the tab is hidden or not viewed)
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
         // Clean up on component unmount

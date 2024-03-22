@@ -134,7 +134,7 @@ export default function RestaurantSearchDetailPage({ user }) {
                             <Button
                                 variant='contained'
                                 onClick={openVisitedModal}>
-                                Mark as Visited
+                                Add a Visit
                             </Button>
                         </>
                     )}

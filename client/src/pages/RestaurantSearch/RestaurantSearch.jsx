@@ -4,7 +4,6 @@ import {
     Container,
     ToggleButtonGroup,
     ToggleButton,
-    Pagination,
 } from '@mui/material';
 
 import RestaurantSearchForm from '../../components/RestaurantSearchForm/RestaurantSearchForm';

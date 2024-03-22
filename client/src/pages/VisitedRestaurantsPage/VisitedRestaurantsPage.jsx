@@ -1,15 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Typography,
-    Box,
-    Grid,
-    Rating,
-} from '@mui/material';
+import { Typography, Box, Grid } from '@mui/material';
 
 import * as visitedAPI from '../../utilities/visited-api';
 import Modal from '../../components/Modal/Modal';

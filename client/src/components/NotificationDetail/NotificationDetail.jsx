@@ -15,7 +15,6 @@ export default function NotificationDetail({
     fetchNotifications,
 }) {
     const navigate = useNavigate();
-    console.log(notification);
 
     const eventDate = new Date(notification.event.date).toLocaleDateString(
         'en-AU',
