@@ -6,6 +6,7 @@ module.exports = {
     addVisited,
     addVisitedFromSearch,
     deleteVisited,
+    checkIfVisited,
 };
 
 async function index(req, res) {
@@ -105,5 +106,27 @@ async function deleteVisited(req, res) {
     } catch (error) {
         console.error('Error deleting visited restaurant:', error);
         res.status(500).json({ error: 'Failed to delete visited restaurant' });
+    }
+}
+
+// Checks if a restaurant is on the visited list for that user
+async function checkIfVisited(req, res) {
+    const { restaurantId } = req.params;
+    try {
+        const restaurant = await Restaurant.findById(restaurantId);
+
+        if (!restaurant) {
+            return res.status(404).json({ message: 'Restaurant not found' });
+        }
+
+        const isVisited = await Visited.exists({
+            user: req.user.sub,
+            restaurant: restaurant._id,
+        });
+
+        res.json({ isVisited });
+    } catch (error) {
+        console.error('Error checking if visited:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 }

@@ -2,9 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
     Button,
-    Card,
-    CardActions,
-    CardContent,
     Typography,
     Box,
     TextField,
@@ -123,12 +120,27 @@ export default function ListShowPage({ user }) {
                     )}
                     {list.restaurants && list.restaurants.length > 0 ? (
                         <Box mt={4}>
-                            <ListRestaurantDetails
-                                restaurants={list.restaurants}
-                                user={user}
-                                handleRemoveRestaurant={handleRemoveRestaurant}
-                                handleMarkAsVisited={handleMarkAsVisited}
-                            />
+                            <Grid container spacing={2}>
+                                {list.restaurants.map((restaurant, index) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        md={4}
+                                        key={index}>
+                                        <ListRestaurantDetails
+                                            restaurant={restaurant}
+                                            user={user}
+                                            handleRemoveRestaurant={
+                                                handleRemoveRestaurant
+                                            }
+                                            handleMarkAsVisited={
+                                                handleMarkAsVisited
+                                            }
+                                        />
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </Box>
                     ) : (
                         <Typography textAlign='center' mt={2}>

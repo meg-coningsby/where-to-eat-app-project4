@@ -81,7 +81,7 @@ Copy `.env.example` to `.env` and update as needed. Please note, there is a .env
 
 ## 📸 App Screenshots
 
-To come.
+Please see the light mode app screenshots below. There is also a dark mode for the app, and the styling is responsive to screen size.
 
 <a id="item-five"></a>
 
@@ -119,7 +119,9 @@ I worked through a range of User Stories - please see the full details on my [Tr
 
 ## 🔳 Wireframes
 
-To come.
+Please see my original [wireframes here](https://www.figma.com/file/1WQCd8UVPH9cKrea2XqKTR/Where-To-Eat?type=design&node-id=0%3A1&mode=design&t=pxQ9TD3ikV2iXAyC-1).
+
+The design morphed quite a bit once I got into React and started using Material UI for my styling.
 
 <a id="item-eight"></a>
 

@@ -19,3 +19,8 @@ export function addRestaurantFromSearchToVisited(visitedData) {
 export function deleteRestaurantFromVisited(restaurantId) {
     return sendRequest(`/api/visited/${restaurantId}`, 'DELETE');
 }
+
+// check if a restaurant has been visited
+export function checkIfVisited(restaurantId) {
+    return sendRequest(`/api/visited/check-visited/${restaurantId}`);
+}
