@@ -123,7 +123,10 @@ export default function RestaurantSearchDetailPage({ user }) {
                 <Box mt={2}>
                     {user && (
                         <>
-                            <Button variant='contained' onClick={openListModal}>
+                            <Button
+                                variant='contained'
+                                onClick={openListModal}
+                                sx={{ mr: 2 }}>
                                 Add to List
                             </Button>
                             <Button

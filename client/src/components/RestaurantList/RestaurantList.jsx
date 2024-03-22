@@ -10,7 +10,7 @@ import {
 
 export default function RestaurantList({ restaurants }) {
     return (
-        <Container maxWidth='lg' sx={{ mt: 4 }}>
+        <Container maxWidth='lg' sx={{ mt: 4, pb: 4 }}>
             <Grid container spacing={2} justifyContent='center'>
                 {restaurants.map((restaurant) => (
                     <Grid
