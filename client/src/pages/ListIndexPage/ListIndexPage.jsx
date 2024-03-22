@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Typography, Container, Box, Button } from '@mui/material';
 
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 import ListList from '../../components/ListList/ListList';
 import * as listsAPI from '../../utilities/lists-api';
 
@@ -15,9 +16,8 @@ export default function ListIndexPage({ user }) {
             // Check the current pathname and decide which API call to make
             if (location.pathname === '/lists/public') {
                 lists = await listsAPI.fetchPublicLists();
-                // Optionally, set the page title or make other UI adjustments here
             } else {
-                lists = await listsAPI.fetchLists(); // User's private lists
+                lists = await listsAPI.fetchLists();
             }
             setLists(lists);
         } catch (error) {
@@ -27,7 +27,7 @@ export default function ListIndexPage({ user }) {
 
     useEffect(() => {
         fetchLists();
-    }, [location.pathname]); // Re-fetch lists if the path changes
+    }, [location.pathname]);
 
     // Adjust the page title based on the path
     const pageTitle =
@@ -36,6 +36,8 @@ export default function ListIndexPage({ user }) {
         location.pathname === '/lists/public'
             ? 'Get inspired and browse through lists other users have created.'
             : "Create lists to save all the places you'd want to visit or even just return to. You can also mark any saved restaurants as 'visited' or use them to create events to invite your friends to try something new.";
+
+    usePageTitle(pageTitle);
 
     return (
         <Container maxWidth='md'>

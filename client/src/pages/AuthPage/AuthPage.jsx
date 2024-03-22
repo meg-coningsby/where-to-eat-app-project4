@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { Box, Typography } from '@mui/material';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function AuthPage({ setUser }) {
     const [toggleLogin, setToggleLogin] = useState(true);
+
+    usePageTitle('Auth Page');
+
     return (
         <>
             {toggleLogin ? (

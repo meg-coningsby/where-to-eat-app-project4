@@ -4,8 +4,10 @@ import { Box, Container } from '@mui/material';
 
 import * as eventsAPI from '../../utilities/events-api';
 import EventDetail from '../../components/EventDetail/EventDetail';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function EventsShowPage({ user }) {
+    usePageTitle(`Event Details`);
     const navigate = useNavigate();
     const { id } = useParams();
     const [eventDetails, setEventDetails] = useState(null);

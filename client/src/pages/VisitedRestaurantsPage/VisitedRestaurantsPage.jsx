@@ -14,8 +14,10 @@ import {
 import * as visitedAPI from '../../utilities/visited-api';
 import Modal from '../../components/Modal/Modal';
 import VisitedRestaurantDetails from '../../components/VisitedRestaurantDetails/VisitedRestaurantDetails';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function VisitedRestaurantsPage() {
+    usePageTitle(`Visited Restaurants`);
     const [visitedList, setVisitedList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedComment, setSelectedComment] = useState('');

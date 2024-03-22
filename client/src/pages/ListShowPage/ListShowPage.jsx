@@ -9,6 +9,7 @@ import {
     Rating,
 } from '@mui/material';
 
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 import * as visitedAPI from '../../utilities/visited-api';
@@ -16,6 +17,7 @@ import Modal from '../../components/Modal/Modal';
 import ListRestaurantDetails from '../../components/ListRestaurantDetails/ListRestaurantDetails';
 
 export default function ListShowPage({ user }) {
+    usePageTitle(`List Details`);
     const navigate = useNavigate();
     const { id } = useParams();
     const [list, setList] = useState(null);

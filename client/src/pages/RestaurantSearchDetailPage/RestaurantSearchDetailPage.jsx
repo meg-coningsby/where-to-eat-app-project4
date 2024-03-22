@@ -14,12 +14,14 @@ import {
 import axios from 'axios';
 import RestaurantDetail from '../../components/RestaurantDetails/RestaurantDetails';
 import Modal from '../../components/Modal/Modal';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 import * as listsAPI from '../../utilities/lists-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 import * as visitedAPI from '../../utilities/visited-api';
 
 export default function RestaurantSearchDetailPage({ user }) {
+    usePageTitle(`Restaurant Details`);
     const { id } = useParams();
     const [restaurantDetails, setRestaurantDetails] = useState(null);
     const [isListModalOpen, setIsListModalOpen] = useState(false);

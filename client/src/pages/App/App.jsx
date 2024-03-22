@@ -2,13 +2,13 @@ import { useState, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
 import { ThemeProvider } from '@mui/material/styles';
-
-import { getUser } from '../../utilities/users-service';
-import { NavBar } from '../../components/NavBar/NavBar';
 import { lightTheme } from '../../themes/LightTheme';
 import { darkTheme } from '../../themes/DarkTheme';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { getUser } from '../../utilities/users-service';
+
+import { NavBar } from '../../components/NavBar/NavBar';
 import Home from '../Home/Home';
 import AuthPage from '../AuthPage/AuthPage';
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch';

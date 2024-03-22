@@ -1,7 +1,10 @@
 import { Button, Typography, Container, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function Profile({ user }) {
+    usePageTitle('Profile');
+
     return (
         <Container>
             <Box

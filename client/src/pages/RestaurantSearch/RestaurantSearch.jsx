@@ -9,8 +9,10 @@ import {
 
 import RestaurantSearchForm from '../../components/RestaurantSearchForm/RestaurantSearchForm';
 import RestaurantList from '../../components/RestaurantList/RestaurantList';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function RestaurantSearch() {
+    usePageTitle(`Restaurant Search`);
     const [restaurants, setRestaurants] = useState([]);
     const [sortCriteria, setSortCriteria] = useState('rating');
     const [searchPerformed, setSearchPerformed] = useState(false);

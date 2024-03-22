@@ -9,10 +9,13 @@ import {
     ToggleButtonGroup,
 } from '@mui/material';
 
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 import EventList from '../../components/EventList/EventList';
 import * as eventsAPI from '../../utilities/events-api';
 
 export default function EventsIndexPage({ user }) {
+    usePageTitle('Events');
+
     const [events, setEvents] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('all');
 

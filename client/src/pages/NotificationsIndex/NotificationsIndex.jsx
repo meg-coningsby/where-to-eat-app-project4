@@ -9,8 +9,10 @@ import {
 
 import * as notificationsAPI from '../../utilities/notifications-api';
 import NotificationDetail from '../../components/NotificationDetail/NotificationDetail';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function NotificationsIndex({ user }) {
+    usePageTitle(`Notifications`);
     const [allNotifications, setAllNotifications] = useState([]);
     const [filteredNotifications, setFilteredNotifications] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('unread');

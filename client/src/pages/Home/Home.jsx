@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Button, Typography, Box, CardMedia } from '@mui/material';
+import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
 
 export default function Home({ user }) {
+    usePageTitle('Home');
+
     return (
         <Box
             display='flex'

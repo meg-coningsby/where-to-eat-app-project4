@@ -13,7 +13,7 @@ export default async function sendRequest(url, method = 'GET', payload = null) {
     if (token) {
         // Ensure the headers object exists
         options.headers = options.headers || {};
-        // Add token to an Authorization header
+        // Add token to an Authorisation header
         // Prefacing with 'Bearer' is recommended in the HTTP specification
         options.headers.Authorization = `Bearer ${token}`;
     }

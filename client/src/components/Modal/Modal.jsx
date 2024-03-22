@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Button } from '@mui/material';
+import { Dialog, DialogContent, Button } from '@mui/material';
 
 export default function Modal({ isOpen, onClose, children }) {
     if (!isOpen) return null;
