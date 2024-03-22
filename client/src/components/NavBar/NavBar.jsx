@@ -78,7 +78,7 @@ export function NavBar({ user, setUser, themeMode, toggleTheme }) {
         : ['Search', 'Public Lists'];
 
     // Setting up http polling
-    const POLLING_INTERVAL = 60000; // 60 seconds
+    const POLLING_INTERVAL = 10000; // 60 seconds
 
     useEffect(() => {
         // If there's no user logged in, do not fetch notifications

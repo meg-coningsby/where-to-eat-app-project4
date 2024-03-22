@@ -133,10 +133,15 @@ export default function EventDetail({
                             {event.title}
                         </Typography>
                         <Typography variant='h6' gutterBottom>
-                            {locationName}
+                            {locationName} |{' '}
+                            {new Date(event.date).toLocaleDateString('en-Au', {
+                                weekday: 'short',
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                            })}
                         </Typography>
 
-                        {/* Responsive Grid Container */}
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={8}>
                                 <Typography variant='body1' gutterBottom>
