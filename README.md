@@ -83,6 +83,8 @@ Copy `.env.example` to `.env` and update as needed. Please note, there is a .env
 
 Please see the light mode app screenshots below. There is also a dark mode for the app, and the styling is responsive to screen size.
 
+![App Screenshots](https://github.com/meg-coningsby/where-to-eat-app-project4/blob/main/client/public/App-Screenshots.png?raw=true)
+
 <a id="item-five"></a>
 
 ## 🧭 General Approach
@@ -113,7 +115,7 @@ We had built a few CRUD type projects during our course, so I took a familar app
 
 ## 🙋 User Stories
 
-I worked through a range of User Stories - please see the full details on my [Trello Board](https://trello.com/b/IAwKNamT/where-to-eat-project-4)
+I worked through a range of User Stories - please see the full details on my [Trello Board](https://trello.com/b/IAwKNamT/where-to-eat-project-4).
 
 <a id="item-seven"></a>
 
@@ -121,13 +123,17 @@ I worked through a range of User Stories - please see the full details on my [Tr
 
 Please see my original [wireframes here](https://www.figma.com/file/1WQCd8UVPH9cKrea2XqKTR/Where-To-Eat?type=design&node-id=0%3A1&mode=design&t=pxQ9TD3ikV2iXAyC-1).
 
-The design morphed quite a bit once I got into React and started using Material UI for my styling.
+The design changed quite a bit once I got into React and started using Material UI for my styling.
 
 <a id="item-eight"></a>
 
 ## ⁉️ Major Hurdles
 
-To come.
+There are a few more things I want to add to this app for it to be more applicable in real-word scenairos [see more planned improvements below](#item-nine), but for where the app is currently at, my major hurdles included:
+
+-   Working with the Google Places API and the [ubilabs google-maps-react-hooks](https://github.com/ubilabs/google-maps-react-hooks). My app interacts with Google Maps and Google Places in four different ways (Google Autocomplete for setting a location in the search, Google Places nearby search to pull a list of results, Google Places specific place search to pull the details of a restaurant or place, and then the Google Maps embed a map).
+-   Dealing with how the data interacts with each other, and how to set up the models accordingly. The app morphed as it grew, and I think this can always add complications on how you originally set up the database and models and then how you want to use it in the future.
+-   Learning how to use Material UI components to style the app. Using these components means re-writing all your return statements on your React components, so it was a fairly big endeavour to understand and then implement throughout the app.
 
 <a id="item-nine"></a>
 
