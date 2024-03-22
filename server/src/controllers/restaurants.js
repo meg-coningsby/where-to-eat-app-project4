@@ -8,6 +8,7 @@ module.exports = {
     update,
 };
 
+// Pull a list of all the user's saved restaurants (to be used in things like events)
 async function index(req, res) {
     try {
         const userId = req.user.sub;
@@ -18,7 +19,6 @@ async function index(req, res) {
             ...new Set(userLists.flatMap((list) => list.restaurants)),
         ];
 
-        // Find all restaurants with IDs that are in the user's lists
         const restaurants = await Restaurant.find({
             _id: { $in: restaurantIds },
         });
@@ -29,6 +29,7 @@ async function index(req, res) {
     }
 }
 
+// Add a restaurant to a list
 async function addToList(req, res) {
     try {
         const { listId, googlePlaceId, name, address } = req.body;
@@ -55,7 +56,7 @@ async function addToList(req, res) {
             await list.save();
             res.status(201).json(list);
         } else {
-            // Instead of erroring, just return the current state of the list
+            // If the restaurant is already in the list, instead of erroring, just return the current state of the list
             res.status(200).json(list);
         }
     } catch (error) {
@@ -63,6 +64,7 @@ async function addToList(req, res) {
     }
 }
 
+// Remove a restaurant from a list
 async function removeFromList(req, res) {
     try {
         const { listId, restaurantId } = req.params;
@@ -75,7 +77,6 @@ async function removeFromList(req, res) {
                 .json({ error: 'List not found or unauthorized access' });
         }
 
-        // Remove the restaurant from the list
         const index = list.restaurants.indexOf(restaurantId);
         if (index > -1) {
             list.restaurants.splice(index, 1);
@@ -92,27 +93,22 @@ async function removeFromList(req, res) {
     }
 }
 
+// Update the list
 async function update(req, res) {
     try {
-        // Retrieve the restaurantId from the request parameters
         const { restaurantId } = req.params;
 
-        // Find the restaurant by its ID
         const restaurant = await Restaurant.findById(restaurantId);
         if (!restaurant) {
             return res.status(404).json({ error: 'Restaurant not found' });
         }
 
-        // Toggle the visited status
         restaurant.visited = !restaurant.visited;
 
-        // Save the updated restaurant
         await restaurant.save();
 
-        // Respond with the updated restaurant
         res.status(200).json(restaurant);
     } catch (error) {
-        // If an error occurs, send a 400 error response
         res.status(400).send(error.message);
     }
 }

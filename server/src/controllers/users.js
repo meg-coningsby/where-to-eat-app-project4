@@ -24,6 +24,7 @@ async function allButCurrentUser(req, res) {
     }
 }
 
+// Create a new user
 async function create(req, res) {
     const userData = req.body;
     try {
@@ -38,6 +39,7 @@ async function create(req, res) {
     }
 }
 
+// Login a user
 async function login(req, res) {
     const { email, password } = req.body;
     try {
@@ -55,12 +57,14 @@ async function login(req, res) {
     }
 }
 
+// Check their token
 function checkToken(req, res) {
     // req.user will always be there for you when a token is sent
     console.log('req.user', req.user);
     res.json(req.user.exp);
 }
 
+// Support function, createJWT
 function createJWT(user) {
     return jwt.sign(
         {

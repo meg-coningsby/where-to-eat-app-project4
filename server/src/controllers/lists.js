@@ -9,6 +9,7 @@ module.exports = {
     deleteList,
 };
 
+// Get all a user's lists
 async function index(req, res) {
     try {
         const lists = await List.find({ owner: req.user.sub });
@@ -18,15 +19,17 @@ async function index(req, res) {
     }
 }
 
+// Retrieve all lists marked 'public
 async function indexPublic(req, res) {
     try {
-        const lists = await List.find({ public: true })
+        const lists = await List.find({ public: true });
         res.json(lists);
     } catch (error) {
         res.status(400).send(error);
     }
 }
 
+// Show a list details
 async function show(req, res) {
     try {
         const list = await List.findById(req.params.id).populate('restaurants');
@@ -39,6 +42,7 @@ async function show(req, res) {
     }
 }
 
+// Add a new list
 async function addList(req, res) {
     try {
         const newList = await List.create({
@@ -52,6 +56,7 @@ async function addList(req, res) {
     }
 }
 
+// Update a list's details
 async function updateList(req, res) {
     try {
         const listId = req.params.id;
@@ -69,6 +74,7 @@ async function updateList(req, res) {
     }
 }
 
+// Delete a list
 async function deleteList(req, res) {
     try {
         const listId = req.params.id;

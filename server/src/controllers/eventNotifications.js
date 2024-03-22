@@ -5,6 +5,7 @@ module.exports = {
     markNotificationAsRead,
 };
 
+// Pull all notifications
 async function eventNotificationsIndex(req, res) {
     try {
         const user = req.user.sub;
@@ -19,6 +20,7 @@ async function eventNotificationsIndex(req, res) {
     }
 }
 
+// Mark a notification as read
 async function markNotificationAsRead(req, res) {
     try {
         const notificationId = req.params.id;

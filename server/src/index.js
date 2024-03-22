@@ -8,7 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const logger = require('morgan');
-const axios = require('axios');
 const checkToken = require('./middleware/check-token');
 const usersApi = require('./routes/api/users');
 const listsApi = require('./routes/api/lists');

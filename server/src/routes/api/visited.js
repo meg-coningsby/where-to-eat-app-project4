@@ -15,7 +15,7 @@ router.post('/search', ensureLoggedIn, visitedCtrl.addVisitedFromSearch);
 // DELETE restaurant from my visited list
 router.delete('/:id', ensureLoggedIn, visitedCtrl.deleteVisited);
 
-// GET checkcs if a restaurant has been visited
+// GET checks if a restaurant has been visited
 router.get(
     '/check-visited/:restaurantId',
     ensureLoggedIn,

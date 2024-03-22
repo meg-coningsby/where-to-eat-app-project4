@@ -32,6 +32,7 @@ const userSchema = new Schema(
     }
 );
 
+// when you save the user
 userSchema.pre('save', async function (next) {
     // 'this' is the user doc
     if (!this.isModified('password')) return next();

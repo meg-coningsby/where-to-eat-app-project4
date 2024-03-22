@@ -9,6 +9,7 @@ module.exports = {
     checkIfVisited,
 };
 
+// Pull all visited restaurants by that user
 async function index(req, res) {
     try {
         const visits = await Visited.find({ user: req.user.sub })
@@ -80,6 +81,7 @@ async function addVisitedFromSearch(req, res) {
     }
 }
 
+// Delete a visit
 async function deleteVisited(req, res) {
     try {
         const visitedId = req.params.id;
@@ -99,7 +101,6 @@ async function deleteVisited(req, res) {
                 .json({ error: 'Unauthorised to delete this visited record' });
         }
 
-        // Proceed to delete the visited document
         await Visited.findByIdAndDelete(visitedId);
 
         res.json({ message: 'Visited restaurant deleted successfully' });
