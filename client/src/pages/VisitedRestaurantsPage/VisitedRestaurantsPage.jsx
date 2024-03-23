@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Typography, Box, Grid, Alert } from '@mui/material';
+import {
+    Typography,
+    Box,
+    Grid,
+    Alert,
+    ToggleButton,
+    ToggleButtonGroup,
+} from '@mui/material';
 
 import * as visitedAPI from '../../utilities/visited-api';
 import Modal from '../../components/Modal/Modal';
@@ -12,6 +19,7 @@ export default function VisitedRestaurantsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedComment, setSelectedComment] = useState('');
     const [error, setError] = useState(null);
+    const [sort, setSort] = useState('date');
 
     useEffect(() => {
         const fetchVisitedList = async () => {
@@ -48,6 +56,15 @@ export default function VisitedRestaurantsPage() {
         setIsModalOpen(true);
     };
 
+    const sortedVisitedList = [...visitedList].sort((a, b) => {
+        if (sort === 'date') {
+            return new Date(b.visitDate) - new Date(a.visitDate);
+        } else if (sort === 'rating') {
+            return b.rating - a.rating;
+        }
+        return 0;
+    });
+
     return (
         <>
             {visitedList ? (
@@ -56,6 +73,22 @@ export default function VisitedRestaurantsPage() {
                         <Typography variant='h4' gutterBottom>
                             Visited Restaurants
                         </Typography>
+                        <ToggleButtonGroup
+                            color='primary'
+                            value={sort}
+                            exclusive
+                            onChange={(event, newSort) => {
+                                if (newSort !== null) {
+                                    setSort(newSort);
+                                }
+                            }}>
+                            <ToggleButton value='date'>
+                                Sort by Date
+                            </ToggleButton>
+                            <ToggleButton value='rating'>
+                                Sory by Rating
+                            </ToggleButton>
+                        </ToggleButtonGroup>
                     </Box>
                     {error && (
                         <Box mb={2}>
@@ -66,7 +99,7 @@ export default function VisitedRestaurantsPage() {
                     {visitedList.length > 0 ? (
                         <Box mt={4}>
                             <Grid container spacing={2}>
-                                {visitedList.map((visited, index) => (
+                                {sortedVisitedList.map((visited, index) => (
                                     <Grid
                                         item
                                         xs={12}

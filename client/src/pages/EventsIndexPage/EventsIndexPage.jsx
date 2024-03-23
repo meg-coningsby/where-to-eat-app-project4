@@ -78,8 +78,7 @@ export default function EventsIndexPage({ user }) {
                     value={selectedFilter}
                     exclusive
                     onChange={handleFilterChange}
-                    aria-label='Filter events'
-                    size='small'
+                    color='primary'
                     style={{ marginBottom: '16px', marginTop: '20px' }}>
                     <ToggleButton value='all'>All Events</ToggleButton>
                     <ToggleButton value='own'>My Own Events</ToggleButton>

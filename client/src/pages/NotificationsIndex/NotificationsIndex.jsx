@@ -81,8 +81,7 @@ export default function NotificationsIndex({ user }) {
                     value={selectedFilter}
                     exclusive
                     onChange={handleFilterChange}
-                    aria-label='Filter events'
-                    size='small'
+                    color='primary'
                     style={{ marginBottom: '16px', marginTop: '20px' }}>
                     <ToggleButton value='unread'>Unread</ToggleButton>
                     <ToggleButton value='all'>All</ToggleButton>
