@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Container, Alert } from '@mui/material';
+import {
+    Box,
+    Container,
+    Alert,
+    Breadcrumbs,
+    Link,
+    Typography,
+} from '@mui/material';
 
 import * as eventsAPI from '../../utilities/events-api';
 import EventDetail from '../../components/EventDetail/EventDetail';
@@ -72,6 +79,31 @@ export default function EventsShowPage({ user }) {
     return (
         <>
             <Container maxWidth='md'>
+                <Box
+                    display='flex'
+                    justifyContent='center'
+                    alignItems='center'
+                    flexDirection='column'
+                    textAlign='center'
+                    mt={2}>
+                    <Breadcrumbs
+                        aria-label='breadcrumb'
+                        sx={{
+                            fontSize: '0.8rem',
+                            '& a': { textDecoration: 'none', color: 'inherit' },
+                            '& .MuiTypography-root': {
+                                fontSize: '0.8rem',
+                                textDecoration: 'none',
+                                color: 'inherit',
+                            },
+                        }}>
+                        <Link href='/'>Home</Link>
+                        <Link href='/events'>Events</Link>
+                        <Typography>
+                            {eventDetails && eventDetails.title}
+                        </Typography>
+                    </Breadcrumbs>
+                </Box>
                 <Box
                     display='flex'
                     flexDirection='column'

@@ -10,6 +10,8 @@ import {
     TextField,
     Rating,
     Alert,
+    Breadcrumbs,
+    Link,
 } from '@mui/material';
 
 import axios from 'axios';
@@ -156,6 +158,31 @@ export default function RestaurantSearchDetailPage({ user }) {
 
     return (
         <Container maxWidth='md'>
+            <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                textAlign='center'
+                mt={2}>
+                <Breadcrumbs
+                    aria-label='breadcrumb'
+                    sx={{
+                        fontSize: '0.8rem',
+                        '& a': { textDecoration: 'none', color: 'inherit' },
+                        '& .MuiTypography-root': {
+                            fontSize: '0.8rem',
+                            textDecoration: 'none',
+                            color: 'inherit',
+                        },
+                    }}>
+                    <Link href='/'>Home</Link>
+                    <Link href='/restaurants'>Restaurant Search</Link>
+                    <Typography>
+                        {restaurantDetails && restaurantDetails.name}
+                    </Typography>
+                </Breadcrumbs>
+            </Box>
             {error ? (
                 <Box mb={2}>
                     <Alert severity='error'>{error}</Alert>

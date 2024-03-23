@@ -8,6 +8,8 @@ import {
     Grid,
     Rating,
     Alert,
+    Breadcrumbs,
+    Link as MULink,
 } from '@mui/material';
 
 import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
@@ -101,6 +103,29 @@ export default function ListShowPage({ user }) {
 
     return (
         <>
+            <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                textAlign='center'
+                mt={2}>
+                <Breadcrumbs
+                    aria-label='breadcrumb'
+                    sx={{
+                        fontSize: '0.8rem',
+                        '& a': { textDecoration: 'none', color: 'inherit' },
+                        '& .MuiTypography-root': {
+                            fontSize: '0.8rem',
+                            textDecoration: 'none',
+                            color: 'inherit',
+                        },
+                    }}>
+                    <MULink href='/'>Home</MULink>
+                    <MULink href='/lists'>Lists</MULink>
+                    <Typography>{list && list.name}</Typography>
+                </Breadcrumbs>
+            </Box>
             {list ? (
                 <Box sx={{ width: '80%', margin: '0 auto', paddingTop: 4 }}>
                     <Box sx={{ textAlign: 'center' }}>
