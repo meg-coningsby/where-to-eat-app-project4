@@ -76,11 +76,6 @@ export default function RestaurantSearch() {
                 restaurants={restaurants}
                 sx={{ width: '100%', maxWidth: 600 }}
             />
-            {searchPerformed && !isLoading && restaurants.length === 0 && (
-                <Typography variant='body1' align='center'>
-                    No places found matching your search filters.
-                </Typography>
-            )}
         </Container>
     );
 }

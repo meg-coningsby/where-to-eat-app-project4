@@ -5,6 +5,7 @@ import {
     Box,
     ToggleButton,
     ToggleButtonGroup,
+    Alert,
 } from '@mui/material';
 
 import * as notificationsAPI from '../../utilities/notifications-api';
@@ -16,8 +17,10 @@ export default function NotificationsIndex({ user }) {
     const [allNotifications, setAllNotifications] = useState([]);
     const [filteredNotifications, setFilteredNotifications] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('unread');
+    const [error, setError] = useState(null);
 
     const fetchNotifications = async () => {
+        setError(null);
         try {
             const fetchedNotifications =
                 await notificationsAPI.fetchNotifications();
@@ -25,6 +28,9 @@ export default function NotificationsIndex({ user }) {
             filterNotifications(fetchedNotifications, 'unread');
         } catch (error) {
             console.error('Error fetching notifications:', error);
+            setError(
+                'An error occcured when fetching notifications. Please refresh the page to try again.'
+            );
         }
     };
 
@@ -90,6 +96,11 @@ export default function NotificationsIndex({ user }) {
                     />
                 ))}
             </Box>
+            {error && (
+                <Box mb={2}>
+                    <Alert severity='error'>{error}</Alert>
+                </Box>
+            )}
         </Container>
     );
 }

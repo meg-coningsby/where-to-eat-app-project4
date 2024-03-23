@@ -7,6 +7,7 @@ import {
     Button,
     ToggleButton,
     ToggleButtonGroup,
+    Alert,
 } from '@mui/material';
 
 import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
@@ -18,8 +19,10 @@ export default function EventsIndexPage({ user }) {
 
     const [events, setEvents] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('all');
+    const [error, setError] = useState(null);
 
     const fetchEvents = async () => {
+        setError(null);
         try {
             let fetchedEvents;
             if (selectedFilter === 'all') {
@@ -32,6 +35,9 @@ export default function EventsIndexPage({ user }) {
             setEvents(fetchedEvents);
         } catch (error) {
             console.error('Error fetching the events');
+            setError(
+                'An error occured when fetching your events. Please refresh the page and try again.'
+            );
         }
     };
 
@@ -63,6 +69,11 @@ export default function EventsIndexPage({ user }) {
                         Create a New Event
                     </Button>
                 </Link>
+                {error && (
+                    <Box mb={2}>
+                        <Alert severity='error'>{error}</Alert>
+                    </Box>
+                )}
                 <ToggleButtonGroup
                     value={selectedFilter}
                     exclusive

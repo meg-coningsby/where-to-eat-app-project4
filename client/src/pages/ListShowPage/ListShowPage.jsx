@@ -7,6 +7,7 @@ import {
     TextField,
     Grid,
     Rating,
+    Alert,
 } from '@mui/material';
 
 import { usePageTitle } from '../../hooks/usePageTitle/usePageTitle';
@@ -28,35 +29,48 @@ export default function ListShowPage({ user }) {
         comments: '',
         rating: 0,
     });
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchList = async () => {
+            setError(null);
             try {
                 const listData = await listsAPI.fetchList(id);
                 setList(listData);
             } catch (error) {
                 console.error('Error fetching list details: ', error);
+                setError(
+                    'An error occured when fetching the list details. Please try again.'
+                );
             }
         };
         fetchList();
     }, [id]);
 
     const handleDelete = async () => {
+        setError(null);
         try {
             await listsAPI.deleteList(id);
             navigate('/lists');
         } catch (error) {
             console.error('Error deleting list', error);
+            setError(
+                'An error occured when deleting this list. Please try again.'
+            );
         }
     };
 
     const handleRemoveRestaurant = async (restaurantId) => {
+        setError(null);
         try {
             await restaurantsAPI.deleteRestaurantFromList(id, restaurantId);
             const updatedList = await listsAPI.fetchList(id);
             setList(updatedList);
         } catch (error) {
             console.error('Error removing restaurant from list', error);
+            setError(
+                'An error occured when removing this restaurant. Please try again.'
+            );
         }
     };
 
@@ -118,6 +132,11 @@ export default function ListShowPage({ user }) {
                                 onClick={handleDelete}>
                                 Delete List
                             </Button>
+                        </Box>
+                    )}
+                    {error && (
+                        <Box mb={2}>
+                            <Alert severity='error'>{error}</Alert>
                         </Box>
                     )}
                     {list.restaurants && list.restaurants.length > 0 ? (

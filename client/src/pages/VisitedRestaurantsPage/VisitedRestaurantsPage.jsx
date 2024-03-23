@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Typography, Box, Grid } from '@mui/material';
+import { Typography, Box, Grid, Alert } from '@mui/material';
 
 import * as visitedAPI from '../../utilities/visited-api';
 import Modal from '../../components/Modal/Modal';
@@ -11,26 +11,35 @@ export default function VisitedRestaurantsPage() {
     const [visitedList, setVisitedList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedComment, setSelectedComment] = useState('');
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchVisitedList = async () => {
+            setError(null);
             try {
                 const listData = await visitedAPI.fetchVisits();
                 setVisitedList(listData);
             } catch (error) {
-                console.error('Error fetching list details: ', error);
+                console.error('Error fetching visited restaurants: ', error);
+                setError(
+                    'An error occured fetching your visited restaurants. Please refresh the page to try again.'
+                );
             }
         };
         fetchVisitedList();
     }, []);
 
     const handleDeleteVisit = async (restaurantId) => {
+        setError(null);
         try {
             await visitedAPI.deleteRestaurantFromVisited(restaurantId);
             const updatedVisitedList = await visitedAPI.fetchVisits();
             setVisitedList(updatedVisitedList);
         } catch (error) {
             console.error('Error deleting visited restaurant', error);
+            setError(
+                'An error occured when trying to delete a visit. Please try again.'
+            );
         }
     };
 
@@ -48,6 +57,11 @@ export default function VisitedRestaurantsPage() {
                             Visited Restaurants
                         </Typography>
                     </Box>
+                    {error && (
+                        <Box mb={2}>
+                            <Alert severity='error'>{error}</Alert>
+                        </Box>
+                    )}
                     {/* Display list of visited restaurants */}
                     {visitedList.length > 0 ? (
                         <Box mt={4}>

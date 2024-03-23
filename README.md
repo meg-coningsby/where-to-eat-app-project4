@@ -141,7 +141,7 @@ There are a few more things I want to add to this app for it to be more applicab
 
 Planned future enhancements for the app:
 
--   Improve error notifications in the UI (not just console notifications of errors)
--   Work on Google Places API & hook to allow more than 20 results
--   Add functionality for user's to add friends (and these requests can be accepted / declined). This then opens up a lot more functionality to add (friends collaborating on lists, being able to view each other's lists - instead of 'public lists', inviting friend's to events etc. )
--   Ability to see the restaurant search results and your list restaurants in map view (not just list view)
+-   Continue to improve error notifications in the UI across all potential areas.
+-   Work on Google Places API & hook to allow more than 20 results.
+-   Add functionality for user's to add friends (and these requests can be accepted / declined). This then opens up a lot more functionality to add (friends collaborating on lists, being able to view each other's lists - instead of 'public lists', inviting friend's to events etc. ).
+-   Ability to see the restaurant search results and your list restaurants in map view (not just list view).

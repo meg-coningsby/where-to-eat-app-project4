@@ -11,6 +11,7 @@ import {
     Select,
     Container,
     Box,
+    Alert,
 } from '@mui/material';
 
 export default function RestaurantSearchForm({
@@ -27,6 +28,7 @@ export default function RestaurantSearchForm({
         cuisine: '',
         minRating: '',
     });
+    const [error, setError] = useState(null);
 
     const onPlaceChanged = (place) => {
         setSelectedPlace(place);
@@ -87,6 +89,18 @@ export default function RestaurantSearchForm({
                 setIsLoading(false);
             } else {
                 console.error('Places Service failed:', status);
+                if (
+                    status ===
+                    google.maps.places.PlacesServiceStatus.ZERO_RESULTS
+                ) {
+                    setError(
+                        'No places found matching your current search filters. Please try again.'
+                    );
+                } else {
+                    setError(
+                        'An error occurred during the search. Please try again.'
+                    );
+                }
                 setRestaurants([]);
                 setIsLoading(false);
             }
@@ -94,6 +108,7 @@ export default function RestaurantSearchForm({
     };
 
     const handleSearch = () => {
+        setError(null);
         performSearch();
     };
 
@@ -178,6 +193,11 @@ export default function RestaurantSearchForm({
                             Search
                         </Button>
                     </Grid>
+                    <Container maxWidth='sm'>
+                        <Box sx={{ mt: 2 }}>
+                            {error && <Alert severity='error'>{error}</Alert>}{' '}
+                        </Box>
+                    </Container>
                 </Grid>
             </Box>
         </Container>

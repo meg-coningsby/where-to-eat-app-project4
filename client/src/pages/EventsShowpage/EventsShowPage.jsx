@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Alert } from '@mui/material';
 
 import * as eventsAPI from '../../utilities/events-api';
 import EventDetail from '../../components/EventDetail/EventDetail';
@@ -11,14 +11,18 @@ export default function EventsShowPage({ user }) {
     const navigate = useNavigate();
     const { id } = useParams();
     const [eventDetails, setEventDetails] = useState(null);
+    const [error, setError] = useState(null);
 
     const fetchEventDetails = async () => {
+        setError(null);
         try {
             const event = await eventsAPI.fetchEvent(id);
             setEventDetails(event);
         } catch (error) {
             console.error(error);
-            setError('Failed to fetch event details.');
+            setError(
+                'An error occured when fetching the event details. Please try again.'
+            );
         }
     };
 
@@ -27,29 +31,41 @@ export default function EventsShowPage({ user }) {
     }, [id]);
 
     const handleDeleteEvent = async () => {
+        setError(null);
         try {
             await eventsAPI.deleteEvent(id);
             navigate('/events');
         } catch (error) {
             console.error('Error deleting event', error);
+            setError(
+                'An error occured when trying to delete this event. Please try again.'
+            );
         }
     };
 
     const handleAcceptEvent = async () => {
+        setError(null);
         try {
             await eventsAPI.acceptEvent(id, user.sub);
             fetchEventDetails();
         } catch (error) {
             console.error('Error accepting event', error);
+            setError(
+                'An error occured when trying to accept this invitation. Please try again.'
+            );
         }
     };
 
     const handleDeclineEvent = async () => {
+        setError(null);
         try {
             await eventsAPI.declineEvent(id, user.sub);
             fetchEventDetails();
         } catch (error) {
             console.error('Error declining event', error);
+            setError(
+                'An error occured when trying to decline this invitation. Please try again.'
+            );
         }
     };
 
@@ -70,6 +86,11 @@ export default function EventsShowPage({ user }) {
                         handleDeclineEvent={handleDeclineEvent}
                     />
                 </Box>
+                {error && (
+                    <Box mb={2}>
+                        <Alert severity='error'>{error}</Alert>
+                    </Box>
+                )}
             </Container>
         </>
     );

@@ -9,6 +9,7 @@ import {
     Typography,
     TextField,
     Rating,
+    Alert,
 } from '@mui/material';
 
 import axios from 'axios';
@@ -33,6 +34,17 @@ export default function RestaurantSearchDetailPage({ user }) {
         comments: '',
         rating: 0,
     });
+    const [error, setError] = useState(null);
+    const [listModalError, setListModalError] = useState(null);
+    const [visitedModalError, setVisitedModalError] = useState(null);
+
+    const clearListModalError = () => {
+        setListModalError(null);
+    };
+
+    const clearVisitedModalError = () => {
+        setVisitedModalError(null);
+    };
 
     useEffect(() => {
         fetchRestaurantDetails(id);
@@ -48,6 +60,7 @@ export default function RestaurantSearchDetailPage({ user }) {
             setUserLists(fetchedLists);
         } catch (error) {
             console.error('Error fetching user lists:', error);
+            setListModalError('Error fetching user lists. Please try again.');
         }
     };
 
@@ -55,8 +68,10 @@ export default function RestaurantSearchDetailPage({ user }) {
         try {
             const response = await axios.get(`/api/restaurants/${placeId}`);
             setRestaurantDetails(response.data);
+            setError(null);
         } catch (error) {
             console.error('Error fetching restaurant details:', error);
+            setError('Error fetching restaurant details. Please try again.');
         }
     };
 
@@ -67,6 +82,9 @@ export default function RestaurantSearchDetailPage({ user }) {
             );
             return;
         }
+
+        clearListModalError();
+
         try {
             const { name, formatted_address: address } = restaurantDetails;
             await restaurantsAPI.addRestaurantToList(
@@ -79,10 +97,15 @@ export default function RestaurantSearchDetailPage({ user }) {
             setSelectedList('');
         } catch (error) {
             console.error('Error adding restaurant to list:', error);
+            setListModalError(
+                'Error adding restaurant to list. Please try again.'
+            );
         }
     };
 
     const handleSubmitVisited = async () => {
+        clearVisitedModalError();
+
         try {
             const commentsValue = visitDetails.comments || '';
 
@@ -104,136 +127,177 @@ export default function RestaurantSearchDetailPage({ user }) {
             closeVisitedModal();
             setVisitDetails({ visitDate: '', comments: '', rating: 0 });
         } catch (error) {
-            console.error('Error marking restaurant as visited', error);
+            console.error('Error adding restaurant visit', error);
+            setVisitedModalError(
+                'Error adding restaurant visit. Please try again.'
+            );
         }
     };
 
-    const openListModal = () => setIsListModalOpen(true);
-    const closeListModal = () => setIsListModalOpen(false);
+    const openListModal = () => {
+        setIsListModalOpen(true);
+        clearListModalError();
+    };
 
-    const openVisitedModal = () => setIsVisitedModalOpen(true);
-    const closeVisitedModal = () => setIsVisitedModalOpen(false);
+    const closeListModal = () => {
+        setIsListModalOpen(false);
+        clearListModalError();
+    };
+
+    const openVisitedModal = () => {
+        setIsVisitedModalOpen(true);
+        clearVisitedModalError();
+    };
+
+    const closeVisitedModal = () => {
+        setIsVisitedModalOpen(false);
+        clearVisitedModalError();
+    };
 
     return (
         <Container maxWidth='md'>
-            <Box
-                display='flex'
-                flexDirection='column'
-                alignItems='center'
-                justifyContent='flex-start'>
-                <RestaurantDetail restaurant={restaurantDetails} />
-                <Box mt={2}>
-                    {user && (
-                        <>
-                            <Button
-                                variant='contained'
-                                onClick={openListModal}
-                                sx={{ mr: 2 }}>
-                                Add to List
-                            </Button>
-                            <Button
-                                variant='contained'
-                                onClick={openVisitedModal}>
-                                Add a Visit
-                            </Button>
-                        </>
-                    )}
-                    <Modal isOpen={isListModalOpen} onClose={closeListModal}>
-                        <>
-                            <Typography variant='body1'>
-                                Select the list you want to add this restaurant
-                                to:
-                            </Typography>
-                            <Select
-                                value={selectedList}
-                                onChange={(e) =>
-                                    setSelectedList(e.target.value)
-                                }
-                                sx={{ minWidth: 200, mt: 1, mr: 1 }}>
-                                <MenuItem value='' disabled>
-                                    Select a list
-                                </MenuItem>
-                                {userLists.map((list) => (
-                                    <MenuItem key={list._id} value={list._id}>
-                                        {list.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <Button
-                                variant='contained'
-                                onClick={addToUserList}
-                                sx={{ mt: 1 }}>
-                                Add to List
-                            </Button>
-                        </>
-                    </Modal>
-                    <Modal
-                        isOpen={isVisitedModalOpen}
-                        onClose={closeVisitedModal}>
-                        <>
-                            <Typography variant='h6' sx={{ mb: 2 }}>
-                                Mark as Visited
-                            </Typography>
-                            <TextField
-                                id='visit-date'
-                                label='Visit Date'
-                                type='date'
-                                value={visitDetails.visitDate}
-                                onChange={(e) =>
-                                    setVisitDetails({
-                                        ...visitDetails,
-                                        visitDate: e.target.value,
-                                    })
-                                }
-                                fullWidth
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                sx={{ mb: 2 }}
-                            />
-                            <TextField
-                                id='comments'
-                                label='Comments'
-                                multiline
-                                rows={4}
-                                value={visitDetails.comments}
-                                onChange={(e) =>
-                                    setVisitDetails({
-                                        ...visitDetails,
-                                        comments: e.target.value,
-                                    })
-                                }
-                                fullWidth
-                                sx={{ mb: 2 }}
-                            />
-                            <Box sx={{ mb: 2 }}>
-                                <Typography component='legend'>
-                                    Rating
-                                </Typography>
-                                <Rating
-                                    name='rating'
-                                    value={visitDetails.rating}
-                                    onChange={(event, newValue) => {
-                                        setVisitDetails({
-                                            ...visitDetails,
-                                            rating: newValue,
-                                        });
-                                    }}
-                                />
-                            </Box>
-                            <Box textAlign='center'>
+            {error ? (
+                <Box mb={2}>
+                    <Alert severity='error'>{error}</Alert>
+                </Box>
+            ) : (
+                <Box
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='center'
+                    justifyContent='flex-start'>
+                    <RestaurantDetail restaurant={restaurantDetails} />
+                    <Box mt={2}>
+                        {user && (
+                            <>
                                 <Button
                                     variant='contained'
-                                    onClick={handleSubmitVisited}
-                                    fullWidth
-                                    sx={{ mt: 1 }}>
-                                    Add Visit
+                                    onClick={openListModal}
+                                    sx={{ mr: 2 }}>
+                                    Add to List
                                 </Button>
-                            </Box>
-                        </>
-                    </Modal>
+                                <Button
+                                    variant='contained'
+                                    onClick={openVisitedModal}>
+                                    Add a Visit
+                                </Button>
+                            </>
+                        )}
+                        <Modal
+                            isOpen={isListModalOpen}
+                            onClose={closeListModal}>
+                            <>
+                                <Typography variant='body1'>
+                                    Select the list you want to add this
+                                    restaurant to:
+                                </Typography>
+                                <Select
+                                    value={selectedList}
+                                    onChange={(e) =>
+                                        setSelectedList(e.target.value)
+                                    }
+                                    sx={{ minWidth: 200, mt: 1, mr: 1 }}>
+                                    <MenuItem value='' disabled>
+                                        Select a list
+                                    </MenuItem>
+                                    {userLists.map((list) => (
+                                        <MenuItem
+                                            key={list._id}
+                                            value={list._id}>
+                                            {list.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                                <Button
+                                    variant='contained'
+                                    onClick={addToUserList}
+                                    sx={{ mt: 1 }}>
+                                    Add to List
+                                </Button>
+                                {listModalError && (
+                                    <Alert
+                                        severity='error'
+                                        onClose={clearListModalError}>
+                                        {listModalError}
+                                    </Alert>
+                                )}
+                            </>
+                        </Modal>
+                        <Modal
+                            isOpen={isVisitedModalOpen}
+                            onClose={closeVisitedModal}>
+                            <>
+                                <Typography variant='h6' sx={{ mb: 2 }}>
+                                    Mark as Visited
+                                </Typography>
+                                <TextField
+                                    id='visit-date'
+                                    label='Visit Date'
+                                    type='date'
+                                    value={visitDetails.visitDate}
+                                    onChange={(e) =>
+                                        setVisitDetails({
+                                            ...visitDetails,
+                                            visitDate: e.target.value,
+                                        })
+                                    }
+                                    fullWidth
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    sx={{ mb: 2 }}
+                                />
+                                <TextField
+                                    id='comments'
+                                    label='Comments'
+                                    multiline
+                                    rows={4}
+                                    value={visitDetails.comments}
+                                    onChange={(e) =>
+                                        setVisitDetails({
+                                            ...visitDetails,
+                                            comments: e.target.value,
+                                        })
+                                    }
+                                    fullWidth
+                                    sx={{ mb: 2 }}
+                                />
+                                <Box sx={{ mb: 2 }}>
+                                    <Typography component='legend'>
+                                        Rating
+                                    </Typography>
+                                    <Rating
+                                        name='rating'
+                                        value={visitDetails.rating}
+                                        onChange={(event, newValue) => {
+                                            setVisitDetails({
+                                                ...visitDetails,
+                                                rating: newValue,
+                                            });
+                                        }}
+                                    />
+                                </Box>
+                                <Box textAlign='center'>
+                                    <Button
+                                        variant='contained'
+                                        onClick={handleSubmitVisited}
+                                        fullWidth
+                                        sx={{ mt: 1 }}>
+                                        Add Visit
+                                    </Button>
+                                </Box>
+                                {visitedModalError && (
+                                    <Alert
+                                        severity='error'
+                                        onClose={clearVisitedModalError}>
+                                        {visitedModalError}
+                                    </Alert>
+                                )}
+                            </>
+                        </Modal>
+                    </Box>
                 </Box>
-            </Box>
+            )}
         </Container>
     );
 }
